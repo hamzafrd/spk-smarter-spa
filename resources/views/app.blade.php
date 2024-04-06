@@ -4,6 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Decision Support system, Dashboard, and Authentication">
     <meta name="theme-color" content="#6777ef" />
     <link rel="apple-touch-icon" href="{{ asset('apple-touch-icon.png') }}">
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('/favicon.ico') }}">
@@ -21,6 +22,7 @@
 </head>
 
 <body class="font-sans antialiased">
+
     @inertia
     <script src="{{ asset('/sw.js') }}"></script>
     <script>

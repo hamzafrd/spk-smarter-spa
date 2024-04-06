@@ -1,16 +1,7 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { useCounterStore } from '@/store';
 import { Head } from '@inertiajs/vue3';
-import { storeToRefs } from 'pinia';
 
-const counterStore = useCounterStore();
-
-// accesing action
-const { increaseCount } = counterStore
-
-// accesing state/refs and getters/computed
-const { doubleCount, count } = storeToRefs(counterStore)
 </script>
 
 <template>
@@ -23,3 +14,4 @@ const { doubleCount, count } = storeToRefs(counterStore)
 
     </AuthenticatedLayout>
 </template>
+resources/data/store

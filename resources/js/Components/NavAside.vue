@@ -1,44 +1,39 @@
 <script setup>
+import { linkNav } from '@/constant';
+import { useSideNavStatus } from '@/store';
+import { Link } from '@inertiajs/vue3';
+import { storeToRefs } from 'pinia';
 import ApplicationLogo from './ApplicationLogo.vue';
-import NavThemeToggle from './NavThemeToggle.vue';
 import Dropdown from './Dropdown.vue';
 import DropdownLink from './DropdownLink.vue';
 import NavLink from './NavLink.vue';
-import { linkNav } from '@/constant';
-import { Link } from '@inertiajs/vue3';
-import { useSideNavStatus } from '@/store';
-import { storeToRefs } from 'pinia';
+import NavThemeToggle from './NavThemeToggle.vue';
 
 const store = useSideNavStatus()
 
 const { toggle } = store
 const { status, isExtended } = storeToRefs(store)
 </script>
+
 <template>
     <aside
-        class="w-44 max-md:hidden dark:bg-gray-800 dark:border-r-dark-4 sticky top-0 left-0 z-20 flex flex-col justify-between h-screen bg-white border-r shadow"
-        :class="!status && 'block w-[0rem]'">
+        class="w-52 hidden lg:flex shrink-0 dark:bg-gray-800 dark:border-r-dark-4 sticky top-0 left-0 z-20  flex-col justify-between h-screen bg-white border-r-1 shadow shadow-gray-400 dark:shadow-gray-500"
+        :class="!status ? 'block w-[0]' : ''">
+
+        <!-- Borger -->
+        <button @click="toggle()" :class="(!status ? 'duration-500  transform  translate-x-12' : 'duration-0')" class="text-gray-700 dark:text-black dark:hover:text-gray-400 dark:hover:bg-secondary-color/50  hover:text-gray-900/50 hover:bg-gray-200 bg-primary-color/50 dark:bg-gray-100/50
+            absolute top-1 right-1 inline-flex items-center justify-center p-2  rounded-md">
+            <svg class="w-6 h-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+        </button>
 
         <div class="flex flex-col flex-1">
             <!-- Toggle & Logo -->
-            <div class="dark:bg-indigo-700 flex flex-col gap-2 py-6 bg-indigo-300"
-                :class="!status ? 'bg-transparent dark:bg-transparent' : 'duration-1000 delay-[350ms]'">
-                <!-- Toggle & Borger -->
-                <div class="flex items-center justify-center flex-1 gap-2">
-                    <NavThemeToggle :class="isExtended" />
-
-                    <!-- Borger -->
-                    <button @click="toggle()" :class="!status && 'transition-transform'"
-                        class="dark:text-gray-500 dark:hover:text-gray-400 dark:hover:bg-gray-700 dark:focus:bg-gray-900/50 dark:focus:text-gray-400 hover:text-gray-900/50 hover:bg-gray-200 dark:bg-secondary-color bg-gray-100/50 inline-flex items-center justify-center p-2 text-gray-700 transition duration-150 ease-in-out rounded-md">
-                        <svg class="w-6 h-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M4 6h16M4 12h16M4 18h16" />
-                        </svg>
-                    </button>
-                </div>
-
+            <div class="dark:bg-indigo-700 bg-indigo-300 flex flex-col gap-2 py-6 border-b border-gray-300/50"
+                :class="!status ? '' : 'duration-1000 delay-[350ms]'">
                 <!-- Logo -->
-                <div :class="isExtended">
+                <div class="overflow-hidden" :class="'transition-opacity ' + isExtended">
                     <div class="shrink-0 justify-evenly flex items-center">
                         <Link :href="route('dashboard.index')">
                         <ApplicationLogo />
@@ -46,15 +41,20 @@ const { status, isExtended } = storeToRefs(store)
                     </div>
                     <div class="dark:text-white pt-3 text-center">
                         <p class="dark:text-white text-base-semibold">SPK SMARTER</p>
-                        <p class="dark:text-white text-small-regular">Tanah Perumahan</p>
+                        <p class="dark:text-white text-small-regular">Pemilihan Tanah Perumahan</p>
                     </div>
+                </div>
+
+                <!-- Toggle -->
+                <div class="flex items-center justify-center 2">
+                    <NavThemeToggle :class="isExtended" />
                 </div>
             </div>
 
             <!-- SideBar -->
-            <div class="flex flex-col flex-1 gap-4 transition-opacity" :class="isExtended">
+            <div class=" flex flex-col flex-1 gap-4 overflow-hidden" :class="'transition-opacity ' + isExtended">
                 <div class=" flex flex-col">
-                    <template v-for=" link  in  linkNav " :key="link.label">
+                    <template v-for="  link in linkNav  " :key="link.label">
                         <NavLink :href="route(link.route)" :active="route().current(link.route)" :img="link.imgURL"
                             :class="'py-6'" :label="link.label">
                         </NavLink>
@@ -95,3 +95,4 @@ const { status, isExtended } = storeToRefs(store)
         </div>
     </aside>
 </template>
+resources/data/constantresources/data/store

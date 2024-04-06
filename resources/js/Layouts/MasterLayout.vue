@@ -1,8 +1,10 @@
 <script setup>
 import { useThemeStore } from '@/store';
+import { initFlowbite } from 'flowbite';
+import { onMounted } from 'vue';
 
-const store = useThemeStore()
-store.isThemeDark && ($('body').addClass('dark'))
+onMounted(() => initFlowbite());
+useThemeStore().isThemeDark && ($('body').addClass('dark'))
 </script>
 
 <template>

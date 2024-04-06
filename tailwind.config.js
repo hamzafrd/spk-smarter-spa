@@ -11,7 +11,8 @@ export default {
         "./resources/views/app.blade.php",
 
         "./resources/js/**/*.vue",
-
+        "./resources/js/*.js",
+        "./resources/js/**/**/*.vue",
         "./node_modules/flowbite/**/*.js",
     ],
 
@@ -182,6 +183,40 @@ export default {
         extend: {
             fontFamily: {
                 sans: ["Figtree", ...defaultTheme.fontFamily.sans],
+                body: [
+                    "Inter",
+                    "ui-sans-serif",
+                    "system-ui",
+                    "-apple-system",
+                    "system-ui",
+                    "Segoe UI",
+                    "Roboto",
+                    "Helvetica Neue",
+                    "Arial",
+                    "Noto Sans",
+                    "sans-serif",
+                    "Apple Color Emoji",
+                    "Segoe UI Emoji",
+                    "Segoe UI Symbol",
+                    "Noto Color Emoji",
+                ],
+                sans: [
+                    "Inter",
+                    "ui-sans-serif",
+                    "system-ui",
+                    "-apple-system",
+                    "system-ui",
+                    "Segoe UI",
+                    "Roboto",
+                    "Helvetica Neue",
+                    "Arial",
+                    "Noto Sans",
+                    "sans-serif",
+                    "Apple Color Emoji",
+                    "Segoe UI Emoji",
+                    "Segoe UI Symbol",
+                    "Noto Color Emoji",
+                ],
             },
             transitionDelay: {
                 2000: "2000ms",
@@ -189,8 +224,8 @@ export default {
             colors: {
                 "primary-color": "#8a76f8",
                 "secondary-color": "#191627",
-                "primary-500": "#877EFF",
-                "secondary-500": "#FFB620",
+                "primary-two": "#F4602B",
+                "secondary-two": "#FFB620",
                 blue: "#0095F6",
                 "logout-btn": "#FF5A5A",
                 "navbar-menu": "rgba(16, 16, 18, 0.6)",
@@ -204,9 +239,29 @@ export default {
                 "light-4": "#5C5C7B",
                 "gray-1": "#697C89",
                 glassmorphism: "rgba(16, 16, 18, 0.60)",
+                primary: {
+                    50: "#eff6ff",
+                    100: "#dbeafe",
+                    200: "#bfdbfe",
+                    300: "#93c5fd",
+                    400: "#60a5fa",
+                    500: "#3b82f6",
+                    600: "#2563eb",
+                    700: "#1d4ed8",
+                    800: "#1e40af",
+                    900: "#1e3a8a",
+                    950: "#172554",
+                },
             },
         },
     },
 
-    plugins: [forms, require("flowbite/plugin")],
+    plugins: [
+        forms,
+        require("flowbite/plugin"),
+        function ({ addVariant }) {
+            addVariant("child", "& > *");
+            addVariant("child-hover", "& > *:hover");
+        },
+    ],
 };

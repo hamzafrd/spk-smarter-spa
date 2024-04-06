@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Kriteria;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class KriteriaController extends Controller
@@ -12,15 +15,10 @@ class KriteriaController extends Controller
      */
     public function index()
     {
-        return Inertia::render('Kriteria/Index');
-    }
+        $user = User::find(Auth::id());
+        $kriteria = $user->kriteria()->orderBy('rank')->get();
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        return Inertia::render('Kriteria/Index', ['kriteriaList' => $kriteria]);
     }
 
     /**
@@ -28,7 +26,137 @@ class KriteriaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nama' => 'required|max:255',
+            'rank' => 'required',
+        ]);
+
+        $postData = [
+            'nama' => $request->nama,
+            'rank' => $request->rank,
+        ];
+
+        try {
+            $user = User::find(Auth::id());
+
+            $this->checkRanks($user, $postData);
+
+            // create kriteria
+            $user->kriteria()->create($postData);
+
+            $this->updateBobot($user);
+
+            return to_route('kriteria.index');
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Internal server error : ' . $e], 500);
+        }
+    }
+
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
+    {
+        $request->validate([
+            'nama' => 'required|max:255',
+            'rank' => 'required',
+        ]);
+
+        $putData = [
+            'nama' => $request->nama,
+            'rank' => $request->rank,
+        ];
+
+        try {
+            $user = User::find(Auth::id());
+
+            $this->checkRanks($user, $putData);
+            // update kriteria
+            $user->kriteria()->find($id)->update($putData);
+
+            $this->updateBobot($user);
+
+            return to_route('kriteria.index');
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Internal server error : ' . $e], 500);
+        }
+    }
+
+
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
+    {
+        try {
+            $user = User::find(Auth::id());
+
+            // update kriteria
+            $user->kriteria()->find($id)->delete();
+
+            $this->updateBobot($user);
+
+            return to_route('kriteria.index');
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Internal server error : ' . $e], 500);
+        }
+    }
+
+
+    /**
+     * DELETE ALL
+     */
+    public function destroyAll()
+    {
+        try {
+            Kriteria::query()->delete();
+            return to_route('kriteria.index');
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Internal server error : ' . $e], 500);
+        }
+    }
+
+
+    public function getBobot($n)
+    {
+        $list = [];
+        $valueNow = 0;
+
+        for ($i = 0; $i < $n; $i++) {
+            $valueNow += 1 / ($n - $i) / $n;
+            $list[] = number_format($valueNow, 3);
+        }
+
+        return array_reverse($list);
+    }
+
+    public function checkRanks($user, $data)
+    {
+        $kriteria = $user->kriteria()->get();
+
+        // Jika rank sudah ada, turunkan 1 rank
+        $isRankExist = $kriteria->where('rank', '==', $data['rank']);
+        if ($isRankExist->first()) {
+            $rank = $kriteria->where('rank', '>=', $data['rank']);
+            foreach ($rank as $value) {
+                $value->update(['rank' => ($value->rank + 1)]);
+            }
+        }
+    }
+    public function updateBobot($user)
+    {
+        $kriteria = $user->kriteria()->orderBy('rank')->get();
+
+        // Update bobot masing" kriteria
+        $bobot = $this->getBobot(count($kriteria));
+        foreach ($kriteria as $index => $item) {
+            $item->update([
+                'bobot' => $bobot[$index],
+                'rank' => $index + 1
+            ]);
+        }
     }
 
     /**
@@ -43,22 +171,6 @@ class KriteriaController extends Controller
      * Show the form for editing the specified resource.
      */
     public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
     {
         //
     }

@@ -17,7 +17,7 @@ import NavThemeToggle from '@/Components/NavThemeToggle.vue';
                 </div>
                 <div>
                     <h1 class="dark:text-white">SPK SMARTER</h1>
-                    <h1 class="dark:text-white">Pemilihan Tanah Perumahan</h1>
+                    <h2 class="dark:text-white">Pemilihan Tanah Perumahan</h2>
                 </div>
                 <div class="dark:bg-primary-color ms-5 p-1 bg-yellow-200 rounded-full">
                     <NavThemeToggle />

@@ -1,16 +1,21 @@
 <script setup>
+import { linkNav } from '@/constant';
+import { useSideNavStatus } from '@/store';
+import { Link } from '@inertiajs/vue3';
+import { ref } from 'vue';
 import ApplicationLogo from './ApplicationLogo.vue';
 import Dropdown from './Dropdown.vue';
 import DropdownLink from './DropdownLink.vue';
 import NavLink from './NavLink.vue';
-import ResponsiveNavLink from './ResponsiveNavLink.vue';
-import { linkNav } from '@/constant';
-import { Link } from '@inertiajs/vue3';
-import { ref } from 'vue';
 import NavThemeToggle from './NavThemeToggle.vue';
+import ResponsiveNavLink from './ResponsiveNavLink.vue';
 
 const showingNavigationDropdown = ref(false);
 const darkNavbar = 'dark:bg-gray-800 dark:border-gray-700 bg-white border-b border-gray-100'
+
+const store = useSideNavStatus()
+
+const { toggle } = store
 </script>
 
 <template>
@@ -70,13 +75,15 @@ const darkNavbar = 'dark:bg-gray-800 dark:border-gray-700 bg-white border-b bord
                         class="dark:text-gray-500 dark:hover:text-gray-400 dark:hover:bg-gray-900 dark:focus:bg-gray-900 dark:focus:text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 inline-flex items-center justify-center p-2 text-gray-400 transition duration-150 ease-in-out rounded-md">
                         <svg class="w-6 h-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                             <path :class="{
-        hidden: showingNavigationDropdown,
-        'inline-flex': !showingNavigationDropdown,
-    }" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                                hidden: showingNavigationDropdown,
+                                'inline-flex': !showingNavigationDropdown,
+                            }" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16M4 18h16" />
                             <path :class="{
-        hidden: !showingNavigationDropdown,
-        'inline-flex': showingNavigationDropdown,
-    }" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                hidden: !showingNavigationDropdown,
+                                'inline-flex': showingNavigationDropdown,
+                            }" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M6 18L18 6M6 6l12 12" />
                         </svg>
                     </button>
                 </div>

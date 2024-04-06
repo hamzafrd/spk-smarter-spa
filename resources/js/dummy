@@ -1,0 +1,169 @@
+import { useForm } from "@inertiajs/vue3";
+import { Modal } from "flowbite";
+import { defineStore } from "pinia";
+
+export const useFormStore = defineStore("forms", {
+    state: () => ({
+        formKriteria: useForm({
+            nama: "",
+            rank: "",
+            errors: "",
+        }),
+        kriteriaList: {
+            type: Array,
+            default: null,
+        },
+        kriteria: {
+            nama: "",
+            rank: "",
+            bobot: "",
+        },
+    }),
+
+    actions: {
+        async submitKriteria() {
+            try {
+                const response = await axios.post(route("kriteria.store"), {
+                    nama: this.formKriteria.nama,
+                    rank: this.formKriteria.rank,
+                });
+
+                this.kriteriaList = response.data.updatedData;
+            } catch (error) {
+                if (error.response) {
+                    const errors = error.response.data.errors;
+                    this.formKriteria.errors = errors;
+                    Object.keys(errors).forEach((key) => {
+                        this.formKriteria.errors[key] = Array.isArray(
+                            errors[key],
+                        )
+                            ? errors[key][0]
+                            : errors[key]; // Display only the first error
+                    });
+                } else if (error.request) {
+                    console.error("No response received:", error.request);
+                } else {
+                    console.error("Error:", error.message);
+                }
+            }
+        },
+
+        showModal() {
+            new Modal(document.querySelector("#createProductModal")).show();
+        },
+        closeModal() {
+            new Modal(document.querySelector("#createProductModal")).hide();
+        },
+        submitForm() {
+            this.formKriteria.post(route("kriteria.store"), {
+                onSuccess: () => {
+                    this.formKriteria.reset("nama");
+                    this.formKriteria.reset("rank");
+                    this.closeModal();
+                },
+            });
+        },
+
+        async savePositions() {
+            try {
+                const response = await axios.put("/poskriteria", {
+                    items: this.kriteriaList,
+                    bobot: this.getBobot,
+                });
+                this.kriteriaList = response.data.updatedData;
+            } catch (error) {
+                console.error("Error saving positions:", error);
+            }
+        },
+
+        moveUp(index) {
+            const item = this.kriteriaList.splice(index, 1)[0];
+            this.kriteriaList.splice(index - 1, 0, item);
+        },
+        moveDown(index) {
+            const item = this.kriteriaList.splice(index, 1)[0];
+            this.kriteriaList.splice(index + 1, 0, item);
+        },
+
+        previewKriteria(item) {
+            this.kriteria = item;
+        },
+    },
+
+    getters: {
+        getBobot() {
+            const list = [];
+            const n = this.kriteriaList.length;
+            let valueNow = 0;
+            for (let i = 0; i < n; i++) {
+                valueNow += 1 / (n - i) / n;
+                list.push(valueNow.toFixed(2));
+            }
+
+            return list.reverse();
+        },
+
+        getListKriteria: (state) => state.kriteriaList,
+    },
+});
+export const useCounterStore = defineStore("counter", {
+    state: () => ({
+        count: 0,
+    }),
+
+    actions: {
+        increaseCount() {
+            this.count++;
+        },
+    },
+
+    getters: {
+        doubleCount: (state) => state.count * 2,
+        doublePlusOne() {
+            return this.doubleCount + 1;
+        },
+    },
+});
+
+export const useSideNavStatus = defineStore("sidenav", {
+    state: () => ({
+        status: true,
+    }),
+
+    actions: {
+        toggle() {
+            this.status = !this.status;
+        },
+    },
+
+    getters: {
+        isExtended: (state) => (!state.status ? "opacity-0" : "opacity-1"),
+    },
+});
+
+export const useThemeStore = defineStore("theme", {
+    state: () => ({
+        isThemeDark:
+            localStorage.theme === "dark" ||
+            (!("theme" in localStorage) &&
+                window.matchMedia("(prefers-color-scheme: dark)").matches),
+    }),
+
+    actions: {
+        toggleTheme() {
+            this.isThemeDark = !this.isThemeDark;
+
+            if (this.isThemeDark) {
+                localStorage.theme = "dark";
+                $("body").addClass("dark");
+            } else {
+                localStorage.theme = "light";
+                $("body").removeClass("dark");
+            }
+        },
+    },
+
+    getters: {
+        getTheme: (state) => state.isThemeDark,
+    },
+});

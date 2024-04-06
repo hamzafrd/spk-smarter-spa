@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('kriteria_id');
             $table->string('nama');
             $table->string('rank');
-            $table->string('bobot');
+            $table->string('bobot')->default(0);
             $table->timestamps();
 
             $table->foreign('kriteria_id')->references('id')->on('kriteria')->onDelete('cascade');

@@ -44,4 +44,12 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function kriteria()
+    {
+        // return $this->hasMany(Kriteria::class, 'user_id', 'id');
+
+        // Tidak perlu detail apabila penamaan sudah sesuai (namaModel_id), id
+        return $this->hasMany(Kriteria::class);
+    }
 }

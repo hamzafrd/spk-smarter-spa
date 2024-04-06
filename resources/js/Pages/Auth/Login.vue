@@ -1,10 +1,10 @@
 <script setup>
 import Checkbox from '@/Components/Checkbox.vue';
-import GuestLayout from '@/Layouts/GuestLayout.vue';
 import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
+import GuestLayout from '@/Layouts/GuestLayout.vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
 
 defineProps({
@@ -68,13 +68,13 @@ const submit = () => {
             </div>
 
             <div class="flex items-center justify-end mt-4">
-                <div class="flex justify-between flex-1">
+                <div class="flex justify-between flex-1 items-center ">
                     <Link v-if="canRegister" :href="route('register')"
-                        class="hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 text-sm text-gray-600 underline rounded-md">
+                        class="hover:text-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 text-sm text-gray-600 underline rounded-md">
                     Register
                     </Link>
                     <Link v-if="canResetPassword" :href="route('password.request')"
-                        class="hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 text-sm text-gray-600 underline rounded-md">
+                        class="hover:text-gray-300 text-end focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 text-sm text-gray-600 underline rounded-md">
                     Forgot your password?
                     </Link>
                 </div>

@@ -12,3 +12,4 @@ const store = useThemeStore()
         </div>
     </div>
 </template>
+resources/data/store

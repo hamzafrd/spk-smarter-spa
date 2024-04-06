@@ -1,16 +1,19 @@
 <script setup>
+import CrudTable from '@/Components/Crud/CrudB.vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { useCounterStore } from '@/store';
+import { useFormStore } from '@/store';
 import { Head } from '@inertiajs/vue3';
-import { storeToRefs } from 'pinia';
 
-const counterStore = useCounterStore();
+const props = defineProps({
+    kriteriaList: {
+        type: Array,
+        default: null
+    },
 
-// accesing action
-const { increaseCount } = counterStore
+})
+const store = useFormStore()
+store.kriteriaList = props.kriteriaList
 
-// accesing state/refs and getters/computed
-const { doubleCount, count } = storeToRefs(counterStore)
 </script>
 
 <template>
@@ -18,6 +21,7 @@ const { doubleCount, count } = storeToRefs(counterStore)
     <Head title="Kriteria" />
 
     <AuthenticatedLayout>
-        <h2 class="dark:text-gray-200 text-xl font-semibold leading-tight text-gray-800">Kriteria</h2>
+        <CrudTable />
     </AuthenticatedLayout>
 </template>
+resources/data/store
