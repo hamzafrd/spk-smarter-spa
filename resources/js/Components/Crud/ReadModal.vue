@@ -43,7 +43,7 @@ const { kriteria } = storeToRefs(store)
                 <div class="flex justify-between items-center">
                     <div class="flex items-center space-x-3 sm:space-x-4">
                         <button type="button" data-modal-target="readProductModal" data-modal-toggle="readProductModal"
-                            @click="toggleModal('updateProductModal', true)" class=" text-white inline-flex items-center bg-primary-700 hover:bg-primary-800
+                            @click="toggleModal('updateProductModal')" class=" text-white inline-flex items-center bg-primary-700 hover:bg-primary-800
                             focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5
                             py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700
                             dark:focus:ring-primary-800">
@@ -59,7 +59,7 @@ const { kriteria } = storeToRefs(store)
                         </button>
                     </div>
                     <button type="button" data-modal-target="readProductModal" data-modal-toggle="readProductModal"
-                        @click="toggleModal('deleteModal', true)" class=" inline-flex items-center text-white bg-red-600 hover:bg-red-700 focus:ring-4
+                        @click="toggleModal('deleteModal')" class=" inline-flex items-center text-white bg-red-600 hover:bg-red-700 focus:ring-4
                         focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center
                         dark:bg-red-500 dark:hover:bg-red-600 dark:focus:ring-red-900">
                         <svg aria-hidden="true" class="w-5 h-5 mr-1.5 -ml-1" fill="currentColor" viewbox="0 0 20 20"

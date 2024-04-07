@@ -53,11 +53,8 @@ class KriteriaController extends Controller
         try {
             $user = User::find(Auth::id());
 
-            $this->checkRanks($user, $postData);
-
-            // create kriteria
+            $this->updateRanks($user, $postData, true);
             $user->kriteria()->create($postData);
-
             $this->updateBobot($user);
 
             return to_route('kriteria.index');
@@ -90,18 +87,27 @@ class KriteriaController extends Controller
             'rank.value.max' => 'Nilai peringkat maximum :max.',
         ]);
 
+        $requestData = [
+            'nama' => $request->nama,
+            'rank' => [
+                'id' => $id,
+                'oldValue' => $request->rank['oldValue'],
+                'newValue' => $request->rank['value']
+            ],
+        ];
+
         $putData = [
             'nama' => $request->nama,
-            'rank' => $request->rank['value'],
+            'rank' => $request->rank['value']
         ];
+
+
 
         try {
             $user = User::find(Auth::id());
 
-            $this->checkRanks($user, $putData);
-            // update kriteria
+            $this->updateRanks($user, $requestData);
             $user->kriteria()->find($id)->update($putData);
-
             $this->updateBobot($user);
 
             return to_route('kriteria.index');
@@ -110,7 +116,48 @@ class KriteriaController extends Controller
         }
     }
 
+    public function updateRanks($user, $data, $isStore = false)
+    {
+        $kriteria = $user->kriteria()->get();
 
+        if ($isStore) {
+            $id = $kriteria->where('rank', '=', $data['rank'])->first();
+            if ($id) {
+                $rank = $kriteria->where('rank', '>=', $data['rank']);
+                foreach ($rank as $value) {
+                    $value->update(['rank' => ($value->rank + 1)]);
+                }
+            }
+            return;
+        }
+
+        if ($data['rank']['newValue'] == $data['rank']['oldValue']) return;
+        if ($data['rank']['newValue'] > $data['rank']['oldValue']) {
+            $rank = $kriteria->where('rank', '<=', $data['rank']['newValue'])->where('id', '!=', $data['rank']['id']);
+            foreach ($rank as $value) {
+                $value->update(['rank' => ($value->rank - 1)]);
+            }
+        } else {
+            $rank = $kriteria->where('rank', '>=', $data['rank']['newValue'])->where('id', '!=', $data['rank']['id']);;
+            foreach ($rank as $value) {
+                $value->update(['rank' => ($value->rank + 1)]);
+            }
+        }
+    }
+
+    public function updateBobot($user)
+    {
+        $kriteria = $user->kriteria()->orderBy('rank')->get();
+
+        // Update bobot masing" kriteria
+        $bobot = $this->getBobot(count($kriteria));
+        foreach ($kriteria as $index => $item) {
+            $item->update([
+                'bobot' => $bobot[$index],
+                'rank' => $index + 1
+            ]);
+        }
+    }
 
     /**
      * Remove the specified resource from storage.
@@ -157,33 +204,6 @@ class KriteriaController extends Controller
         }
 
         return array_reverse($list);
-    }
-
-    public function checkRanks($user, $data)
-    {
-        $kriteria = $user->kriteria()->get();
-
-        // Jika rank sudah ada, turunkan 1 rank
-        $isRankExist = $kriteria->where('rank', '==', $data['rank']);
-        if ($isRankExist->first()) {
-            $rank = $kriteria->where('rank', '>=', $data['rank']);
-            foreach ($rank as $value) {
-                $value->update(['rank' => ($value->rank + 1)]);
-            }
-        }
-    }
-    public function updateBobot($user)
-    {
-        $kriteria = $user->kriteria()->orderBy('rank')->get();
-
-        // Update bobot masing" kriteria
-        $bobot = $this->getBobot(count($kriteria));
-        foreach ($kriteria as $index => $item) {
-            $item->update([
-                'bobot' => $bobot[$index],
-                'rank' => $index + 1
-            ]);
-        }
     }
 
     /**

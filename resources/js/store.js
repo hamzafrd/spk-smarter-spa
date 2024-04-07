@@ -1,6 +1,6 @@
-import { useForm } from "@inertiajs/vue3";
+import { router, useForm } from "@inertiajs/vue3";
 import axios from "axios";
-import { Modal } from "flowbite";
+import { Dropdown, Modal } from "flowbite";
 import { defineStore } from "pinia";
 
 export const useFormStore = defineStore("forms", {
@@ -10,6 +10,7 @@ export const useFormStore = defineStore("forms", {
             rank: {
                 min: 1,
                 max: null,
+                oldValue: null,
                 value: null,
             },
         }),
@@ -39,8 +40,7 @@ export const useFormStore = defineStore("forms", {
     actions: {
         async loadList() {
             try {
-                const response = await axios.get(route("api.listkriteria"));
-                this.kriteriaList = response.data.updatedData;
+                router.get("/kriteria");
             } catch (error) {
                 console.log(error.response);
             }
@@ -58,13 +58,6 @@ export const useFormStore = defineStore("forms", {
             } catch (error) {
                 console.error("Error saving positions:", error);
             }
-        },
-
-        toggleModal(modalName, isShow) {
-            this.modalName != modalName ? (this.modalName = modalName) : null;
-            this.modalBase = this.getModal;
-            isShow ? this.modalBase.show() : this.modalBase.hide();
-            this.formKriteria.errors = "";
         },
 
         submitForm(params, maxValue) {
@@ -191,6 +184,15 @@ export const useFormStore = defineStore("forms", {
             this.kriteria = item;
             this.formKriteria.nama = this.kriteria.nama;
             this.formKriteria.rank.value = this.kriteria.rank;
+            this.formKriteria.rank.oldValue = this.kriteria.rank;
+        },
+        resetForm() {
+            this.formKriteria.reset();
+            this.formKriteria.errors = "";
+        },
+        toggleModal(modalName) {
+            this.modalName = modalName;
+            this.getModal.toggle();
         },
     },
 
