@@ -1,19 +1,15 @@
 <script setup>
-import CrudTable from '@/Components/Crud/CrudB.vue';
+import CrudTable from '@/Components/Crud/CrudTable.vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { useFormStore } from '@/store';
 import { Head } from '@inertiajs/vue3';
 
-const props = defineProps({
+defineProps({
     kriteriaList: {
         type: Array,
         default: null
     },
 
 })
-const store = useFormStore()
-store.kriteriaList = props.kriteriaList
-
 </script>
 
 <template>
@@ -21,7 +17,7 @@ store.kriteriaList = props.kriteriaList
     <Head title="Kriteria" />
 
     <AuthenticatedLayout>
-        <CrudTable />
+        <CrudTable :kriteria-list="kriteriaList" />
     </AuthenticatedLayout>
 </template>
 resources/data/store

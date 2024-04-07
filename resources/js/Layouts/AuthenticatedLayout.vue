@@ -6,14 +6,14 @@ import MasterLayout from './MasterLayout.vue';
 
 <template>
     <MasterLayout>
-        <div class="dark:bg-gray-900 min-h-screen bg-gray-100">
+        <div class="dark:bg-gray-900 min-h-screen bg-gray-100 flex flex-col lg:flex-row">
             <header class="lg:hidden dark:bg-gray-800 dark:border-gray-700  bg-white border-b border-gray-100">
                 <NavBarTop />
             </header>
-            <main class="dark:bg-gray-900 flex max-md:block bg-gray-100">
+            <main class="dark:bg-gray-900 flex-1 flex max-md:flex-col bg-gray-100">
                 <NavbarAside />
 
-                <div class="max-w-full flex-1 overflow-auto px-1">
+                <div class="flex-1 relative mx-2 my-1 max-lg:m-0 rounded-lg overflow-auto">
                     <slot />
                 </div>
             </main>

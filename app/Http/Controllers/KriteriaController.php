@@ -26,14 +26,28 @@ class KriteriaController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        $rules = [
             'nama' => 'required|max:255',
-            'rank' => 'required',
+            'rank.value' => [
+                'required',
+                'numeric',
+                'min:' . $request->rank['min'],
+                'max:' . $request->rank['max'],
+            ],
+        ];
+
+        $request->validate($rules, [
+            'nama' => 'Isi kriteria terlebih dahulu',
+            'rank.value.required' => 'Isi peringkat terlebih dahulu.',
+            'rank.value.numeric' => 'Nilai yang dimasukan harus berupa angka.',
+            'rank.value.min' => 'Nilai peringkat minimum adalah :min.',
+            'rank.value.max' => 'Nilai peringkat tidak boleh melebihi :max.',
         ]);
+
 
         $postData = [
             'nama' => $request->nama,
-            'rank' => $request->rank,
+            'rank' => $request->rank['value'],
         ];
 
         try {
@@ -58,14 +72,27 @@ class KriteriaController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $request->validate([
+        $rules = [
             'nama' => 'required|max:255',
-            'rank' => 'required',
+            'rank.value' => [
+                'required',
+                'numeric',
+                'min:' . $request->rank['min'],
+                'max:' . $request->rank['max'],
+            ],
+        ];
+
+        $request->validate($rules, [
+            'nama' => 'Isi kriteria terlebih dahulu',
+            'rank.value.required' => 'Isi peringkat terlebih dahulu.',
+            'rank.value.numeric' => 'Nilai yang dimasukan harus berupa angka.',
+            'rank.value.min' => 'Nilai peringkat minimum adalah :min.',
+            'rank.value.max' => 'Nilai peringkat maximum :max.',
         ]);
 
         $putData = [
             'nama' => $request->nama,
-            'rank' => $request->rank,
+            'rank' => $request->rank['value'],
         ];
 
         try {

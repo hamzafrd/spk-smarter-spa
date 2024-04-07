@@ -3,10 +3,16 @@ import { useFormStore } from '@/store';
 import { storeToRefs } from 'pinia';
 import InputError from '../InputError.vue';
 
-const store = useFormStore()
+defineProps({
+    kriteriaList: {
+        type: Array,
+        default: null
+    },
+})
 
-const { submitForm, toggleModal } = store
-const { formKriteria, kriteriaList } = storeToRefs(store)
+const storePinia = useFormStore()
+const { submitForm, toggleModal } = storePinia
+const { formKriteria } = storeToRefs(storePinia)
 
 </script>
 <template>
@@ -31,7 +37,7 @@ const { formKriteria, kriteriaList } = storeToRefs(store)
                         <span class="sr-only">Close modal</span>
                     </button>
                 </div>
-                <form @submit.prevent="submitForm('store')">
+                <form @submit.prevent="submitForm('store', kriteriaList.length + 1)">
                     <div class="grid gap-4 mb-4 sm:grid-cols-2">
                         <div>
                             <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama
@@ -45,12 +51,12 @@ const { formKriteria, kriteriaList } = storeToRefs(store)
                         <div>
                             <label for="brand"
                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Peringkat</label>
-                            <input type="number" name="brand" id="brand" min="1" :max="kriteriaList.length + 1"
+                            <input type="number" name="brand" id="brand"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                 :placeholder="'Masukan angka antara 1 s.d. ' + (kriteriaList.length + 1)"
-                                v-model="formKriteria.rank">
+                                v-model="formKriteria.rank.value">
 
-                            <InputError class="mt-2" :message="formKriteria.errors.rank" />
+                            <InputError class="mt-2" :message="formKriteria.errors['rank.value']" />
 
                         </div>
 

@@ -7,7 +7,11 @@ export const useFormStore = defineStore("forms", {
     state: () => ({
         formKriteria: useForm({
             nama: "",
-            rank: "",
+            rank: {
+                min: 1,
+                max: null,
+                value: null,
+            },
         }),
         kriteriaList: {
             type: Array,
@@ -20,14 +24,16 @@ export const useFormStore = defineStore("forms", {
             bobot: "",
         },
 
-        massEdit: true,
-        showBobot: false,
+        massEdit: false,
+        showBobot: true,
 
         modalName: "",
-        createKriteria: {
+        modalBase: {
             type: Modal,
             default: null,
         },
+
+        searchQuery: "",
     }),
 
     actions: {
@@ -47,6 +53,8 @@ export const useFormStore = defineStore("forms", {
                     bobot: this.getBobot,
                 });
                 this.kriteriaList = response.data.updatedData;
+                this.massEdit =
+                    response.status == 200 ? !this.massEdit : this.massEdit;
             } catch (error) {
                 console.error("Error saving positions:", error);
             }
@@ -54,29 +62,32 @@ export const useFormStore = defineStore("forms", {
 
         toggleModal(modalName, isShow) {
             this.modalName != modalName ? (this.modalName = modalName) : null;
-            this.createKriteria = this.getModal;
-            isShow ? this.createKriteria.show() : this.createKriteria.hide();
+            this.modalBase = this.getModal;
+            isShow ? this.modalBase.show() : this.modalBase.hide();
+            this.formKriteria.errors = "";
         },
 
-        submitForm(params) {
+        submitForm(params, maxValue) {
             switch (params) {
                 case "store":
+                    this.formKriteria.rank.max = maxValue;
                     this.formKriteria.post(route("kriteria.store"), {
                         onSuccess: () => {
                             this.formKriteria.nama = "";
-                            this.formKriteria.rank = "";
+                            this.formKriteria.rank.value = "";
                             this.loadList();
                             this.toggleModal("createProductModal");
                         },
                     });
                     break;
                 case "update":
+                    this.formKriteria.rank.max = maxValue;
                     this.formKriteria.put(
                         route("kriteria.update", this.kriteria.id),
                         {
                             onSuccess: () => {
                                 this.formKriteria.nama = "";
-                                this.formKriteria.rank = "";
+                                this.formKriteria.rank.value = "";
                                 this.loadList();
                                 this.toggleModal("updateProductModal");
                             },
@@ -179,7 +190,7 @@ export const useFormStore = defineStore("forms", {
         setKriteria(item) {
             this.kriteria = item;
             this.formKriteria.nama = this.kriteria.nama;
-            this.formKriteria.rank = this.kriteria.rank;
+            this.formKriteria.rank.value = this.kriteria.rank;
         },
     },
 
@@ -198,6 +209,13 @@ export const useFormStore = defineStore("forms", {
 
         getModal(state) {
             return new Modal(document.getElementById(state.modalName));
+        },
+
+        filteredList(state) {
+            const searchFiltered = state.searchQuery.trim().toLowerCase();
+            return state.kriteriaList.filter((value) => {
+                return value.nama.trim().toLowerCase().includes(searchFiltered);
+            });
         },
     },
 });
