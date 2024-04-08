@@ -2,7 +2,7 @@
 import { useFormStore } from '@/store';
 import { storeToRefs } from 'pinia';
 import SecondaryButton from '../SecondaryButton.vue';
-
+import SortArrow from '../SortArrow.vue';
 const store = defineProps({
     kriteriaList: {
         type: Array,
@@ -11,8 +11,8 @@ const store = defineProps({
 })
 
 const storePinia = useFormStore()
-const { setKriteria, updatePositions, toggleModal, moveListItem, loadList, resetForm } = storePinia
-const { massEdit, showBobot, kriteriaList, searchQuery, filteredList } = storeToRefs(storePinia)
+const { setKriteria, updatePositions, toggleModal, moveListItem, loadListSpa, resetForm, showkriteria, showSubKriteria } = storePinia
+const { massEdit, showBobot, kriteriaList, searchQuery, filteredList, sorted } = storeToRefs(storePinia)
 kriteriaList.value = store.kriteriaList
 
 const tableBase = 'px-1 py-3';
@@ -32,7 +32,7 @@ const tableHead = 'px-5 py-3';
             </p>
         </div>
 
-        <!-- Table Header -->
+        <!-- Header at table -->
         <div class="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
 
             <!-- Left (Search Bar) -->
@@ -71,7 +71,7 @@ const tableHead = 'px-5 py-3';
 
                     Tambah Kriteria
                 </button>
-                <button v-if="massEdit" @click="updatePositions()" type="button"
+                <button v-if="massEdit" @click="updatePositions(), massEdit = !massEdit" type="button"
                     class="p-2 flex items-center justify-center text-white bg-primary-700  hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg t:ext-sm tableBase dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800">
                     Save Posisi Kriteria
                 </button>
@@ -94,9 +94,11 @@ const tableHead = 'px-5 py-3';
                         <ul class="py-1 text-sm text-gray-700 dark:text-gray-200"
                             aria-labelledby="actionsDropdownButton">
                             <li>
-                                <a href="#" v-if="!massEdit" @click="massEdit = !massEdit, searchQuery = '', loadList()"
+                                <a href="#" v-if="!massEdit"
+                                    @click="massEdit = !massEdit, sorted = !sorted, searchQuery = '', loadListSpa()"
                                     class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
                                     Atur Posisi
+
                                 </a>
                                 <a href="#" :class="massEdit ? 'block' : 'hidden'" type="button"
                                     @click="toggleModal('simpanPosisiModal')"
@@ -130,31 +132,54 @@ const tableHead = 'px-5 py-3';
             </p>
         </div>
 
-        <!-- Table Content -->
+        <!-- Table -->
         <div v-if="kriteriaList.length"
             class="overflow-x-auto  lg:mx-4 lg:mb-4 lg:rounded-md border dark:border-gray-600 border-gray-300">
             <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                <thead
-                    class="text-xs text-gray-700 uppercase bg-gray-200 dark:bg-gray-700 dark:text-gray-400 child:text-center">
+                <thead class="text-xs text-gray-700 uppercase bg-gray-200 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
-                        <th scope="col" :class="tableHead">Kriteria</th>
-                        <th scope="col" :class="tableHead">Keterangan</th>
-                        <th scope="col" :class="tableHead">Peringkat</th>
-                        <th v-if="!massEdit && showBobot" scope="col" :class="tableHead">Bobot</th>
-                        <th scope="col" :class="tableHead">Sub Kriteria</th>
-                        <th scope="col" :class="tableHead">Aksi</th>
+                        <th v-if="!massEdit" scope="col" :class="tableHead">
+                            <div class="flex items-center justify-center">
+                                <SortArrow :nama="'Kriteria'" />
+                            </div>
+                        </th>
+                        <th scope="col" :class="tableHead">
+                            <div class="flex items-center justify-center">
+                                <SortArrow :nama="'Keterangan'" />
+                            </div>
+                        </th>
+                        <th scope="col" :class="tableHead">
+                            <div class="flex items-center justify-center">
+                                <SortArrow :nama="'Peringkat'" />
+                            </div>
+                        </th>
+                        <th v-if="!massEdit && showBobot" scope="col" :class="tableHead">
+                            <div class="flex items-center justify-center">
+                                <SortArrow :nama="'Bobot'" />
+                            </div>
+                        </th>
+                        <th v-if="!massEdit" scope="col" :class="tableHead">
+                            <div class="flex items-center justify-center text-center">
+                                Sub Kriteria
+                            </div>
+                        </th>
+                        <th scope="col" :class="tableHead">
+                            <div class="flex items-center justify-center">
+                                Aksi
+                            </div>
+                        </th>
                     </tr>
                 </thead>
                 <tbody class="child:text-center">
-                    <tr class="border-b dark:border-gray-700 " v-for="(item, index) in filteredList"
+                    <tr class="border-b dark:border-gray-700" v-for="(item, index) in filteredList"
                         :id="'kriteria' + index">
-                        <th scope=" row" :class="tableBase"
+                        <th v-if="!massEdit" scope=" row" :class="tableBase"
                             class="font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            {{ 'C' + (index + 1) }}</th>
+                            {{ 'C' + item.rank }}</th>
                         <td :class="tableBase">{{ item.nama }}</td>
                         <td :class="tableBase" class="rankKriteria">{{ item.rank }}</td>
                         <td v-if="!massEdit && showBobot" :class="tableBase">{{ item.bobot }}</td>
-                        <td :class="tableBase">
+                        <td v-if="!massEdit" :class="tableBase">
                             <a href="#" class="flex items-center justify-center text-primary-600 dark:text-primary-500">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 20 20"
                                     fill="currentColor" aria-hidden="true">
@@ -262,6 +287,10 @@ const tableHead = 'px-5 py-3';
 
         <div v-else class="dark:text-gray-500 text-heading4-medium flex-1 flex items-center justify-center">
             <p>Masukan Data Kriteria dengan cara menekan tombol + Tambah Kriteria</p>
+        </div>
+        <div v-if="!filteredList.length"
+            class="dark:text-gray-500 text-heading4-medium flex-1 flex items-center justify-center">
+            <p>Data tidak Ditemukan</p>
         </div>
     </section>
 </template>

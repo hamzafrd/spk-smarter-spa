@@ -1,5 +1,5 @@
 <script setup>
-import CrudTable from '@/Components/Crud/CrudTable.vue';
+import MasterCrudTable from '@/Components/Crud/MasterCrudTable.vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
 
@@ -17,7 +17,6 @@ defineProps({
     <Head title="Kriteria" />
 
     <AuthenticatedLayout>
-        <CrudTable :kriteria-list="kriteriaList" />
+        <MasterCrudTable :kriteria-list="kriteriaList" />
     </AuthenticatedLayout>
 </template>
-resources/data/store

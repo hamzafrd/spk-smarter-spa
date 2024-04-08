@@ -26,7 +26,9 @@ export const useFormStore = defineStore("forms", {
         },
 
         massEdit: false,
-        showBobot: true,
+        showBobot: false,
+        sorted: false,
+        sortValue: null,
 
         modalName: "",
         modalBase: {
@@ -38,9 +40,18 @@ export const useFormStore = defineStore("forms", {
     }),
 
     actions: {
-        async loadList() {
+        loadList() {
             try {
                 router.get("/kriteria");
+            } catch (error) {
+                console.log(error.response);
+            }
+        },
+
+        async loadListSpa() {
+            try {
+                const response = await axios.get(route("api.listkriteria"));
+                this.kriteriaList = response.data.updatedData;
             } catch (error) {
                 console.log(error.response);
             }
@@ -53,8 +64,6 @@ export const useFormStore = defineStore("forms", {
                     bobot: this.getBobot,
                 });
                 this.kriteriaList = response.data.updatedData;
-                this.massEdit =
-                    response.status == 200 ? !this.massEdit : this.massEdit;
             } catch (error) {
                 console.error("Error saving positions:", error);
             }
@@ -194,6 +203,12 @@ export const useFormStore = defineStore("forms", {
             this.modalName = modalName;
             this.getModal.toggle();
         },
+
+        sortList(params) {
+            const valueName = params == "keterangan" ? "nama" : "rank";
+            this.sortValue = valueName;
+            this.sorted = !this.sorted;
+        },
     },
 
     getters: {
@@ -214,10 +229,30 @@ export const useFormStore = defineStore("forms", {
         },
 
         filteredList(state) {
+            let filteredList = [...state.kriteriaList];
+
+            if (state.sorted) {
+                filteredList = filteredList.sort((a, b) => {
+                    const valueA = a[state.sortValue];
+                    const valueB = b[state.sortValue];
+
+                    if (state.sortValue == "nama") {
+                        valueA.trim().toLowerCase();
+                        valueB.trim().toLowerCase();
+
+                        return valueA > valueB ? -1 : valueA < valueB ? 1 : 0;
+                    } else {
+                        return valueB - valueA;
+                    }
+                });
+            }
+
             const searchFiltered = state.searchQuery.trim().toLowerCase();
-            return state.kriteriaList.filter((value) => {
+            filteredList = filteredList.filter((value) => {
                 return value.nama.trim().toLowerCase().includes(searchFiltered);
             });
+
+            return filteredList;
         },
     },
 });
