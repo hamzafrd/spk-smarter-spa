@@ -230,19 +230,12 @@ export const useFormStore = defineStore("forms", {
 
         filteredList(state) {
             let filteredList = [...state.kriteriaList];
-
             if (state.sorted) {
                 filteredList = filteredList.sort((a, b) => {
-                    const valueA = a[state.sortValue];
-                    const valueB = b[state.sortValue];
-
                     if (state.sortValue == "nama") {
-                        valueA.trim().toLowerCase();
-                        valueB.trim().toLowerCase();
-
-                        return valueA > valueB ? -1 : valueA < valueB ? 1 : 0;
+                        return a.nama < b.nama ? -1 : a.nama > b.nama ? 1 : 0;
                     } else {
-                        return valueB - valueA;
+                        return b.rank - a.rank;
                     }
                 });
             }
