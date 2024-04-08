@@ -95,7 +95,7 @@ const tableHead = 'px-5 py-3';
                             aria-labelledby="actionsDropdownButton">
                             <li>
                                 <a href="#" v-if="!massEdit"
-                                    @click="massEdit = !massEdit, sorted = !sorted, searchQuery = '', loadListSpa()"
+                                    @click="massEdit = !massEdit, sorted ? sorted = !sorted : null, searchQuery = '', loadListSpa()"
                                     class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
                                     Atur Posisi
 
