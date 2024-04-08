@@ -10,12 +10,12 @@ const store = defineProps({
 })
 
 const storePinia = useFormStore();
-const { } = storeToRefs(storePinia)
+const { massEdit } = storeToRefs(storePinia)
 const { sortList } = storePinia
 </script>
 <template>
     {{ nama }}
-    <a href="#" @click="sortList(nama.toLocaleLowerCase())">
+    <a v-if="!massEdit" href="#" @click="sortList(nama.toLocaleLowerCase())">
         <svg class="w-3 h-3 ms-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
             viewBox="0 0 24 24">
             <path
