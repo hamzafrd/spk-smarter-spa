@@ -10,10 +10,10 @@ import MasterLayout from './MasterLayout.vue';
             <header class="lg:hidden dark:bg-gray-800 dark:border-gray-700  bg-white border-b border-gray-100">
                 <NavBarTop />
             </header>
-            <main class="dark:bg-gray-900 flex-1 flex max-md:flex-col bg-gray-100">
+            <main class="flex-1 flex max-md:flex-col dark:bg-gray-900 bg-slate-200">
                 <NavbarAside />
 
-                <div class="flex-1 relative mx-2 my-1 max-lg:m-0 rounded-lg overflow-auto">
+                <div class="flex-1 relative mx-2 my-1 max-lg:m-0 overflow-auto">
                     <slot />
                 </div>
             </main>

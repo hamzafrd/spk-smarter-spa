@@ -2,7 +2,7 @@ export const linkNav = [
     {
         imgURL: ["img/home-dark.svg", "img/home.svg"],
         route: "dashboard.index",
-        label: "Dashboard",
+        label: "Home",
     },
     {
         imgURL: ["img/kriteria-dark.svg", "img/kriteria.svg"],

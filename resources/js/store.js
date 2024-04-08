@@ -150,7 +150,7 @@ export const useFormStore = defineStore("forms", {
             const delay = 200;
 
             const toggleClass = (el) =>
-                el.classList.toggle("child:bg-primary-700/50");
+                el.classList.toggle("bg-primary-700/50");
 
             toggleClass(currentEl);
 
