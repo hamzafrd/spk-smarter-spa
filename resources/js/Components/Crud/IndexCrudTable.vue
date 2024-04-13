@@ -18,7 +18,7 @@ const props = defineProps({
 const store = useFormStore();
 const { updatePositions, toggleModal, loadListSpa, resetForm, handleSearch } =
   store;
-const { massEdit, showBobot, searchQuery, sorted } = storeToRefs(store);
+const { massEdit, showBobot, searchQuery, currSort } = storeToRefs(store);
 </script>
 <template lang="html">
   <CreateModal :list="list" />
@@ -163,8 +163,8 @@ const { massEdit, showBobot, searchQuery, sorted } = storeToRefs(store);
                   v-if="!massEdit"
                   @click="
                     (massEdit = !massEdit),
-                      sorted ? (sorted = !sorted) : null,
-                      (searchQuery = ''),
+                      searchQuery.trim(),
+                      (currSort = 0),
                       loadListSpa()
                   "
                   class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
