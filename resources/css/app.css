@@ -16,7 +16,7 @@
     @apply bg-secondary-color w-[0.2em] h-[0.2em] opacity-50 z-[44] transition-[0.3s] absolute left-[calc(70%_-_0.2em)] rounded-[150em] scale-[0.7] top-[calc(50%)] after:content-[""] after:h-[0.3em] after:w-[0.3em] after:top-[calc(50%_-_0.3em)] after:rounded-[inherit] after:left-[calc(100%_+_0.3em/2)] before:content-[""] before:h-[0.4em] before:w-[0.4em] before:bg-inherit before:absolute before:rounded-[inherit] before:left-[calc(100%)] before:top-[calc(100%)];
   }
   .dot:after {
-    @apply absolute dark:bg-white bg-secondary-color;
+    @apply absolute dark:bg-gray-50 bg-secondary-color;
   }
   .lightmode .theme__toggler-container {
     @apply bg-slate-200 border-inherit border-solid;
@@ -29,5 +29,22 @@
   }
   .lightmode .theme__toggler-container .dot {
     @apply bg-[#959505];
+  }
+
+  .bg-content {
+    @apply bg-gray-50 dark:bg-gray-800 lg:border border-gray-300 dark:border-gray-700 lg:rounded-lg shadow-sm;
+  }
+
+  .table-container {
+    @apply overflow-x-auto rounded-b-lg border dark:border-gray-600 border-gray-300;
+  }
+  .table {
+    @apply w-full text-center text-gray-500 dark:text-gray-400;
+  }
+  .t-head {
+    @apply text-gray-700 uppercase bg-gray-200 dark:bg-gray-700 dark:text-gray-400;
+  }
+  .t-row {
+    @apply border-b dark:border-gray-700;
   }
 }

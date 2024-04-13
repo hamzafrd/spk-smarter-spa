@@ -1,5 +1,7 @@
 <script setup>
-defineProps({
+import { Link } from '@inertiajs/vue3';
+
+const props = defineProps({
   label: {
     type: String,
     default: '',
@@ -9,19 +11,38 @@ defineProps({
     default: 0,
   },
 });
+const label = props.label.replace(/\s+/g, '').toLowerCase();
+const imgLabel =
+  label == 'subkriteria' ? 'kriteria_sub' : label == 'hasil' ? 'result' : label;
+
+const imgDark = `img/${imgLabel}-dark.svg`;
+const imgLight = `img/${imgLabel}.svg`;
+const link = `${label == 'hasil' ? 'hasil-smarter' : label}.index`;
 </script>
 <template>
-  <a
-    href="#"
-    class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
+  <Link
+    :href="route(link)"
+    class="group/card block max-w-sm p-6 bg-gray-50 border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
   >
-    <h5
-      class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"
-    >
-      {{ length }}
-    </h5>
-    <p class="font-normal text-gray-700 dark:text-gray-400">
-      {{ label }}
+    <div class="flex justify-between">
+      <h5
+        class="mb-2 text-5xl font-bold tracking-tight text-gray-900 dark:text-white"
+      >
+        {{ length }}
+      </h5>
+      <img
+        :src="imgDark"
+        :alt="label"
+        class="w-14 h-14 opacity-50 hidden dark:block group-hover/card:opacity-100 group-focus/card:opacity-100"
+      />
+      <img
+        :src="imgLight"
+        :alt="label"
+        class="w-14 h-14 opacity-50 dark:hidden group-hover/card:opacity-100 group-focus/card:opacity-10"
+      />
+    </div>
+    <p class="font-norma text-start text-lg text-gray-700 dark:text-gray-400">
+      {{ props.label }}
     </p>
-  </a>
+  </Link>
 </template>
