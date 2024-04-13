@@ -70,9 +70,12 @@ store.kriteriaList = props.kriteriaList;
               <!-- SubKriteria -->
               <TData v-if="!massEdit">
                 <a
-                  @click="setSubkriteria(item.subkriteria), setKriteria(item)"
+                  @click="
+                    setSubkriteria(item.subkriteria),
+                      setKriteria(item),
+                      toggleModal('sub-kriteria-modal')
+                  "
                   data-modal-target="sub-kriteria-modal"
-                  data-modal-toggle="sub-kriteria-modal"
                   class="flex items-center justify-center text-primary-600 dark:text-primary-500 cursor-pointer"
                 >
                   <svg

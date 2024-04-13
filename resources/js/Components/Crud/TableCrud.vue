@@ -9,7 +9,7 @@ defineProps({
   label: null,
   list: {
     type: Array,
-    default: null,
+    default: [],
   },
   query: {
     type: String,
