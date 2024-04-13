@@ -30,7 +30,7 @@ const { subKriteriaList, kriteria } = storeToRefs(store);
           </h3>
           <button
             type="button"
-            class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+            class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
             data-modal-hide="sub-kriteria-modal"
           >
             <svg
@@ -66,7 +66,7 @@ const { subKriteriaList, kriteria } = storeToRefs(store);
             <tr
               v-if="subKriteriaList.length > 0"
               v-for="(item, index) in store.subKriteriaList"
-              class="border-b dark:border-gray-700"
+              class="t-row"
               :id="'kriteria' + index"
             >
               <TData :label="'SK' + (index + 1)" />

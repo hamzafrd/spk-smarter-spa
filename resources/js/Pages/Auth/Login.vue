@@ -36,7 +36,7 @@ const submit = () => {
   <GuestLayout>
     <Head title="Log in" />
 
-    <div v-if="status" class="mb-4 text-sm font-medium text-green-600">
+    <div v-if="status" class="mb-4 font-medium text-green-600">
       {{ status }}
     </div>
 
@@ -75,9 +75,7 @@ const submit = () => {
       <div class="block mt-4">
         <label class="flex items-center">
           <Checkbox name="remember" v-model:checked="form.remember" />
-          <span class="ms-2 dark:text-gray-400 text-sm text-gray-600"
-            >Remember me</span
-          >
+          <span class="ms-2 dark:text-gray-400 text-gray-600">Remember me</span>
         </label>
       </div>
 
@@ -86,14 +84,14 @@ const submit = () => {
           <Link
             v-if="canRegister"
             :href="route('register')"
-            class="hover:text-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 text-sm text-gray-600 underline rounded-md"
+            class="hover:text-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 text-gray-600 underline rounded-md"
           >
             Register
           </Link>
           <Link
             v-if="canResetPassword"
             :href="route('password.request')"
-            class="hover:text-gray-300 text-end focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 text-sm text-gray-600 underline rounded-md"
+            class="hover:text-gray-300 text-end focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 text-gray-600 underline rounded-md"
           >
             Forgot your password?
           </Link>

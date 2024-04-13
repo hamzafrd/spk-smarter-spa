@@ -18,7 +18,7 @@ const { kriteria } = storeToRefs(store);
     <div class="relative p-4 w-full max-w-xl max-h-full">
       <!-- Modal content -->
       <div
-        class="relative p-4 bg-white rounded-lg shadow dark:bg-gray-800 sm:p-5"
+        class="relative p-4 bg-gray-50 rounded-lg shadow dark:bg-gray-800 sm:p-5"
       >
         <!-- Modal header -->
         <div class="flex justify-between mb-4 rounded-t sm:mb-5">
@@ -31,7 +31,7 @@ const { kriteria } = storeToRefs(store);
           <div>
             <button
               type="button"
-              class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 inline-flex dark:hover:bg-gray-600 dark:hover:text-white"
+              class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg p-1.5 inline-flex dark:hover:bg-gray-600 dark:hover:text-white"
               data-modal-toggle="readProductModal"
             >
               <svg
@@ -72,7 +72,7 @@ const { kriteria } = storeToRefs(store);
               data-modal-target="readProductModal"
               data-modal-toggle="readProductModal"
               @click="toggleModal('updateProductModal')"
-              class="text-white inline-flex items-center bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+              class="text-white inline-flex items-center bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
             >
               <svg
                 aria-hidden="true"
@@ -98,7 +98,7 @@ const { kriteria } = storeToRefs(store);
             data-modal-target="readProductModal"
             data-modal-toggle="readProductModal"
             @click="toggleModal('deleteModal')"
-            class="inline-flex items-center text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-500 dark:hover:bg-red-600 dark:focus:ring-red-900"
+            class="inline-flex items-center text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg px-5 py-2.5 text-center dark:bg-red-500 dark:hover:bg-red-600 dark:focus:ring-red-900"
           >
             <svg
               aria-hidden="true"

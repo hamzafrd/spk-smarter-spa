@@ -12,7 +12,7 @@ import ResponsiveNavLink from './ResponsiveNavLink.vue';
 
 const showingNavigationDropdown = ref(false);
 const darkNavbar =
-  'dark:bg-gray-800 dark:border-gray-700 bg-white border-b border-gray-100';
+  'dark:bg-gray-800 dark:border-gray-700 bg-gray-50 border-b border-gray-100';
 
 const store = useSideNavStatus();
 
@@ -46,7 +46,7 @@ const { toggle } = store;
                   <span class="inline-flex rounded-md">
                     <button
                       type="button"
-                      class="dark:text-gray-400 dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none inline-flex items-center px-3 py-2 text-sm font-medium leading-4 text-gray-500 transition duration-150 ease-in-out bg-white border border-transparent rounded-md"
+                      class="dark:text-gray-400 dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none inline-flex items-center px-3 py-2 font-medium leading-4 text-gray-500 transition duration-150 ease-in-out bg-gray-50 border border-transparent rounded-md"
                     >
                       {{ $page.props.auth.user.name }}
 
@@ -147,7 +147,7 @@ const { toggle } = store;
         <div class="dark:text-gray-200 text-base font-medium text-gray-800">
           {{ $page.props.auth.user.name }}
         </div>
-        <div class="text-sm font-medium text-gray-500">
+        <div class="font-medium text-gray-500">
           {{ $page.props.auth.user.email }}
         </div>
       </div>

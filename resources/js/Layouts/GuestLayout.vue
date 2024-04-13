@@ -26,7 +26,7 @@ import NavThemeToggle from '@/Components/NavThemeToggle.vue';
       </div>
 
       <div
-        class="sm:max-w-md dark:bg-gray-800 sm:rounded-lg w-full px-6 py-4 mt-6 overflow-hidden bg-white shadow-md"
+        class="sm:max-w-md dark:bg-gray-800 sm:rounded-lg w-full px-6 py-4 mt-6 overflow-hidden bg-gray-50 shadow-md"
       >
         <slot />
       </div>

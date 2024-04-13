@@ -22,8 +22,8 @@ const props = defineProps({
 
 const classes = computed(() =>
   props.active
-    ? 'flex items-center gap-2 px-6 max-md:px-4 pb-2 py-2.5 border-b-2  border-primary-400 dark:border-primary-600 text-sm font-medium leading-5 text-gray-900 dark:text-gray-100 focus:outline-none focus:border-primary-700 transition duration-150 ease-in-out'
-    : 'flex items-center gap-2 px-6 max-md:px-4 pb-2 py-2.5 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-primary-300 dark:hover:primary-gray-700 focus:outline-none focus:text-gray-700 dark:focus:text-gray-300 focus:border-gray-300 dark:focus:border-gray-700 transition duration-150 ease-in-out'
+    ? 'flex items-center gap-2 px-6 max-md:px-4 pb-2 py-2.5 border-b-2  border-primary-400 dark:border-primary-600  font-medium leading-5 text-gray-900 dark:text-gray-100 focus:outline-none focus:border-primary-700 transition duration-150 ease-in-out'
+    : 'group/link flex items-center gap-2 px-6 max-md:px-4 pb-2 py-2.5 border-b-2 border-transparent  font-medium leading-5 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-primary-300 dark:hover:primary-gray-700 focus:outline-none focus:text-gray-700 dark:focus:text-gray-300 focus:border-gray-300 dark:focus:border-gray-700 transition duration-150 ease-in-out'
 );
 </script>
 
@@ -41,6 +41,11 @@ const classes = computed(() =>
       :src="props.img[1]"
       :alt="'img-' + props.label"
       :id="props.label"
+      :class="
+        !props.active
+          ? 'opacity-50 group-hover/link:opacity-80 group-focus/link:opacity-80'
+          : null
+      "
       class="dark:hidden"
     />
     {{ label }}

@@ -87,7 +87,7 @@ function handleImageError() {
             <a
               href="https://laravel.com/docs"
               id="docs-card"
-              class="flex flex-col items-start gap-6 overflow-hidden rounded-lg bg-white p-6 shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] ring-1 ring-white/[0.05] transition duration-300 hover:text-black/70 hover:ring-black/20 focus:outline-none focus-visible:ring-[#FF2D20] md:row-span-3 lg:p-10 lg:pb-10 dark:bg-zinc-900 dark:ring-zinc-800 dark:hover:text-white/70 dark:hover:ring-zinc-700 dark:focus-visible:ring-[#FF2D20]"
+              class="flex flex-col items-start gap-6 overflow-hidden rounded-lg bg-gray-50 p-6 shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] ring-1 ring-white/[0.05] transition duration-300 hover:text-black/70 hover:ring-black/20 focus:outline-none focus-visible:ring-[#FF2D20] md:row-span-3 lg:p-10 lg:pb-10 dark:bg-zinc-900 dark:ring-zinc-800 dark:hover:text-white/70 dark:hover:ring-zinc-700 dark:focus-visible:ring-[#FF2D20]"
             >
               <div
                 id="screenshot-container"
@@ -141,7 +141,7 @@ function handleImageError() {
                       Documentation
                     </h2>
 
-                    <p class="text-sm/relaxed mt-4">
+                    <p class="/relaxed mt-4">
                       Laravel has wonderful documentation covering every aspect
                       of the framework. Whether you are a newcomer or have prior
                       experience with Laravel, we recommend reading our
@@ -168,7 +168,7 @@ function handleImageError() {
 
             <a
               href="https://laracasts.com"
-              class="flex items-start gap-4 rounded-lg bg-white p-6 shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] ring-1 ring-white/[0.05] transition duration-300 hover:text-black/70 hover:ring-black/20 focus:outline-none focus-visible:ring-[#FF2D20] lg:pb-10 dark:bg-zinc-900 dark:ring-zinc-800 dark:hover:text-white/70 dark:hover:ring-zinc-700 dark:focus-visible:ring-[#FF2D20]"
+              class="flex items-start gap-4 rounded-lg bg-gray-50 p-6 shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] ring-1 ring-white/[0.05] transition duration-300 hover:text-black/70 hover:ring-black/20 focus:outline-none focus-visible:ring-[#FF2D20] lg:pb-10 dark:bg-zinc-900 dark:ring-zinc-800 dark:hover:text-white/70 dark:hover:ring-zinc-700 dark:focus-visible:ring-[#FF2D20]"
             >
               <div
                 class="flex size-12 shrink-0 items-center justify-center rounded-full bg-[#FF2D20]/10 sm:size-16"
@@ -192,7 +192,7 @@ function handleImageError() {
                   Laracasts
                 </h2>
 
-                <p class="text-sm/relaxed mt-4">
+                <p class="/relaxed mt-4">
                   Laracasts offers thousands of video tutorials on Laravel, PHP,
                   and JavaScript development. Check them out, see for yourself,
                   and massively level up your development skills in the process.
@@ -216,7 +216,7 @@ function handleImageError() {
 
             <a
               href="https://laravel-news.com"
-              class="flex items-start gap-4 rounded-lg bg-white p-6 shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] ring-1 ring-white/[0.05] transition duration-300 hover:text-black/70 hover:ring-black/20 focus:outline-none focus-visible:ring-[#FF2D20] lg:pb-10 dark:bg-zinc-900 dark:ring-zinc-800 dark:hover:text-white/70 dark:hover:ring-zinc-700 dark:focus-visible:ring-[#FF2D20]"
+              class="flex items-start gap-4 rounded-lg bg-gray-50 p-6 shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] ring-1 ring-white/[0.05] transition duration-300 hover:text-black/70 hover:ring-black/20 focus:outline-none focus-visible:ring-[#FF2D20] lg:pb-10 dark:bg-zinc-900 dark:ring-zinc-800 dark:hover:text-white/70 dark:hover:ring-zinc-700 dark:focus-visible:ring-[#FF2D20]"
             >
               <div
                 class="flex size-12 shrink-0 items-center justify-center rounded-full bg-[#FF2D20]/10 sm:size-16"
@@ -246,7 +246,7 @@ function handleImageError() {
                   Laravel News
                 </h2>
 
-                <p class="text-sm/relaxed mt-4">
+                <p class="/relaxed mt-4">
                   Laravel News is a community driven portal and newsletter
                   aggregating all of the latest and most important news in the
                   Laravel ecosystem, including new package releases and
@@ -270,7 +270,7 @@ function handleImageError() {
             </a>
 
             <div
-              class="flex items-start gap-4 rounded-lg bg-white p-6 shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] ring-1 ring-white/[0.05] lg:pb-10 dark:bg-zinc-900 dark:ring-zinc-800"
+              class="flex items-start gap-4 rounded-lg bg-gray-50 p-6 shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] ring-1 ring-white/[0.05] lg:pb-10 dark:bg-zinc-900 dark:ring-zinc-800"
             >
               <div
                 class="flex size-12 shrink-0 items-center justify-center rounded-full bg-[#FF2D20]/10 sm:size-16"
@@ -294,7 +294,7 @@ function handleImageError() {
                   Vibrant Ecosystem
                 </h2>
 
-                <p class="text-sm/relaxed mt-4">
+                <p class="/relaxed mt-4">
                   Laravel's robust library of first-party tools and libraries,
                   such as
                   <a
@@ -360,7 +360,7 @@ function handleImageError() {
           </div>
         </main>
 
-        <footer class="dark:text-white/70 py-16 text-sm text-center text-black">
+        <footer class="dark:text-white/70 py-16 text-center text-black">
           Laravel v{{ laravelVersion }} (PHP v{{ phpVersion }})
         </footer>
       </div>

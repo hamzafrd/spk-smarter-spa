@@ -17,7 +17,7 @@ const { status, isExtended } = storeToRefs(store);
 
 <template>
   <aside
-    class="w-52 hidden lg:flex shrink-0 dark:bg-gray-800 dark:border-r-dark-4 sticky top-0 left-0 z-20 flex-col justify-between h-screen bg-white border-r-1 shadow shadow-gray-400 dark:shadow-gray-500"
+    class="w-52 hidden lg:flex shrink-0 dark:bg-gray-800 dark:border-r-dark-4 sticky top-0 left-0 z-20 flex-col justify-between h-screen bg-gray-50 border-r-1 shadow shadow-gray-400 dark:shadow-gray-500"
     :class="!status ? 'block w-[0]' : ''"
   >
     <!-- Borger -->
@@ -99,7 +99,7 @@ const { status, isExtended } = storeToRefs(store);
                 <span class="inline-flex rounded-md">
                   <button
                     type="button"
-                    class="dark:text-gray-400 dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none inline-flex items-center px-3 py-2 text-sm font-medium leading-4 text-gray-500 transition duration-150 ease-in-out bg-white border border-transparent rounded-md"
+                    class="dark:text-gray-400 dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none inline-flex items-center px-3 py-2 font-medium leading-4 text-gray-500 transition duration-150 ease-in-out bg-gray-50 border border-transparent rounded-md"
                   >
                     Hello, {{ $page.props.auth.user.name }}
 

@@ -55,7 +55,7 @@ store.kriteriaList = props.kriteriaList;
           <template #tbody-content>
             <tr
               v-for="(item, index) in filteredList"
-              class="border-b dark:border-gray-700"
+              class="t-row"
               :id="'kriteria' + index"
             >
               <TData v-if="!massEdit" :label="'K' + item.rank" />
@@ -146,7 +146,7 @@ store.kriteriaList = props.kriteriaList;
                   :id="item.nama + item.id"
                   :data-dropdown-toggle="item.nama + item.id + 'dropdown'"
                   :class="massEdit ? 'hidden' : 'block'"
-                  class="inline-flex items-center text-sm font-medium hover:bg-gray-100 dark:hover:bg-gray-700 p-1.5 dark:hover-bg-gray-800 text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100"
+                  class="inline-flex items-center font-medium hover:bg-gray-100 dark:hover:bg-gray-700 p-1.5 dark:hover-bg-gray-800 text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100"
                   type="button"
                 >
                   <svg
@@ -163,12 +163,9 @@ store.kriteriaList = props.kriteriaList;
                 </button>
                 <div
                   :id="item.nama + item.id + 'dropdown'"
-                  class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600 border border-gray-200 dark:border-gray-700"
+                  class="hidden z-10 w-44 bg-gray-50 rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600 border border-gray-200 dark:border-gray-700"
                 >
-                  <ul
-                    class="py-1 text-sm"
-                    :aria-labelledby="item.nama + item.id"
-                  >
+                  <ul class="py-1" :aria-labelledby="item.nama + item.id">
                     <li>
                       <button
                         type="button"

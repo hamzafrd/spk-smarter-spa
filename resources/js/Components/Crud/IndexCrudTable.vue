@@ -24,9 +24,7 @@ const { massEdit, showBobot, searchQuery, currSort } = storeToRefs(store);
   <CreateModal :list="list" />
   <DeleteAllModal />
 
-  <div
-    class="h-full flex flex-col bg-white dark:bg-gray-800 lg:border border-gray-300 dark:border-gray-700 lg:rounded-lg shadow-sm antialiased relative"
-  >
+  <div class="h-full flex flex-col antialiased relative">
     <!-- Header -->
     <div
       class="flex justify-start flex-col lg:items-end md:flex-row md:justify-between dark:text-white mx-4 mt-4 lg:m-4"
@@ -70,7 +68,7 @@ const { massEdit, showBobot, searchQuery, currSort } = storeToRefs(store);
               v-model="searchQuery"
               @input="handleSearch()"
               :disabled="massEdit"
-              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+              class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
               :placeholder="
                 massEdit
                   ? 'Kembali ke awal untuk melakukan pencarian'
@@ -131,7 +129,7 @@ const { massEdit, showBobot, searchQuery, currSort } = storeToRefs(store);
           <button
             id="actionsDropdownButton"
             data-dropdown-toggle="actionsDropdown"
-            class="w-full md:w-auto flex items-center justify-center py-2 px-4 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+            class="w-full md:w-auto flex items-center justify-center py-2 px-4 font-medium text-gray-900 focus:outline-none bg-gray-50 rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
             type="button"
           >
             <svg
@@ -151,10 +149,10 @@ const { massEdit, showBobot, searchQuery, currSort } = storeToRefs(store);
           </button>
           <div
             id="actionsDropdown"
-            class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
+            class="hidden z-10 w-44 bg-gray-50 rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
           >
             <ul
-              class="py-1 text-sm text-gray-700 dark:text-gray-200"
+              class="py-1 text-gray-700 dark:text-gray-200"
               aria-labelledby="actionsDropdownButton"
             >
               <li>
@@ -183,10 +181,9 @@ const { massEdit, showBobot, searchQuery, currSort } = storeToRefs(store);
               </li>
               <li>
                 <a
-                  href="#"
                   v-if="!massEdit"
                   @click="showBobot = !showBobot"
-                  class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                  class="cursor-pointer block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                 >
                   <template v-if="!showBobot"> Tampilkan Bobot </template>
                   <template v-else> Sembunyikan Bobot </template>
@@ -195,12 +192,11 @@ const { massEdit, showBobot, searchQuery, currSort } = storeToRefs(store);
             </ul>
             <div class="py-1">
               <a
-                href="#"
                 data-modal-target="deleteAllModal"
                 @click="toggleModal('deleteAllModal')"
-                class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                >Delete all</a
-              >
+                class="cursor-pointer block py-2 px-4 text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                >Delete all
+              </a>
             </div>
           </div>
         </div>

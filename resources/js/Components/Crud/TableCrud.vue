@@ -20,18 +20,12 @@ defineProps({
 });
 </script>
 <template>
-  <div
-    v-if="list.length > 0"
-    class="overflow-x-auto rounded-b-lg border dark:border-gray-600 border-gray-300"
-    :class="class"
-  >
-    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-      <thead
-        class="text-xs text-gray-700 uppercase bg-gray-200 dark:bg-gray-700 dark:text-gray-400"
-      >
+  <div v-if="list.length > 0" class="table-container" :class="class">
+    <table class="table">
+      <thead class="t-head">
         <slot name="thead-content" />
       </thead>
-      <tbody class="child:text-center">
+      <tbody>
         <slot name="tbody-content" />
       </tbody>
     </table>

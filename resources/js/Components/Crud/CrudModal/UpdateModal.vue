@@ -18,7 +18,7 @@ const { formKriteria, kriteriaList: dataList } = storeToRefs(storePinia);
     <div class="relative p-4 w-full max-w-2xl max-h-full">
       <!-- Modal content -->
       <div
-        class="relative p-4 bg-white rounded-lg shadow dark:bg-gray-800 sm:p-5"
+        class="relative p-4 bg-gray-50 rounded-lg shadow dark:bg-gray-800 sm:p-5"
       >
         <!-- Modal header -->
         <div
@@ -30,7 +30,7 @@ const { formKriteria, kriteriaList: dataList } = storeToRefs(storePinia);
           <button
             type="button"
             @click="toggleModal('updateProductModal')"
-            class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
+            class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
             data-modal-toggle="updateProductModal"
           >
             <svg
@@ -55,7 +55,7 @@ const { formKriteria, kriteriaList: dataList } = storeToRefs(storePinia);
             <div>
               <label
                 for="name"
-                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                class="block mb-2 font-medium text-gray-900 dark:text-white"
                 >Kriteria</label
               >
               <input
@@ -63,7 +63,7 @@ const { formKriteria, kriteriaList: dataList } = storeToRefs(storePinia);
                 name="name"
                 id="name"
                 v-model="formKriteria.nama"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                 placeholder="Masukan Nama Kriteria"
               />
               <InputError class="mt-2" :message="formKriteria.errors.nama" />
@@ -71,7 +71,7 @@ const { formKriteria, kriteriaList: dataList } = storeToRefs(storePinia);
             <div>
               <label
                 for="brand"
-                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                class="block mb-2 font-medium text-gray-900 dark:text-white"
                 >Peringkat</label
               >
               <input
@@ -79,7 +79,7 @@ const { formKriteria, kriteriaList: dataList } = storeToRefs(storePinia);
                 name="brand"
                 id="brand"
                 v-model="formKriteria.rank['value']"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                 :placeholder="'Masukan angka antara 1 s.d. ' + dataList.length"
               />
               <InputError
@@ -91,7 +91,7 @@ const { formKriteria, kriteriaList: dataList } = storeToRefs(storePinia);
           <div class="flex items-center justify-end space-x-4">
             <button
               type="submit"
-              class="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+              class="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
             >
               Update Kriteria
             </button>
