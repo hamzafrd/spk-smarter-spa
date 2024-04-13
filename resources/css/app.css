@@ -3,31 +3,31 @@
 @tailwind utilities;
 
 @layer components {
-    .theme__toggler-container {
-        @apply h-[2em] flex-col border-solid border-secondary-color border-[5px] bg-secondary-color w-[3.5em] cursor-pointer transition-all duration-[0.3s] overflow-hidden flex justify-center rounded-[50em];
-    }
-    .theme__toggler {
-        @apply h-[1.25em] w-[1.25em] bg-primary-color relative ml-[calc(100%_-_1.25em)] transition-all duration-[0.3s] rotate-[360deg] rounded-[450em] border-[none] before:content-[""] before:shadow-[0_0_0_none] before:h-[1.25em] before:w-[1.25em] before:left-[-0.5em] before:top-[-0.3em] before:transition-[margin] before:duration-[0.3s] before:delay-[0.2s] before:absolute before:rounded-[50em];
-    }
-    .theme__toggler:before {
-        @apply bg-secondary-color;
-    }
-    .dot {
-        @apply bg-secondary-color w-[0.2em] h-[0.2em] opacity-50 z-[44] transition-[0.3s] absolute left-[calc(70%_-_0.2em)] rounded-[150em] scale-[0.7] top-[calc(50%)] after:content-[""] after:h-[0.3em] after:w-[0.3em] after:top-[calc(50%_-_0.3em)] after:rounded-[inherit] after:left-[calc(100%_+_0.3em/2)] before:content-[""] before:h-[0.4em] before:w-[0.4em] before:bg-inherit before:absolute before:rounded-[inherit] before:left-[calc(100%)] before:top-[calc(100%)];
-    }
-    .dot:after {
-        @apply absolute dark:bg-white bg-secondary-color;
-    }
-    .lightmode .theme__toggler-container {
-        @apply bg-slate-200 border-inherit border-solid;
-    }
-    .lightmode .theme__toggler-container .theme__toggler {
-        @apply bg-yellow-300 rotate-0 shadow-[0_-1px_1em_#fff] ml-0 border-inherit before:ml-[-3em] before:origin-left before:duration-[0] before:delay-[0] before:scale-0;
-    }
-    .lightmode .theme__toggler-container .theme__toggler:before {
-        @apply bg-secondary-color;
-    }
-    .lightmode .theme__toggler-container .dot {
-        @apply bg-[#959505];
-    }
+  .theme__toggler-container {
+    @apply h-[2em] flex-col border-solid border-secondary-color border-[5px] bg-secondary-color w-[3.5em] cursor-pointer transition-all duration-[0.3s] overflow-hidden flex justify-center rounded-[50em];
+  }
+  .theme__toggler {
+    @apply h-[1.25em] w-[1.25em] bg-primary-color relative ml-[calc(100%_-_1.25em)] transition-all duration-[0.3s] rotate-[360deg] rounded-[450em] border-[none] before:content-[""] before:shadow-[0_0_0_none] before:h-[1.25em] before:w-[1.25em] before:left-[-0.5em] before:top-[-0.3em] before:transition-[margin] before:duration-[0.3s] before:delay-[0.2s] before:absolute before:rounded-[50em];
+  }
+  .theme__toggler:before {
+    @apply bg-secondary-color;
+  }
+  .dot {
+    @apply bg-secondary-color w-[0.2em] h-[0.2em] opacity-50 z-[44] transition-[0.3s] absolute left-[calc(70%_-_0.2em)] rounded-[150em] scale-[0.7] top-[calc(50%)] after:content-[""] after:h-[0.3em] after:w-[0.3em] after:top-[calc(50%_-_0.3em)] after:rounded-[inherit] after:left-[calc(100%_+_0.3em/2)] before:content-[""] before:h-[0.4em] before:w-[0.4em] before:bg-inherit before:absolute before:rounded-[inherit] before:left-[calc(100%)] before:top-[calc(100%)];
+  }
+  .dot:after {
+    @apply absolute dark:bg-white bg-secondary-color;
+  }
+  .lightmode .theme__toggler-container {
+    @apply bg-slate-200 border-inherit border-solid;
+  }
+  .lightmode .theme__toggler-container .theme__toggler {
+    @apply bg-yellow-300 rotate-0 shadow-[0_-1px_1em_#fff] ml-0 border-inherit before:ml-[-3em] before:origin-left before:duration-[0] before:delay-[0] before:scale-0;
+  }
+  .lightmode .theme__toggler-container .theme__toggler:before {
+    @apply bg-secondary-color;
+  }
+  .lightmode .theme__toggler-container .dot {
+    @apply bg-[#959505];
+  }
 }

@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class DashboardController extends Controller
@@ -12,8 +14,10 @@ class DashboardController extends Controller
      */
     public function index()
     {
+        $user = User::find(Auth::id());
+        $kriteria = $user->kriteria()->orderBy('rank')->get();
 
-        return Inertia::render('Dashboard/Index');
+        return Inertia::render('Dashboard/IndexDashboard', ['kriteriaList' => $kriteria]);
     }
 
     /**

@@ -16,9 +16,9 @@ class KriteriaController extends Controller
     public function index()
     {
         $user = User::find(Auth::id());
-        $kriteria = $user->kriteria()->orderBy('rank')->get();
+        $kriteria = $user->kriteria()->with('subkriteria')->orderBy('rank')->get();
 
-        return Inertia::render('Kriteria/Index', ['kriteriaList' => $kriteria]);
+        return Inertia::render('Kriteria/IndexKriteria', ['kriteriaList' => $kriteria]);
     }
 
     /**
