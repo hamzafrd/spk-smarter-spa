@@ -1,9 +1,9 @@
 <script setup>
 import { useFormStore } from '@/store';
 
-const storePinia = useFormStore();
+const store = useFormStore();
 
-const { submitForm, toggleModal } = storePinia;
+const { submitForm, toggleModal } = store;
 </script>
 <template>
   <div
@@ -55,7 +55,7 @@ const { submitForm, toggleModal } = storePinia;
           Are you sure you want to
           <span class="text-red-600">DELETE ALL</span> the item ?
         </p>
-        <form @submit.prevent="submitForm('deleteAll')">
+        <form @submit.prevent="submitForm('deleteAll', _, store.category)">
           <div class="flex justify-center items-center space-x-4">
             <button
               data-modal-toggle="deleteAllModal"

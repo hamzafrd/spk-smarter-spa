@@ -9,6 +9,8 @@ import SecondaryButton from '@/Components/SecondaryButton.vue';
 import SubKriteriaModal from '@/Components/Crud/CrudModal/SubKriteriaModal.vue';
 import Thead from '@/Components/Crud/Thead.vue';
 import TData from '@/Components/Crud/TData.vue';
+import SearchInput from '@/Components/Crud/SearchInput.vue';
+import ButtonGroupTable from '@/Components/Crud/ButtonGroupTable.vue';
 
 const props = defineProps({
   kriteriaList: {
@@ -19,10 +21,13 @@ const props = defineProps({
 
 const store = useFormStore();
 
-const { setKriteria, setSubkriteria, toggleModal, moveListItem } = store;
-const { massEdit, showBobot, kriteriaList, filteredList, searchQuery } =
+const { setKriteria, setSubKriteriaList, toggleModal, moveListItem } = store;
+const { massEdit, showBobot, filteredList, dataList, category, searchQuery } =
   storeToRefs(store);
-store.kriteriaList = props.kriteriaList;
+
+searchQuery.value = '';
+dataList.value = props.kriteriaList;
+category.value = 'kriteria';
 </script>
 
 <template>
@@ -31,19 +36,22 @@ store.kriteriaList = props.kriteriaList;
   <AuthenticatedLayout>
     <SubKriteriaModal />
     <section class="h-full bg-content">
-      <IndexCrudTable :list="filteredList">
+      <IndexCrudTable>
         <template #header>
           <p class="text-heading1-bold">Kriteria</p>
 
           <p class="text-heading2-semibold">
-            Total Kriteria : {{ kriteriaList.length }}
+            Total Kriteria : {{ dataList.length }}
           </p>
+        </template>
+        <template #table-header>
+          <SearchInput />
+          <ButtonGroupTable />
         </template>
         <template #table>
           <TableCrud
-            :label="'Kriteria'"
-            :list="filteredList"
-            :query="searchQuery"
+            :list="dataList"
+            :search-query="searchQuery"
             :class="'lg:mx-4 lg:mb-4 lg:rounded-lg'"
           >
             <template #thead-content>
@@ -77,7 +85,7 @@ store.kriteriaList = props.kriteriaList;
                 <TData v-if="!massEdit">
                   <a
                     @click="
-                      setSubkriteria(item.subkriteria),
+                      setSubKriteriaList(item.subkriteria),
                         setKriteria(item),
                         toggleModal('sub-kriteria-modal')
                     "
@@ -102,6 +110,7 @@ store.kriteriaList = props.kriteriaList;
                   </a>
                 </TData>
 
+                <!-- Arrow Button -->
                 <td class="px-1 py-3 flex justify-center">
                   <div class="move-buttons" v-if="massEdit">
                     <SecondaryButton
@@ -150,7 +159,7 @@ store.kriteriaList = props.kriteriaList;
                     </SecondaryButton>
                   </div>
 
-                  <!-- Aksi Dropdown -->
+                  <!-- Aksi/Trigger Dropdown -->
                   <button
                     :id="item.nama + item.id"
                     :data-dropdown-toggle="item.nama + item.id + 'dropdown'"
@@ -170,6 +179,7 @@ store.kriteriaList = props.kriteriaList;
                       />
                     </svg>
                   </button>
+                  <!-- Dropdown Target -->
                   <div
                     :id="item.nama + item.id + 'dropdown'"
                     class="hidden z-10 w-44 bg-gray-50 rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600 border border-gray-200 dark:border-gray-700"

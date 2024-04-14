@@ -1,9 +1,9 @@
 <script setup>
 import { useFormStore } from '@/store';
 
-const storePinia = useFormStore();
+const store = useFormStore();
 
-const { submitForm, toggleModal } = storePinia;
+const { submitForm, toggleModal } = store;
 </script>
 <template>
   <div
@@ -54,7 +54,7 @@ const { submitForm, toggleModal } = storePinia;
         <p class="mb-4 text-gray-500 dark:text-gray-300">
           Are you sure you want to delete this item?
         </p>
-        <form @submit.prevent="submitForm('delete')">
+        <form @submit.prevent="submitForm('delete', _, store.category)">
           <div class="flex justify-center items-center space-x-4">
             <button
               data-modal-toggle="deleteModal"

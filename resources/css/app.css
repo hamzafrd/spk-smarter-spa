@@ -36,7 +36,7 @@
   }
 
   .table-container {
-    @apply overflow-x-auto rounded-b-lg border dark:border-gray-600 border-gray-300;
+    @apply overflow-x-auto lg:rounded-b-lg lg:border dark:border-gray-600 border-gray-300;
   }
   .table {
     @apply w-full text-center text-gray-500 dark:text-gray-400;

@@ -20,7 +20,7 @@ Route::middleware('auth')->group(function () {
   Route::get('/test', [KriteriaController::class, 'test']);
 
   Route::put('/updkriteria', [ApiController::class, 'updateKriteriaPositions'])->name('api.updateKriteriaPositions');
-  Route::get('/listkriteria', [ApiController::class, 'getListKriteria'])->name('api.listkriteria');
+  Route::get('/listkriteria', [ApiController::class, 'getDataList'])->name('api.dataList');
 
   Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
   Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

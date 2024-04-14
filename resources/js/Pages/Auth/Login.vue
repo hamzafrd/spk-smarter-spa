@@ -6,6 +6,7 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import GuestLayout from '@/Layouts/GuestLayout.vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
+import { getActivePinia } from 'pinia';
 
 defineProps({
   canResetPassword: {
@@ -17,6 +18,10 @@ defineProps({
   canRegister: {
     type: Boolean,
   },
+});
+
+getActivePinia()._s.forEach((store) => {
+  store.$reset();
 });
 
 const form = useForm({

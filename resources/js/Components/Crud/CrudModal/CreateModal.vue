@@ -3,16 +3,9 @@ import InputError from '@/Components/InputError.vue';
 import { useFormStore } from '@/store';
 import { storeToRefs } from 'pinia';
 
-defineProps({
-  list: {
-    type: Array,
-    default: null,
-  },
-});
-
 const storePinia = useFormStore();
 const { submitForm, toggleModal } = storePinia;
-const { formKriteria } = storeToRefs(storePinia);
+const { formKriteria, dataList, category } = storeToRefs(storePinia);
 </script>
 <template>
   <div
@@ -31,7 +24,7 @@ const { formKriteria } = storeToRefs(storePinia);
           class="flex justify-between items-center pb-4 mb-4 rounded-t border-b sm:mb-5 dark:border-gray-600"
         >
           <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
-            Tambah Kriteria
+            Tambah <span class="capitalize">{{ category }}</span>
           </h3>
           <button
             type="button"
@@ -56,7 +49,9 @@ const { formKriteria } = storeToRefs(storePinia);
             <span class="sr-only">Close modal</span>
           </button>
         </div>
-        <form @submit.prevent="submitForm('store', list.length + 1)">
+        <form
+          @submit.prevent="submitForm('store', dataList.length + 1, category)"
+        >
           <div class="grid gap-4 mb-4 sm:grid-cols-2">
             <div>
               <label
@@ -86,7 +81,7 @@ const { formKriteria } = storeToRefs(storePinia);
                 id="brand"
                 class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                 :placeholder="
-                  'Masukan angka antara 1 s.d. ' + (list.length + 1)
+                  'Masukan angka antara 1 s.d. ' + (dataList.length + 1)
                 "
                 v-model="formKriteria.rank.value"
               />

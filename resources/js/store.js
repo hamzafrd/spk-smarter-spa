@@ -1,6 +1,6 @@
 import { router, useForm } from '@inertiajs/vue3';
 import axios from 'axios';
-import { Dropdown, Modal } from 'flowbite';
+import { Modal, initFlowbite } from 'flowbite';
 import { defineStore } from 'pinia';
 
 export const useFormStore = defineStore('forms', {
@@ -14,11 +14,9 @@ export const useFormStore = defineStore('forms', {
         value: null,
       },
     }),
-    kriteriaList: {
-      type: Array,
-      default: null,
-    },
 
+    category: null,
+    dataList: [],
     subKriteriaList: [],
 
     kriteria: {
@@ -41,19 +39,15 @@ export const useFormStore = defineStore('forms', {
     currSort: 0,
 
     modalName: '',
-    modalBase: {
-      type: Modal,
-      default: null,
-    },
 
     searchQuery: '',
     searchTimeout: null,
   }),
 
   actions: {
-    loadList() {
+    loadList(category) {
       try {
-        router.get('/kriteria');
+        router.get(route(`${category}.index`));
       } catch (error) {
         console.error(error.response);
       }
@@ -61,8 +55,10 @@ export const useFormStore = defineStore('forms', {
 
     async loadListSpa() {
       try {
-        const response = await axios.get(route('api.listkriteria'));
-        this.kriteriaList = response.data.updatedData;
+        const response = await axios.get(route('api.dataList'));
+        // console.log(this.dataList);
+        this.dataList = response.data.updatedData;
+        // console.log(response.data.updatedData);
       } catch (error) {
         console.error(error.response);
       }
@@ -71,54 +67,64 @@ export const useFormStore = defineStore('forms', {
     async updatePositions() {
       try {
         const response = await axios.put('/updkriteria', {
-          listKriteria: this.kriteriaList,
+          listKriteria: this.dataList,
           bobot: this.getBobot,
         });
-        this.kriteriaList = response.data.updatedData;
+        this.dataList = response.data.updatedData;
       } catch (error) {
         console.error('Error saving positions:', error);
       }
     },
 
-    submitForm(params, maxValue) {
+    /**
+     * Handles different actions based on the 'params' value.
+     *
+     * @param {string} params - The type of action to perform ('store', 'update', 'delete', 'deleteAll')
+     * @param {number} maxValue - The maximum value to set
+     * @param {string} category - The category for the action
+     */
+    submitForm(params, maxValue, category) {
       switch (params) {
         case 'store':
           this.formKriteria.rank.max = maxValue;
-          this.formKriteria.post(route('kriteria.store'), {
+          this.formKriteria.post(route(category + '.store'), {
             onSuccess: () => {
               this.formKriteria.nama = '';
               this.formKriteria.rank.value = '';
-              this.loadList();
+              this.loadList(category);
               this.toggleModal('createProductModal');
             },
           });
           break;
         case 'update':
           this.formKriteria.rank.max = maxValue;
-          this.formKriteria.put(route('kriteria.update', this.kriteria.id), {
-            onSuccess: () => {
-              this.formKriteria.nama = '';
-              this.formKriteria.rank.value = '';
-              this.loadList();
-              this.toggleModal('updateProductModal');
-            },
-          });
+          this.formKriteria.put(
+            route(category + '.update', this[category].id),
+            {
+              onSuccess: () => {
+                this.formKriteria.nama = '';
+                this.formKriteria.rank.value = '';
+                this.loadList(category);
+                this.toggleModal('updateProductModal');
+              },
+            }
+          );
           break;
         case 'delete':
           this.formKriteria.delete(
-            route('kriteria.destroy', this.kriteria.id),
+            route(category + '.destroy', this[category].id),
             {
               onSuccess: () => {
-                this.loadList();
+                this.loadList(category);
                 this.toggleModal('deleteModal');
               },
             }
           );
           break;
         case 'deleteAll':
-          this.formKriteria.delete(route('kriteria.destroyAll'), {
+          this.formKriteria.delete(route(category + '.destroyAll'), {
             onSuccess: () => {
-              this.loadList();
+              this.loadList(category);
               this.toggleModal('deleteAllModal');
             },
           });
@@ -131,13 +137,13 @@ export const useFormStore = defineStore('forms', {
     },
 
     moveUp(index) {
-      const item = this.kriteriaList.splice(index, 1)[0];
-      this.kriteriaList.splice(index - 1, 0, item);
+      const item = this.dataList.splice(index, 1)[0];
+      this.dataList.splice(index - 1, 0, item);
     },
 
     moveDown(index) {
-      const item = this.kriteriaList.splice(index, 1)[0];
-      this.kriteriaList.splice(index + 1, 0, item);
+      const item = this.dataList.splice(index, 1)[0];
+      this.dataList.splice(index + 1, 0, item);
     },
 
     moveRank(index, el, isUp) {
@@ -203,7 +209,8 @@ export const useFormStore = defineStore('forms', {
       this.formKriteria.rank.oldValue = this.kriteria.rank;
     },
 
-    setSubkriteria(itemList) {
+    setSubKriteriaList(itemList) {
+      console.log(itemList);
       this.subKriteriaList = itemList;
     },
     resetForm() {
@@ -227,16 +234,17 @@ export const useFormStore = defineStore('forms', {
 
     handleSearch() {
       if (this.searchTimeout) clearTimeout(this.searchTimeout);
-      this.searchTimeout = setTimeout(() => {
-        this.loadList();
-      }, 1000);
+      if (this.filteredList.length > 0)
+        this.searchTimeout = setTimeout(() => {
+          initFlowbite();
+        }, 500);
     },
   },
 
   getters: {
     getBobot() {
       const list = [];
-      const n = this.kriteriaList.length;
+      const n = this.dataList.length;
       let valueNow = 0;
       for (let i = 0; i < n; i++) {
         valueNow += 1 / (n - i) / n;
@@ -251,7 +259,7 @@ export const useFormStore = defineStore('forms', {
     },
 
     filteredList(state) {
-      let filteredList = [...state.kriteriaList];
+      let filteredList = state.dataList.length > 0 ? [...state.dataList] : [];
       const stateSort = this.sortState[this.currSort];
 
       if (stateSort != 'normal') {

@@ -6,7 +6,7 @@ import TData from '../TData.vue';
 import { storeToRefs } from 'pinia';
 const store = useFormStore();
 
-const { subKriteriaList, kriteria } = storeToRefs(store);
+const { kriteria, subKriteriaList } = storeToRefs(store);
 </script>
 <template>
   <!-- Main modal -->
@@ -53,8 +53,7 @@ const { subKriteriaList, kriteria } = storeToRefs(store);
         </div>
         <TableCrud
           :list="subKriteriaList"
-          :label="'Sub Kriteria'"
-          :error-message="'Tidak Memiliki Sub Kriteria'"
+          :error-message="'Belum Memiliki Sub Kriteria'"
         >
           <template #thead-content>
             <Thead :label="'Sub Kriteria'" :sort="false" />

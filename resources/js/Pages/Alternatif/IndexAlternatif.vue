@@ -19,7 +19,12 @@ const props = defineProps({
 
 const store = useFormStore();
 
-const { setKriteria, setSubkriteria, toggleModal, moveListItem } = store;
+const {
+  setKriteria,
+  setSubkriteriaList: setSubkriteria,
+  toggleModal,
+  moveListItem,
+} = store;
 const { massEdit, showBobot, kriteriaList, filteredList, searchQuery } =
   storeToRefs(store);
 store.kriteriaList = props.kriteriaList;

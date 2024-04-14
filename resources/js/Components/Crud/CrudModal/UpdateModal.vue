@@ -6,7 +6,7 @@ import { storeToRefs } from 'pinia';
 const storePinia = useFormStore();
 
 const { submitForm, toggleModal } = storePinia;
-const { formKriteria, kriteriaList: dataList } = storeToRefs(storePinia);
+const { formKriteria, dataList, category } = storeToRefs(storePinia);
 </script>
 <template>
   <div
@@ -50,7 +50,7 @@ const { formKriteria, kriteriaList: dataList } = storeToRefs(storePinia);
           </button>
         </div>
         <!-- Modal body -->
-        <form @submit.prevent="submitForm('update', dataList.length)">
+        <form @submit.prevent="submitForm('update', dataList.length, category)">
           <div class="grid gap-4 mb-4 sm:grid-cols-2">
             <div>
               <label
