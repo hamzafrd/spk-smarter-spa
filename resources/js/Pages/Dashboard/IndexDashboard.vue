@@ -49,7 +49,6 @@ const hasilLen = props.kriteriaList.reduce((result, current) => {
           <Card :length="alternatifList.length" label="Alternatif" />
           <Card :length="hasilLen" label="Hasil" />
         </div>
-
         <DashboardPill />
 
         <div class="table-container rounded-t-lg">
@@ -59,7 +58,9 @@ const hasilLen = props.kriteriaList.reduce((result, current) => {
             Intruksi Penggunaan :
           </h1>
 
-          <div class="py-8 px-4 lg:px-6 grid lg:grid-cols-4 grid-cols-2">
+          <div
+            class="py-8 px-4 lg:px-6 grid lg:grid-cols-4 grid-cols-2 dark:bg-gray-800 bg-gray-100"
+          >
             <CardInstruction
               number="1"
               title="Masukan Kriteria"

@@ -26,14 +26,13 @@ store.kriteriaList = props.kriteriaList;
 </script>
 
 <template>
-  <Head title="Kriteria" />
+  <Head title="Sub Kriteria" />
 
   <AuthenticatedLayout>
-    <SubKriteriaModal />
     <section class="h-full bg-content">
       <IndexCrudTable :list="filteredList">
         <template #header>
-          <p class="text-heading1-bold">Kriteria</p>
+          <h1 class="text-heading1-bold">Sub Kriteria</h1>
 
           <p class="text-heading2-semibold">
             Total Kriteria : {{ kriteriaList.length }}
@@ -51,8 +50,7 @@ store.kriteriaList = props.kriteriaList;
                 <Thead v-if="!massEdit" :label="'Kriteria'" />
                 <Thead :label="'Keterangan'" />
                 <Thead :label="'Peringkat'" />
-                <Thead v-if="!massEdit && showBobot" :label="'Bobot'" />
-                <Thead v-if="!massEdit" :sort="false" :label="'Sub Kriteria'" />
+                <Thead v-if="!massEdit" :label="'Bobot'" />
 
                 <Thead :sort="false" :label="'Aksi'" />
               </tr>
@@ -72,35 +70,7 @@ store.kriteriaList = props.kriteriaList;
                   {{ item.rank }}
                 </td>
 
-                <TData v-if="!massEdit && showBobot" :label="item.bobot" />
-                <!-- SubKriteria -->
-                <TData v-if="!massEdit">
-                  <a
-                    @click="
-                      setSubkriteria(item.subkriteria),
-                        setKriteria(item),
-                        toggleModal('sub-kriteria-modal')
-                    "
-                    data-modal-target="sub-kriteria-modal"
-                    class="flex items-center justify-center text-primary-600 dark:text-primary-500 cursor-pointer"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      class="w-6 h-6"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                      aria-hidden="true"
-                    >
-                      <path
-                        d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z"
-                      ></path>
-                      <path
-                        d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z"
-                      ></path>
-                    </svg>
-                    Lihat Sub Kriteria
-                  </a>
-                </TData>
+                <TData v-if="!massEdit" :label="item.bobot" />
 
                 <td class="px-1 py-3 flex justify-center">
                   <div class="move-buttons" v-if="massEdit">

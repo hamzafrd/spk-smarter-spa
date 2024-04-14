@@ -17,9 +17,7 @@ import MasterLayout from './MasterLayout.vue';
       <main class="flex-1 flex dark:bg-gray-900 bg-slate-200">
         <NavbarAside />
 
-        <div
-          class="flex-1 relative mx-2 my-1 max-lg:m-0 overflow-auto bg-content"
-        >
+        <div class="flex-1 relative mx-2 my-1 max-lg:m-0 overflow-auto">
           <slot />
         </div>
       </main>

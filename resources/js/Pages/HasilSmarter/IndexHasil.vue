@@ -13,7 +13,7 @@ import TData from '@/Components/Crud/TData.vue';
 const props = defineProps({
   kriteriaList: {
     type: Array,
-    default: null,
+    default: [],
   },
 });
 
@@ -33,11 +33,11 @@ store.kriteriaList = props.kriteriaList;
     <section class="h-full bg-content">
       <IndexCrudTable :list="filteredList">
         <template #header>
-          <p class="text-heading1-bold">Kriteria</p>
-
+          <p class="text-heading1-bold">Hasil Penilaian</p>
+          <!--
           <p class="text-heading2-semibold">
             Total Kriteria : {{ kriteriaList.length }}
-          </p>
+          </p> -->
         </template>
         <template #table>
           <TableCrud
@@ -273,3 +273,4 @@ store.kriteriaList = props.kriteriaList;
     </section>
   </AuthenticatedLayout>
 </template>
+s

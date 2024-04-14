@@ -26,7 +26,6 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ['Figtree', ...defaultTheme.fontFamily.sans],
         body: [
           'Inter',
           'ui-sans-serif',
@@ -70,7 +69,6 @@ export default {
         'secondary-color': '#191627',
         'primary-two': '#F4602B',
         'secondary-two': '#FFB620',
-        blue: '#0095F6',
         'logout-btn': '#FF5A5A',
         'navbar-menu': 'rgba(16, 16, 18, 0.6)',
         'dark-1': '#000000',

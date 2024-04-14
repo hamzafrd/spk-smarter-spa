@@ -9,10 +9,6 @@ const props = defineProps({
     type: Array,
     default: null,
   },
-  label: {
-    type: String,
-    default: null,
-  },
 });
 
 const store = useFormStore();
@@ -22,18 +18,14 @@ const { massEdit, showBobot, searchQuery, currSort } = storeToRefs(store);
 </script>
 <template lang="html">
   <CreateModal :list="list" />
-  <DeleteAllModal />
+  <DeleteAllModal v-if="list.length > 0" />
 
   <div class="h-full flex flex-col antialiased relative">
     <!-- Header -->
     <div
       class="flex justify-start flex-col lg:items-end md:flex-row md:justify-between dark:text-white mx-4 mt-4 lg:m-4"
     >
-      <p class="text-heading1-bold">{{ props.label }}</p>
-
-      <p class="text-heading2-semibold">
-        <slot name="header" />
-      </p>
+      <slot name="header" />
     </div>
 
     <!-- Table Header -->
@@ -129,7 +121,7 @@ const { massEdit, showBobot, searchQuery, currSort } = storeToRefs(store);
           <button
             id="actionsDropdownButton"
             data-dropdown-toggle="actionsDropdown"
-            class="w-full md:w-auto flex items-center justify-center py-2 px-4 font-medium text-gray-900 focus:outline-none bg-gray-50 rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+            class="w-full md:w-auto flex items-center justify-center py-2 px-4 font-medium text-gray-900 focus:outline-none bg-gray-100 rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
             type="button"
           >
             <svg
