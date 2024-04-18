@@ -1,10 +1,15 @@
 <script setup>
 import { useFormStore } from '@/store';
 import { storeToRefs } from 'pinia';
-
+const props = defineProps({
+  id: {
+    type: String,
+    default: null,
+  },
+});
 const storePinia = useFormStore();
 
-const { updatePositions, toggleModal, loadListSpa, handleSearch } = storePinia;
+const { updatePositions, toggleModal, loadListSpa, initLib } = storePinia;
 const { massEdit } = storeToRefs(storePinia);
 </script>
 <template>
@@ -63,7 +68,7 @@ const { massEdit } = storeToRefs(storePinia);
                 toggleModal('simpanPosisiModal'),
                   (massEdit = !massEdit),
                   loadListSpa(),
-                  handleSearch()
+                  initLib()
               "
               data-modal-target="simpanPosisiModal"
               class="py-2 px-3 font-medium text-gray-500 bg-primary-50 rounded-lg border border-gray-200 hover:bg-primary-100 focus:ring-4 focus:outline-none focus:ring-primary-300 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600"
@@ -77,7 +82,7 @@ const { massEdit } = storeToRefs(storePinia);
                   (massEdit = !massEdit),
                   updatePositions(),
                   loadListSpa(),
-                  handleSearch()
+                  initLib()
               "
               data-modal-target="simpanPosisiModal"
               class="py-2 px-3 font-medium text-center text-white bg-primary-600 rounded-lg hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-primary-500 dark:hover:bg-primary-600 dark:focus:ring-primary-900"

@@ -3,15 +3,14 @@ import { useFormStore } from '@/store';
 import { storeToRefs } from 'pinia';
 import DropdownHover from '../DropdownHover.vue';
 
-defineProps({
+const props = defineProps({
   id: {
     type: String,
     default: null,
   },
 });
-
 const store = useFormStore();
-const { updatePositions, toggleModal, resetForm, handleSearch } = store;
+const { updatePositions, toggleModal, resetForm, initLib } = store;
 const { massEdit, showBobot, currSort, filteredList, category } =
   storeToRefs(store);
 
@@ -21,6 +20,17 @@ const handlePosisi = () => {
   currSort.value = 0;
   emit('onClickAturPosisi');
 };
+
+const handleCreate = () => {
+  toggleModal(`createProductModal${props.id}`);
+  resetForm();
+};
+
+const handleMassEdit = () => {
+  massEdit.value = !massEdit.value;
+  updatePositions();
+  initLib();
+};
 </script>
 <template>
   <div
@@ -28,9 +38,7 @@ const handlePosisi = () => {
   >
     <button
       type="button"
-      id="createProductModalButton"
-      @click="toggleModal('createProductModal'), resetForm()"
-      data-modal-target="createProductModal"
+      @click="handleCreate()"
       class="px-3 py-2 capitalize flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg t:ext-sm tableBase dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"
     >
       <svg
@@ -55,7 +63,7 @@ const handlePosisi = () => {
     </button>
     <button
       v-if="massEdit"
-      @click="updatePositions(), (massEdit = !massEdit), handleSearch()"
+      @click="handleMassEdit()"
       type="button"
       class="p-2 flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg t:ext-sm tableBase dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"
     >

@@ -73,7 +73,7 @@ const searchSubKriteria = (query, id) => {
 
   <AuthenticatedLayout>
     <section class="h-full">
-      <IndexCrudTable>
+      <IndexCrudTable :list="formattedKriteriaList" id="main">
         <template #header>
           <h1 class="lg:text-heading1-bold text-heading2-bold">Sub Kriteria</h1>
 
@@ -99,6 +99,7 @@ const searchSubKriteria = (query, id) => {
           <template v-for="kriteria in filteredList">
             <TableCrud
               :list="kriteria.subkriteria"
+              :id="`sk${kriteria.id}`"
               errorMessage="Belum memiliki sub kriteria"
               class="lg:mx-4 lg:mb-4 lg:rounded-lg"
               wrapper="bg-content lg:m-2 my-2"
@@ -120,7 +121,7 @@ const searchSubKriteria = (query, id) => {
                       :is-edit="false"
                       @search="(e) => searchSubKriteria(e, kriteria.id)"
                     />
-                    <ButtonGroupTable :id="'sk' + kriteria.id" />
+                    <ButtonGroupTable :id="`sk${kriteria.id}`" />
                   </div>
                 </div>
                 <div

@@ -1,7 +1,20 @@
 <script setup>
+import CreateModal from '@/Components/Crud/CrudModal/CreateModal.vue';
+import SavePosisiModal from './CrudModal/SavePosisiModal.vue';
+import UpdateModal from './CrudModal/UpdateModal.vue';
+import ReadModal from './CrudModal/ReadModal.vue';
+import DeleteModal from './CrudModal/DeleteModal.vue';
+import DeleteAllModal from './CrudModal/DeleteAllModal.vue';
+
 defineProps({
-  class: null,
-  errorMessage: null,
+  id: {
+    type: String,
+    default: null,
+  },
+  maxRank: {
+    type: Number,
+    default: null,
+  },
   list: {
     type: Array,
     default: [],
@@ -10,10 +23,31 @@ defineProps({
     type: String,
     default: '',
   },
+
+  class: null,
   wrapper: null,
+  errorMessage: null,
 });
+
+const emit = defineEmits([
+  'create',
+  'deleteAll',
+  'update',
+  'read',
+  'delete',
+  'save',
+]);
 </script>
 <template>
+  <CreateModal @submit-form="emit('create')" :max-rank="maxRank" :id="id" />
+  <template v-if="list.length > 0">
+    <DeleteAllModal />
+    <UpdateModal />
+    <ReadModal />
+    <DeleteModal />
+    <SavePosisiModal />
+  </template>
+  <slot />
   <div :class="wrapper">
     <slot name="sub-table-header" />
 

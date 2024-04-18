@@ -90,7 +90,7 @@ export const useFormStore = defineStore('forms', {
               this.formKriteria.nama = '';
               this.formKriteria.rank.value = '';
               this.loadList(category);
-              this.toggleModal('createProductModal');
+              this.toggleModal('createProductModalmain');
             },
           });
           break;
@@ -230,7 +230,7 @@ export const useFormStore = defineStore('forms', {
       else this.currSort = (this.currSort + 1) % 2;
     },
 
-    handleSearch() {
+    initLib() {
       if (this.searchTimeout) clearTimeout(this.searchTimeout);
       if (this.filteredList.length > 0)
         this.searchTimeout = setTimeout(() => {

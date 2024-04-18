@@ -1,28 +1,4 @@
-<script setup>
-import CreateModal from '@/Components/Crud/CrudModal/CreateModal.vue';
-import SavePosisiModal from './CrudModal/SavePosisiModal.vue';
-import UpdateModal from './CrudModal/UpdateModal.vue';
-import ReadModal from './CrudModal/ReadModal.vue';
-import DeleteModal from './CrudModal/DeleteModal.vue';
-import DeleteAllModal from './CrudModal/DeleteAllModal.vue';
-
-defineProps({
-  list: {
-    type: Array,
-    default: [],
-  },
-});
-</script>
 <template lang="html">
-  <CreateModal />
-  <template v-if="list.length > 0">
-    <DeleteAllModal />
-    <UpdateModal />
-    <ReadModal />
-    <DeleteModal />
-    <SavePosisiModal />
-  </template>
-
   <div class="h-full flex flex-col antialiased relative">
     <div>
       <div
@@ -37,7 +13,7 @@ defineProps({
         <p
           class="text-base-semibold dark:text-gray-600 text-gray-300 md:hidden"
         >
-          Scroll ke kanan untuk melihat tabel >>>
+          Scroll kanan jika tabel tidak terlihat >>>
         </p>
       </div>
     </div>

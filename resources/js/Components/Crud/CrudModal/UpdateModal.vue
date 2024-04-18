@@ -3,6 +3,13 @@ import InputError from '@/Components/InputError.vue';
 import { useFormStore } from '@/store';
 import { storeToRefs } from 'pinia';
 
+const props = defineProps({
+  id: {
+    type: String,
+    default: null,
+  },
+});
+
 const storePinia = useFormStore();
 
 const { submitForm, toggleModal } = storePinia;

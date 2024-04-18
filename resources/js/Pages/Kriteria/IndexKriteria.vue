@@ -27,7 +27,8 @@ const {
   setSubKriteriaList,
   toggleModal,
   moveListItem,
-  handleSearch,
+  initLib,
+  submitForm,
 } = store;
 const { massEdit, showBobot, filteredList, dataList, category, queryKriteria } =
   storeToRefs(store);
@@ -38,12 +39,16 @@ queryKriteria.value = '';
 
 const searchKriteria = (query) => {
   queryKriteria.value = query;
-  handleSearch();
+  initLib();
 };
 
 const handleAturPosisi = () => {
   child.value.clearQuery();
   queryKriteria.value = '';
+};
+
+const handleCreate = () => {
+  submitForm('store', dataList.value.length + 1, category.value);
 };
 </script>
 
@@ -51,9 +56,8 @@ const handleAturPosisi = () => {
   <Head title="Kriteria" />
 
   <AuthenticatedLayout>
-    <SubKriteriaModal />
     <section class="h-full bg-content">
-      <IndexCrudTable :list="filteredList">
+      <IndexCrudTable>
         <template #header>
           <p class="text-heading1-bold">Kriteria</p>
 
@@ -69,16 +73,21 @@ const handleAturPosisi = () => {
             @search="searchKriteria"
           />
           <ButtonGroupTable
-            id="kriteria-main"
+            id="main"
             @on-click-atur-posisi="handleAturPosisi"
           />
         </template>
         <template #table>
           <TableCrud
-            :list="dataList"
+            id="main"
+            @create="handleCreate"
+            :max-rank="dataList.length + 1"
+            :list="filteredList"
             :search-query="queryKriteria"
             :class="'lg:mx-4 lg:mb-4 lg:rounded-lg'"
           >
+            <SubKriteriaModal />
+
             <template #thead-content>
               <tr>
                 <Thead v-if="!massEdit" :label="'Kriteria'" />

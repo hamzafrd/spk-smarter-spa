@@ -2,14 +2,30 @@
 import InputError from '@/Components/InputError.vue';
 import { useFormStore } from '@/store';
 import { storeToRefs } from 'pinia';
+const props = defineProps({
+  id: {
+    type: String,
+    default: 'NotFound',
+  },
+  maxRank: {
+    type: Number,
+    default: null,
+  },
+});
+
+const emit = defineEmits(['submitForm']);
 
 const storePinia = useFormStore();
-const { submitForm, toggleModal } = storePinia;
-const { formKriteria, dataList, category } = storeToRefs(storePinia);
+const { toggleModal } = storePinia;
+const { formKriteria: form, category } = storeToRefs(storePinia);
+
+const handleSubmit = () => {
+  emit('submitForm');
+};
 </script>
 <template>
   <div
-    id="createProductModal"
+    :id="`createProductModal${id}`"
     tabindex="-1"
     aria-hidden="true"
     class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full"
@@ -26,11 +42,11 @@ const { formKriteria, dataList, category } = storeToRefs(storePinia);
           <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
             Tambah <span class="capitalize">{{ category }}</span>
           </h3>
+          <!-- Close Modal -->
           <button
             type="button"
-            @click="toggleModal('createProductModal')"
-            data-modal-target="createProductModal"
-            data-modal-toggle="createProductModal"
+            @click="toggleModal(`createProductModal${id}`)"
+            :data-modal-target="`createProductModal${id}`"
             class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
           >
             <svg
@@ -49,25 +65,23 @@ const { formKriteria, dataList, category } = storeToRefs(storePinia);
             <span class="sr-only">Close modal</span>
           </button>
         </div>
-        <form
-          @submit.prevent="submitForm('store', dataList.length + 1, category)"
-        >
+        <form @submit.prevent="handleSubmit()">
           <div class="grid gap-4 mb-4 sm:grid-cols-2">
             <div>
               <label
                 for="name"
-                class="block mb-2 font-medium text-gray-900 dark:text-white"
-                >Nama Kriteria</label
+                class="block mb-2 font-medium text-gray-900 dark:text-white capitalize"
+                >Nama {{ category }}</label
               >
               <input
                 type="text"
                 name="name"
                 id="name"
                 class="bg-primary-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                placeholder="Masukan Nama Kriteria"
-                v-model="formKriteria.nama"
+                :placeholder="`Masukan Nama ${category}`"
+                v-model="form.nama"
               />
-              <InputError class="mt-2" :message="formKriteria.errors.nama" />
+              <InputError class="mt-2" :message="form.errors.nama" />
             </div>
             <div>
               <label
@@ -80,16 +94,11 @@ const { formKriteria, dataList, category } = storeToRefs(storePinia);
                 name="brand"
                 id="brand"
                 class="bg-primary-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                :placeholder="
-                  'Masukan angka antara 1 s.d. ' + (dataList.length + 1)
-                "
-                v-model="formKriteria.rank.value"
+                :placeholder="'Masukan angka antara 1 s.d. ' + maxRank"
+                v-model="form.rank.value"
               />
 
-              <InputError
-                class="mt-2"
-                :message="formKriteria.errors['rank.value']"
-              />
+              <InputError class="mt-2" :message="form.errors['rank.value']" />
             </div>
           </div>
           <button

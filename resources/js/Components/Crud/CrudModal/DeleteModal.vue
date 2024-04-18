@@ -1,6 +1,11 @@
 <script setup>
 import { useFormStore } from '@/store';
-
+const props = defineProps({
+  id: {
+    type: String,
+    default: null,
+  },
+});
 const store = useFormStore();
 
 const { submitForm, toggleModal } = store;
