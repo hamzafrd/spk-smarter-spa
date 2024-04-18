@@ -37,7 +37,7 @@ class ApiController extends Controller
     }
   }
 
-  public function getDatalist($category = 'kriteria')
+  public function getDatalist()
   {
     $user = User::find(Auth::id());
     $newKriteria = $user->kriteria()->with('subkriteria')->with('smarter')->orderBy('rank')->get();
