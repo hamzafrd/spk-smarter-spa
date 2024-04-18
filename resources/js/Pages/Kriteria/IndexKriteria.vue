@@ -9,16 +9,18 @@ import SecondaryButton from '@/Components/SecondaryButton.vue';
 import SubKriteriaModal from '@/Components/Crud/CrudModal/SubKriteriaModal.vue';
 import Thead from '@/Components/Crud/Thead.vue';
 import TData from '@/Components/Crud/TData.vue';
-import SearchInput from '@/Components/Crud/SearchInput.vue';
 import ButtonGroupTable from '@/Components/Crud/ButtonGroupTable.vue';
+import DropdownDots from '@/Components/DropdownDots.vue';
+import SearchInput from '@/Components/Crud/SearchInput.vue';
+import { ref } from 'vue';
 
+const child = ref(null);
 const props = defineProps({
   kriteriaList: {
     type: Array,
     default: null,
   },
 });
-
 const store = useFormStore();
 const {
   setKriteria,
@@ -38,6 +40,11 @@ const searchKriteria = (query) => {
   queryKriteria.value = query;
   handleSearch();
 };
+
+const handleAturPosisi = () => {
+  child.value.clearQuery();
+  queryKriteria.value = '';
+};
 </script>
 
 <template>
@@ -46,7 +53,7 @@ const searchKriteria = (query) => {
   <AuthenticatedLayout>
     <SubKriteriaModal />
     <section class="h-full bg-content">
-      <IndexCrudTable>
+      <IndexCrudTable :list="filteredList">
         <template #header>
           <p class="text-heading1-bold">Kriteria</p>
 
@@ -56,11 +63,15 @@ const searchKriteria = (query) => {
         </template>
         <template #table-header>
           <SearchInput
+            ref="child"
             label="Kriteria"
             :is-edit="massEdit"
             @search="searchKriteria"
           />
-          <ButtonGroupTable id="kriteria-main" />
+          <ButtonGroupTable
+            id="kriteria-main"
+            @on-click-atur-posisi="handleAturPosisi"
+          />
         </template>
         <template #table>
           <TableCrud
@@ -173,121 +184,89 @@ const searchKriteria = (query) => {
                     </SecondaryButton>
                   </div>
 
-                  <!-- Aksi/Trigger Dropdown -->
-                  <button
-                    :id="item.nama + item.id"
-                    :data-dropdown-toggle="item.nama + item.id + 'dropdown'"
-                    :class="massEdit ? 'hidden' : 'block'"
-                    class="inline-flex items-center font-medium hover:bg-gray-100 dark:hover:bg-gray-700 p-1.5 dark:hover-bg-gray-800 text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100"
-                    type="button"
-                  >
-                    <svg
-                      class="w-5 h-5"
-                      aria-hidden="true"
-                      fill="currentColor"
-                      viewbox="0 0 20 20"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z"
-                      />
-                    </svg>
-                  </button>
-                  <!-- Dropdown Target -->
-                  <div
-                    :id="item.nama + item.id + 'dropdown'"
-                    class="hidden z-10 w-44 bg-gray-50 rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600 border border-gray-200 dark:border-gray-700"
-                  >
-                    <ul class="py-1" :aria-labelledby="item.nama + item.id">
-                      <li>
-                        <button
-                          type="button"
-                          data-modal-target="updateProductModal"
-                          data-modal-toggle="updateProductModal"
-                          @click="
-                            setKriteria(item), toggleModal('updateProductModal')
-                          "
-                          class="flex w-full items-center py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white text-gray-700 dark:text-gray-200"
+                  <DropdownDots v-if="!massEdit" :id="`Kriteria${item.id}`">
+                    <li>
+                      <button
+                        id="editKriteria"
+                        class="dropdownDotItem"
+                        @click="
+                          setKriteria(item), toggleModal('updateProductModal')
+                        "
+                      >
+                        <svg
+                          class="w-6 h-6 text-gray-800 dark:text-white mr-2"
+                          aria-hidden="true"
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          fill="none"
+                          viewBox="0 0 24 24"
                         >
-                          <svg
-                            class="w-6 h-6 text-gray-800 dark:text-white mr-2"
-                            aria-hidden="true"
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="24"
-                            height="24"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              stroke="currentColor"
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              stroke-width="2"
-                              d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z"
-                            />
-                          </svg>
-                          Edit
-                        </button>
-                      </li>
-                      <li>
-                        <button
-                          type="button"
-                          data-modal-target="readProductModal"
-                          data-modal-toggle="readProductModal"
-                          @click="setKriteria(item)"
-                          class="flex w-full items-center py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white text-gray-700 dark:text-gray-200"
+                          <path
+                            stroke="currentColor"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z"
+                          />
+                        </svg>
+                        Edit
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        class="dropdownDotItem"
+                        @click="setKriteria(item)"
+                        data-modal-target="readProductModal"
+                        data-modal-toggle="readProductModal"
+                      >
+                        <svg
+                          class="w-6 h-6 text-gray-800 dark:text-white mr-2"
+                          aria-hidden="true"
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          fill="none"
+                          viewBox="0 0 24 24"
                         >
-                          <svg
-                            class="w-6 h-6 text-gray-800 dark:text-white mr-2"
-                            aria-hidden="true"
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="24"
-                            height="24"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              stroke="currentColor"
-                              stroke-width="2"
-                              d="M21 12c0 1.2-4.03 6-9 6s-9-4.8-9-6c0-1.2 4.03-6 9-6s9 4.8 9 6Z"
-                            />
-                            <path
-                              stroke="currentColor"
-                              stroke-width="2"
-                              d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
-                            />
-                          </svg>
+                          <path
+                            stroke="currentColor"
+                            stroke-width="2"
+                            d="M21 12c0 1.2-4.03 6-9 6s-9-4.8-9-6c0-1.2 4.03-6 9-6s9 4.8 9 6Z"
+                          />
+                          <path
+                            stroke="currentColor"
+                            stroke-width="2"
+                            d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+                          />
+                        </svg>
 
-                          Lihat
-                        </button>
-                      </li>
-                      <li>
-                        <button
-                          type="button"
-                          data-modal-target="deleteModal"
-                          data-modal-toggle="deleteModal"
-                          @click="setKriteria(item), toggleModal('deleteModal')"
-                          class="flex w-full items-center py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 text-red-500 dark:hover:text-red-400"
+                        Lihat
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        class="dropdownDotItem"
+                        @click="setKriteria(item), toggleModal('deleteModal')"
+                      >
+                        <svg
+                          class="w-6 h-6 text-red-500 mr-2"
+                          aria-hidden="true"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="currentColor"
+                          viewBox="0 0 24 24"
                         >
-                          <svg
-                            class="w-6 h-6 text-red-500 mr-2"
-                            aria-hidden="true"
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="currentColor"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              fill-rule="evenodd"
-                              d="M8.586 2.586A2 2 0 0 1 10 2h4a2 2 0 0 1 2 2v2h3a1 1 0 1 1 0 2v12a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V8a1 1 0 0 1 0-2h3V4a2 2 0 0 1 .586-1.414ZM10 6h4V4h-4v2Zm1 4a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0v-8Zm4 0a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0v-8Z"
-                              clip-rule="evenodd"
-                            />
-                          </svg>
+                          <path
+                            fill-rule="evenodd"
+                            d="M8.586 2.586A2 2 0 0 1 10 2h4a2 2 0 0 1 2 2v2h3a1 1 0 1 1 0 2v12a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V8a1 1 0 0 1 0-2h3V4a2 2 0 0 1 .586-1.414ZM10 6h4V4h-4v2Zm1 4a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0v-8Zm4 0a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0v-8Z"
+                            clip-rule="evenodd"
+                          />
+                        </svg>
 
-                          Delete
-                        </button>
-                      </li>
-                    </ul>
-                  </div>
+                        Delete
+                      </button>
+                    </li>
+                  </DropdownDots>
                 </td>
               </tr>
             </template>

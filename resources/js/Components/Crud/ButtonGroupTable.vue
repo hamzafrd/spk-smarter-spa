@@ -1,6 +1,7 @@
 <script setup>
 import { useFormStore } from '@/store';
 import { storeToRefs } from 'pinia';
+import DropdownHover from '../DropdownHover.vue';
 
 defineProps({
   id: {
@@ -8,16 +9,17 @@ defineProps({
     default: null,
   },
 });
+
 const store = useFormStore();
 const { updatePositions, toggleModal, resetForm, handleSearch } = store;
 const { massEdit, showBobot, currSort, filteredList, category } =
   storeToRefs(store);
 
-const emit = defineEmits(['onClick']);
+const emit = defineEmits(['onClickAturPosisi']);
 const handlePosisi = () => {
   massEdit.value = !massEdit.value;
   currSort.value = 0;
-  handleSearch();
+  emit('onClickAturPosisi');
 };
 </script>
 <template>
@@ -53,7 +55,7 @@ const handlePosisi = () => {
     </button>
     <button
       v-if="massEdit"
-      @click="updatePositions(), (massEdit = !massEdit)"
+      @click="updatePositions(), (massEdit = !massEdit), handleSearch()"
       type="button"
       class="p-2 flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg t:ext-sm tableBase dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"
     >
@@ -65,72 +67,43 @@ const handlePosisi = () => {
       :class="filteredList.length > 0 ? 'flex' : 'hidden'"
       class="items-center space-x-3 w-full md:w-auto"
     >
-      <button
-        :id="'actionsDropdownButton' + id"
-        :data-dropdown-toggle="'actionsDropdown' + id"
-        class="w-full md:w-auto flex items-center justify-center py-2 px-4 font-medium text-gray-900 focus:outline-none bg-gray-100 rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
-        type="button"
-      >
-        <svg
-          class="-ml-1 mr-1.5 w-5 h-5"
-          fill="currentColor"
-          viewbox="0 0 20 20"
-          xmlns="http://www.w3.org/2000/svg"
-          aria-hidden="true"
-        >
-          <path
-            clip-rule="evenodd"
-            fill-rule="evenodd"
-            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-          />
-        </svg>
-        Pengaturan Tabel
-      </button>
-      <div
-        :id="'actionsDropdown' + id"
-        class="hidden z-10 w-44 bg-gray-50 rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
-      >
-        <ul
-          class="py-1 text-gray-700 dark:text-gray-200"
-          aria-labelledby="actionsDropdownButton"
-        >
+      <DropdownHover :id="id">
+        <template #contentTop>
           <li>
-            <a
-              v-if="!massEdit"
+            <button
+              :class="!massEdit ? 'block' : 'hidden'"
               @click="handlePosisi()"
-              class="cursor-pointer block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+              class="dropdownHoverItem"
             >
               Atur Posisi
-            </a>
-            <a
+            </button>
+            <button
               :class="massEdit ? 'block' : 'hidden'"
-              type="button"
               @click="toggleModal('simpanPosisiModal')"
-              class="cursor-pointer block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+              class="dropdownHoverItem"
             >
-              Kembali ke awal
-            </a>
+              Kembali Ke Awal
+            </button>
           </li>
           <li>
-            <a
-              v-if="!massEdit"
+            <button
+              :class="!massEdit ? 'block' : 'hidden'"
               @click="showBobot = !showBobot"
-              class="cursor-pointer block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+              class="dropdownHoverItem"
             >
               <template v-if="!showBobot"> Tampilkan Bobot </template>
               <template v-else> Sembunyikan Bobot </template>
-            </a>
+            </button>
           </li>
-        </ul>
-        <div class="py-1">
-          <a
-            data-modal-target="deleteAllModal"
-            @click="toggleModal('deleteAllModal')"
-            class="cursor-pointer block py-2 px-4 text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-            >Delete all
-          </a>
-        </div>
-      </div>
+        </template>
+
+        <button
+          @click="toggleModal('deleteAllModal')"
+          class="dropdownHoverItem bg-red-500 hover:bg-red-800"
+        >
+          Delete All Data
+        </button>
+      </DropdownHover>
     </div>
   </div>
 </template>

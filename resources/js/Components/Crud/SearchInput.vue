@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref } from 'vue';
+import { ref } from 'vue';
 
 const props = defineProps({
   label: null,
@@ -8,17 +8,15 @@ const props = defineProps({
 const emit = defineEmits(['search']);
 
 const query = ref('');
-const inputValue = computed(() => {
-  if (props.isEdit) {
-    emit('search', '');
-    query.value = '';
-  }
-  return query.value;
-});
-const handleSearch = (e) => {
-  query.value = e;
+const handleSearch = () => {
   emit('search', query.value);
 };
+
+const clearQuery = () => {
+  query.value = '';
+};
+
+defineExpose({ clearQuery });
 </script>
 <template>
   <div class="w-full">
@@ -45,10 +43,10 @@ const handleSearch = (e) => {
         <input
           type="text"
           id="simple-search"
-          :value="inputValue"
-          @input="handleSearch($event.target.value)"
+          v-model="query"
+          @input="handleSearch()"
           :disabled="isEdit"
-          class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+          class="bg-primary-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
           :placeholder="
             isEdit
               ? 'Kembali ke awal untuk melakukan pencarian'
