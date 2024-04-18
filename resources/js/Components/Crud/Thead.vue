@@ -12,7 +12,7 @@ defineProps({
 <template>
   <th scope="col">
     <div class="flex items-center justify-center px-5 py-3">
-      {{ label }}
+      <span class="max-md:text-sm">{{ label }}</span>
       <SortArrow v-if="sort" :label="label" />
     </div>
   </th>

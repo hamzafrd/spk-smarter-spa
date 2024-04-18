@@ -20,14 +20,24 @@ const props = defineProps({
 });
 
 const store = useFormStore();
-
-const { setKriteria, setSubKriteriaList, toggleModal, moveListItem } = store;
-const { massEdit, showBobot, filteredList, dataList, category, searchQuery } =
+const {
+  setKriteria,
+  setSubKriteriaList,
+  toggleModal,
+  moveListItem,
+  handleSearch,
+} = store;
+const { massEdit, showBobot, filteredList, dataList, category, queryKriteria } =
   storeToRefs(store);
 
-searchQuery.value = '';
 dataList.value = props.kriteriaList;
 category.value = 'kriteria';
+queryKriteria.value = '';
+
+const searchKriteria = (query) => {
+  queryKriteria.value = query;
+  handleSearch();
+};
 </script>
 
 <template>
@@ -45,13 +55,17 @@ category.value = 'kriteria';
           </p>
         </template>
         <template #table-header>
-          <SearchInput />
-          <ButtonGroupTable />
+          <SearchInput
+            label="Kriteria"
+            :is-edit="massEdit"
+            @search="searchKriteria"
+          />
+          <ButtonGroupTable id="kriteria-main" />
         </template>
         <template #table>
           <TableCrud
             :list="dataList"
-            :search-query="searchQuery"
+            :search-query="queryKriteria"
             :class="'lg:mx-4 lg:mb-4 lg:rounded-lg'"
           >
             <template #thead-content>

@@ -64,9 +64,9 @@ const { kriteria, subKriteriaList } = storeToRefs(store);
           <template #tbody-content>
             <tr
               v-if="subKriteriaList.length > 0"
-              v-for="(item, index) in store.subKriteriaList"
+              v-for="(item, index) in subKriteriaList"
               class="t-row"
-              :id="'kriteria' + index"
+              :id="'sk' + index"
             >
               <TData :label="'SK' + (index + 1)" />
               <TData :label="item.nama" />

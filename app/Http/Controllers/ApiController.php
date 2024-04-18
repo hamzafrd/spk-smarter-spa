@@ -25,7 +25,7 @@ class ApiController extends Controller
       }
 
       $user = User::find(Auth::id());
-      $kriteria = $user->kriteria()->orderBy('rank')->get();
+      $kriteria = $user->kriteria()->with('subkriteria')->with('smarter')->orderBy('rank')->get();
 
       return response()->json([
         'message' => 'Positions updated successfully',

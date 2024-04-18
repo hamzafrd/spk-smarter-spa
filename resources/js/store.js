@@ -40,7 +40,7 @@ export const useFormStore = defineStore('forms', {
 
     modalName: '',
 
-    searchQuery: '',
+    queryKriteria: '',
     searchTimeout: null,
   }),
 
@@ -56,9 +56,7 @@ export const useFormStore = defineStore('forms', {
     async loadListSpa() {
       try {
         const response = await axios.get(route('api.dataList'));
-        // console.log(this.dataList);
         this.dataList = response.data.updatedData;
-        // console.log(response.data.updatedData);
       } catch (error) {
         console.error(error.response);
       }
@@ -260,6 +258,7 @@ export const useFormStore = defineStore('forms', {
 
     filteredList(state) {
       let filteredList = state.dataList.length > 0 ? [...state.dataList] : [];
+
       const stateSort = this.sortState[this.currSort];
 
       if (stateSort != 'normal') {
@@ -275,10 +274,11 @@ export const useFormStore = defineStore('forms', {
           }
         });
       }
-      if (state.searchQuery.trim()) {
-        const searchFiltered = state.searchQuery.trim().toLowerCase();
+
+      if (state.queryKriteria.trim()) {
+        const searchQuery = state.queryKriteria.trim().toLowerCase();
         filteredList = filteredList.filter((value) => {
-          return value.nama.trim().toLowerCase().includes(searchFiltered);
+          return value.nama.trim().toLowerCase().includes(searchQuery);
         });
       }
 

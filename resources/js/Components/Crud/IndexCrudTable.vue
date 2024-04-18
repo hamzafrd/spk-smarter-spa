@@ -1,10 +1,9 @@
 <script setup>
 import CreateModal from '@/Components/Crud/CrudModal/CreateModal.vue';
-import DeleteAllModal from './CrudModal/DeleteAllModal.vue';
 </script>
 <template lang="html">
   <CreateModal />
-  <DeleteAllModal />
+
   <div class="h-full flex flex-col antialiased relative">
     <div>
       <div

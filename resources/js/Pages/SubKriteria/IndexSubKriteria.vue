@@ -10,6 +10,19 @@ import Thead from '@/Components/Crud/Thead.vue';
 import TData from '@/Components/Crud/TData.vue';
 import SearchInput from '@/Components/Crud/SearchInput.vue';
 import ButtonGroupTable from '@/Components/Crud/ButtonGroupTable.vue';
+import { computed, ref } from 'vue';
+const store = useFormStore();
+
+const { setKriteria, toggleModal, moveListItem } = store;
+const { massEdit, dataList, filteredList, category, queryKriteria } =
+  storeToRefs(store);
+
+category.value = 'subkriteria';
+
+const currentSubLen = ref(0);
+const searchKriteria = (query) => {
+  queryKriteria.value = query;
+};
 
 const props = defineProps({
   kriteriaList: {
@@ -17,17 +30,39 @@ const props = defineProps({
     default: null,
   },
 });
+const formattedKriteriaList = computed(() => {
+  return props.kriteriaList.map((kriteria) => {
+    currentSubLen.value += kriteria.subkriteria.length;
+    return {
+      ...kriteria,
+      nama: `${kriteria.nama} (K${kriteria.rank})`,
+    };
+  });
+});
 
-const store = useFormStore();
+dataList.value = formattedKriteriaList.value;
 
-const { setKriteria, toggleModal, moveListItem } = store;
-const { massEdit, dataList, filteredList, searchQuery, category } =
-  storeToRefs(store);
+const searchSubKriteria = (query, id) => {
+  if (!query.trim()) {
+    dataList.value = formattedKriteriaList.value;
+    return;
+  }
 
-searchQuery.value = '';
-dataList.value = props.kriteriaList;
-category.value = 'subkriteria';
-const currentSubLen = 0;
+  const filteredList = formattedKriteriaList.value.map((kriteria) => {
+    if (kriteria.id === id) {
+      return {
+        nama: kriteria.nama,
+        subkriteria: kriteria.subkriteria.filter((subkriteria) => {
+          const filteredQuery = query.toLowerCase();
+          return subkriteria.nama.toLowerCase().includes(filteredQuery);
+        }),
+      };
+    } else {
+      return kriteria;
+    }
+  });
+  dataList.value = filteredList;
+};
 </script>
 
 <template>
@@ -37,14 +72,25 @@ const currentSubLen = 0;
     <section class="h-full">
       <IndexCrudTable>
         <template #header>
-          <h1 class="text-heading1-bold">Sub Kriteria</h1>
+          <h1 class="lg:text-heading1-bold text-heading2-bold">Sub Kriteria</h1>
 
-          <p class="text-heading2-semibold">
+          <p class="lg:text-heading2-semibold text-heading4-medium">
             Total Sub Kriteria : {{ currentSubLen }}
           </p>
         </template>
         <template #table-header>
-          <SearchInput />
+          <div class="w-6/12 max-md:w-full bg-content p-4 rounded-lg">
+            <p
+              class="text-start max-md:text-center lg:text-heading4-medium text-body-semibold dark:text-gray-300 text-gray-800 pb-2"
+            >
+              Cari Kriteria :
+            </p>
+            <SearchInput
+              label="Kriteria"
+              :is-edit="massEdit"
+              @search="searchKriteria"
+            />
+          </div>
         </template>
         <template #table>
           <template v-for="kriteria in filteredList">
@@ -59,15 +105,19 @@ const currentSubLen = 0;
                   class="flex flex-col md:flex-row justify-between p-4 text-center"
                 >
                   <p
-                    class="text-heading3-bold my-3 text-gray-800 dark:text-gray-100"
+                    class="lg:text-heading3-bold text-heading3-bold my-3 text-gray-800 dark:text-gray-100"
                   >
-                    {{ kriteria.nama + ' (K' + kriteria.rank + ')' }}
+                    {{ kriteria.nama }}
                   </p>
                   <div
                     class="flex flex-col space-y-3 md:flex-row md:space-x-4 md:space-y-0 items-center"
                   >
-                    <SearchInput />
-                    <ButtonGroupTable />
+                    <SearchInput
+                      label="Sub Kriteria"
+                      :is-edit="false"
+                      @search="(e) => searchSubKriteria(e, kriteria.id)"
+                    />
+                    <ButtonGroupTable :id="'sk' + kriteria.id" />
                   </div>
                 </div>
                 <div

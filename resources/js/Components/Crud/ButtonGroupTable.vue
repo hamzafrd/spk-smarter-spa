@@ -2,12 +2,23 @@
 import { useFormStore } from '@/store';
 import { storeToRefs } from 'pinia';
 
+defineProps({
+  id: {
+    type: String,
+    default: null,
+  },
+});
 const store = useFormStore();
-const { updatePositions, toggleModal, loadListSpa, resetForm, handleSearch } =
-  store;
-
-const { massEdit, showBobot, searchQuery, currSort, filteredList } =
+const { updatePositions, toggleModal, resetForm, handleSearch } = store;
+const { massEdit, showBobot, currSort, filteredList, category } =
   storeToRefs(store);
+
+const emit = defineEmits(['onClick']);
+const handlePosisi = () => {
+  massEdit.value = !massEdit.value;
+  currSort.value = 0;
+  handleSearch();
+};
 </script>
 <template>
   <div
@@ -18,8 +29,7 @@ const { massEdit, showBobot, searchQuery, currSort, filteredList } =
       id="createProductModalButton"
       @click="toggleModal('createProductModal'), resetForm()"
       data-modal-target="createProductModal"
-      data-modal-toggle="createProductModal"
-      class="px-3 py-2 flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg t:ext-sm tableBase dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"
+      class="px-3 py-2 capitalize flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg t:ext-sm tableBase dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"
     >
       <svg
         class="w-6 h-6 text-white mr-1"
@@ -39,7 +49,7 @@ const { massEdit, showBobot, searchQuery, currSort, filteredList } =
         />
       </svg>
 
-      Tambah Kriteria
+      Tambah {{ category }}
     </button>
     <button
       v-if="massEdit"
@@ -56,8 +66,8 @@ const { massEdit, showBobot, searchQuery, currSort, filteredList } =
       class="items-center space-x-3 w-full md:w-auto"
     >
       <button
-        id="actionsDropdownButton"
-        data-dropdown-toggle="actionsDropdown"
+        :id="'actionsDropdownButton' + id"
+        :data-dropdown-toggle="'actionsDropdown' + id"
         class="w-full md:w-auto flex items-center justify-center py-2 px-4 font-medium text-gray-900 focus:outline-none bg-gray-100 rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
         type="button"
       >
@@ -77,7 +87,7 @@ const { massEdit, showBobot, searchQuery, currSort, filteredList } =
         Pengaturan Tabel
       </button>
       <div
-        id="actionsDropdown"
+        :id="'actionsDropdown' + id"
         class="hidden z-10 w-44 bg-gray-50 rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
       >
         <ul
@@ -86,24 +96,17 @@ const { massEdit, showBobot, searchQuery, currSort, filteredList } =
         >
           <li>
             <a
-              href="#"
               v-if="!massEdit"
-              @click="
-                (massEdit = !massEdit),
-                  searchQuery.trim(),
-                  (currSort = 0),
-                  loadListSpa()
-              "
-              class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+              @click="handlePosisi()"
+              class="cursor-pointer block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
             >
               Atur Posisi
             </a>
             <a
-              href="#"
               :class="massEdit ? 'block' : 'hidden'"
               type="button"
               @click="toggleModal('simpanPosisiModal')"
-              class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+              class="cursor-pointer block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
             >
               Kembali ke awal
             </a>
