@@ -12,7 +12,7 @@ import ResponsiveNavLink from './ResponsiveNavLink.vue';
 
 const showingNavigationDropdown = ref(false);
 const darkNavbar =
-  'dark:bg-gray-800 dark:border-gray-700 bg-gray-50 border-b border-gray-100';
+  'dark:bg-gray-800 dark:border-gray-700 bg-primary-50 border-b border-gray-100';
 
 const store = useSideNavStatus();
 
@@ -46,7 +46,7 @@ const { toggle } = store;
                   <span class="inline-flex rounded-md">
                     <button
                       type="button"
-                      class="dark:text-gray-400 dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none inline-flex items-center px-3 py-2 font-medium leading-4 text-gray-500 transition duration-150 ease-in-out bg-gray-50 border border-transparent rounded-md"
+                      class="dark:text-gray-400 dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none inline-flex items-center px-3 py-2 font-medium leading-4 text-gray-500 transition duration-150 ease-in-out bg-primary-50 border border-transparent rounded-md"
                     >
                       {{ $page.props.auth.user.name }}
 
@@ -87,7 +87,7 @@ const { toggle } = store;
         <div class="-me-2 ms-2 sm:hidden flex items-center">
           <button
             @click="showingNavigationDropdown = !showingNavigationDropdown"
-            class="dark:text-gray-500 dark:hover:text-gray-400 dark:hover:bg-gray-900 dark:focus:bg-gray-900 dark:focus:text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 inline-flex items-center justify-center p-2 text-gray-400 transition duration-150 ease-in-out rounded-md"
+            class="dark:text-gray-500 dark:hover:text-gray-400 dark:hover:bg-gray-900 dark:focus:bg-gray-900 dark:focus:text-gray-400 hover:text-gray-500 hover:bg-primary-100 focus:outline-none focus:bg-primary-100 focus:text-gray-500 inline-flex items-center justify-center p-2 text-gray-400 transition duration-150 ease-in-out rounded-md"
           >
             <svg
               class="w-6 h-6"

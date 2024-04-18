@@ -1,10 +1,4 @@
 <script setup>
-import SavePosisiModal from './CrudModal/SavePosisiModal.vue';
-import UpdateModal from './CrudModal/UpdateModal.vue';
-import ReadModal from './CrudModal/ReadModal.vue';
-import DeleteModal from './CrudModal/DeleteModal.vue';
-import DeleteAllModal from './CrudModal/DeleteAllModal.vue';
-
 defineProps({
   class: null,
   errorMessage: null,
@@ -20,14 +14,6 @@ defineProps({
 });
 </script>
 <template>
-  <template v-if="list.length > 0">
-    <DeleteAllModal />
-    <UpdateModal />
-    <ReadModal />
-    <DeleteModal />
-    <SavePosisiModal />
-  </template>
-
   <div :class="wrapper">
     <slot name="sub-table-header" />
 

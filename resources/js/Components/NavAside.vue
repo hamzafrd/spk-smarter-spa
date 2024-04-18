@@ -17,16 +17,16 @@ const { status, isExtended } = storeToRefs(store);
 
 <template>
   <aside
-    class="w-52 hidden lg:flex shrink-0 dark:bg-gray-800 dark:border-r-dark-4 sticky top-0 left-0 z-20 flex-col justify-between h-screen bg-gray-50 border-r-1 shadow shadow-gray-400 dark:shadow-gray-500"
+    class="w-52 hidden lg:flex shrink-0 dark:bg-gray-800 dark:border-r-dark-4 sticky top-0 left-0 z-20 flex-col justify-between h-screen bg-primary-50 border-r-1 shadow shadow-gray-400 dark:shadow-gray-500"
     :class="!status ? 'block w-[0]' : ''"
   >
-    <!-- Borger -->
+    <!-- Hamburger -->
     <button
       @click="toggle()"
       :class="
         !status ? 'duration-500  transform  translate-x-12' : 'duration-0'
       "
-      class="text-gray-700 dark:text-black dark:hover:text-gray-400 dark:hover:bg-secondary-color/50 hover:text-gray-900/50 hover:bg-gray-200 bg-primary-color/50 dark:bg-gray-100/50 absolute top-1 right-1 inline-flex items-center justify-center p-2 rounded-md"
+      class="text-gray-700 dark:text-black dark:hover:text-gray-400 dark:hover:bg-secondary-color/50 hover:text-gray-200 hover:bg-primary-500 bg-primary-500/50 dark:bg-primary-100/50 absolute top-1 right-1 inline-flex items-center justify-center p-2 rounded-md"
     >
       <svg
         class="w-6 h-6"
@@ -46,7 +46,7 @@ const { status, isExtended } = storeToRefs(store);
     <div class="flex flex-col flex-1">
       <!-- Toggle & Logo -->
       <div
-        class="dark:bg-indigo-700 bg-indigo-300 flex flex-col gap-2 py-6 border-b border-gray-300/50"
+        class="dark:bg-indigo-700 bg-primary-300 flex flex-col gap-2 py-6 border-b border-gray-300/50"
         :class="!status ? '' : 'duration-1000 delay-[350ms]'"
       >
         <!-- Logo -->
@@ -99,7 +99,7 @@ const { status, isExtended } = storeToRefs(store);
                 <span class="inline-flex rounded-md">
                   <button
                     type="button"
-                    class="dark:text-gray-400 dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none inline-flex items-center px-3 py-2 font-medium leading-4 text-gray-500 transition duration-150 ease-in-out bg-gray-50 border border-transparent rounded-md"
+                    class="dark:text-gray-400 dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none inline-flex items-center px-3 py-2 font-medium leading-4 text-gray-500 transition duration-150 ease-in-out bg-primary-50 border border-transparent rounded-md"
                   >
                     Hello, {{ $page.props.auth.user.name }}
 

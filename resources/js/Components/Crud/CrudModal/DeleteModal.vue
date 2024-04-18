@@ -15,7 +15,7 @@ const { submitForm, toggleModal } = store;
     <div class="relative p-4 w-full max-w-md max-h-full">
       <!-- Modal content -->
       <div
-        class="relative p-4 text-center bg-gray-50 rounded-lg shadow dark:bg-gray-800 sm:p-5"
+        class="relative p-4 text-center bg-primary-50 rounded-lg shadow dark:bg-gray-800 sm:p-5"
       >
         <button
           type="button"
@@ -57,10 +57,10 @@ const { submitForm, toggleModal } = store;
         <form @submit.prevent="submitForm('delete', _, store.category)">
           <div class="flex justify-center items-center space-x-4">
             <button
-              data-modal-toggle="deleteModal"
               type="button"
+              data-modal-target="deleteModal"
               @click="toggleModal('deleteModal')"
-              class="py-2 px-3 font-medium text-gray-500 bg-gray-50 rounded-lg border border-gray-200 hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-primary-300 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600"
+              class="py-2 px-3 font-medium text-gray-500 bg-primary-50 rounded-lg border border-gray-200 hover:bg-primary-100 focus:ring-4 focus:outline-none focus:ring-primary-300 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600"
             >
               No, cancel
             </button>

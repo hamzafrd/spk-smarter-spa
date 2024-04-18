@@ -53,13 +53,13 @@ const hasilLen = props.kriteriaList.reduce((result, current) => {
 
         <div class="table-container rounded-t-lg">
           <h1
-            class="t-head capitalize py-2 tracking-tight leading-none text-gray-900 md:text-xl dark:text-white"
+            class="t-head capitalize py-2 tracking-tight leading-none md:text-xl text-white"
           >
             Intruksi Penggunaan :
           </h1>
 
           <div
-            class="py-8 px-4 lg:px-6 grid lg:grid-cols-4 grid-cols-2 dark:bg-gray-800 bg-gray-100"
+            class="py-8 px-4 lg:px-6 grid lg:grid-cols-4 grid-cols-2 dark:bg-gray-800 bg-primary-100"
           >
             <CardInstruction
               number="1"

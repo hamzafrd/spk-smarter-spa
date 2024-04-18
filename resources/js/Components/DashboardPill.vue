@@ -4,7 +4,7 @@ import { Link, router } from '@inertiajs/vue3';
 <template>
   <Link
     :href="route('kriteria.index')"
-    class="inline-flex h-12 justify-between items-center py-1 px-1 pr-4 mb-7 text-gray-700 bg-gray-100 rounded-full dark:bg-gray-800 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600"
+    class="inline-flex h-12 justify-between items-center py-1 px-1 pr-4 mb-7 text-gray-700 bg-primary-100 rounded-full dark:bg-gray-800 dark:text-white hover:bg-primary-200 dark:hover:bg-gray-600"
     role="alert"
   >
     <div

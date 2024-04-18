@@ -4,7 +4,7 @@ import { storeToRefs } from 'pinia';
 
 const storePinia = useFormStore();
 
-const { updatePositions, toggleModal, loadListSpa } = storePinia;
+const { updatePositions, toggleModal, loadListSpa, handleSearch } = storePinia;
 const { massEdit } = storeToRefs(storePinia);
 </script>
 <template>
@@ -16,7 +16,7 @@ const { massEdit } = storeToRefs(storePinia);
     <div class="relative p-4 w-full max-w-md max-h-full">
       <!-- Modal content -->
       <div
-        class="relative p-4 text-center bg-gray-50 rounded-lg shadow dark:bg-gray-800 sm:p-5"
+        class="relative p-4 text-center bg-primary-50 rounded-lg shadow dark:bg-gray-800 sm:p-5"
       >
         <button
           type="button"
@@ -58,15 +58,15 @@ const { massEdit } = storeToRefs(storePinia);
         <div>
           <div class="flex justify-center items-center space-x-4">
             <button
-              type="button"
+              type="submit"
               @click="
                 toggleModal('simpanPosisiModal'),
                   (massEdit = !massEdit),
-                  loadListSpa()
+                  loadListSpa(),
+                  handleSearch()
               "
-              data-modal-toggle="simpanPosisiModal"
               data-modal-target="simpanPosisiModal"
-              class="py-2 px-3 font-medium text-gray-500 bg-gray-50 rounded-lg border border-gray-200 hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-primary-300 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600"
+              class="py-2 px-3 font-medium text-gray-500 bg-primary-50 rounded-lg border border-gray-200 hover:bg-primary-100 focus:ring-4 focus:outline-none focus:ring-primary-300 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600"
             >
               Ya, kembali ke awal
             </button>
@@ -76,9 +76,9 @@ const { massEdit } = storeToRefs(storePinia);
                 toggleModal('simpanPosisiModal'),
                   (massEdit = !massEdit),
                   updatePositions(),
-                  loadListSpa()
+                  loadListSpa(),
+                  handleSearch()
               "
-              data-modal-toggle="simpanPosisiModal"
               data-modal-target="simpanPosisiModal"
               class="py-2 px-3 font-medium text-center text-white bg-primary-600 rounded-lg hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-primary-500 dark:hover:bg-primary-600 dark:focus:ring-primary-900"
             >

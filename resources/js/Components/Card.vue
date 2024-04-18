@@ -22,7 +22,7 @@ const link = `${label == 'hasil' ? 'hasil-smarter' : label}.index`;
 <template>
   <Link
     :href="route(link)"
-    class="group/card block max-w-sm p-6 bg-gray-50 border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
+    class="group/card block max-w-sm p-6 bg-primary-50 border border-gray-200 rounded-lg shadow hover:bg-primary-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
   >
     <div class="flex justify-between">
       <h5

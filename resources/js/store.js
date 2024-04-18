@@ -1,6 +1,6 @@
 import { router, useForm } from '@inertiajs/vue3';
 import axios from 'axios';
-import { Modal, initFlowbite } from 'flowbite';
+import { Dropdown, Modal, initFlowbite } from 'flowbite';
 import { defineStore } from 'pinia';
 
 export const useFormStore = defineStore('forms', {

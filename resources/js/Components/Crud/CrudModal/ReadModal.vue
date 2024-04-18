@@ -18,7 +18,7 @@ const { kriteria } = storeToRefs(store);
     <div class="relative p-4 w-full max-w-xl max-h-full">
       <!-- Modal content -->
       <div
-        class="relative p-4 bg-gray-50 rounded-lg shadow dark:bg-gray-800 sm:p-5"
+        class="relative p-4 bg-primary-50 rounded-lg shadow dark:bg-gray-800 sm:p-5"
       >
         <!-- Modal header -->
         <div class="flex justify-between mb-4 rounded-t sm:mb-5">

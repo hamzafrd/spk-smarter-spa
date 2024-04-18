@@ -18,7 +18,7 @@ const { formKriteria, dataList, category } = storeToRefs(storePinia);
     <div class="relative p-4 w-full max-w-2xl max-h-full">
       <!-- Modal content -->
       <div
-        class="relative p-4 bg-gray-50 rounded-lg shadow dark:bg-gray-800 sm:p-5"
+        class="relative p-4 bg-primary-50 rounded-lg shadow dark:bg-gray-800 sm:p-5"
       >
         <!-- Modal header -->
         <div
@@ -31,7 +31,6 @@ const { formKriteria, dataList, category } = storeToRefs(storePinia);
             type="button"
             @click="toggleModal('updateProductModal')"
             class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
-            data-modal-toggle="updateProductModal"
           >
             <svg
               aria-hidden="true"
@@ -63,7 +62,7 @@ const { formKriteria, dataList, category } = storeToRefs(storePinia);
                 name="name"
                 id="name"
                 v-model="formKriteria.nama"
-                class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                class="bg-primary-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                 placeholder="Masukan Nama Kriteria"
               />
               <InputError class="mt-2" :message="formKriteria.errors.nama" />
@@ -79,7 +78,7 @@ const { formKriteria, dataList, category } = storeToRefs(storePinia);
                 name="brand"
                 id="brand"
                 v-model="formKriteria.rank['value']"
-                class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                class="bg-primary-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                 :placeholder="'Masukan angka antara 1 s.d. ' + dataList.length"
               />
               <InputError

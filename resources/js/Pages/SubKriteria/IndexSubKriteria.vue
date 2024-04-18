@@ -30,9 +30,12 @@ const props = defineProps({
     default: null,
   },
 });
+
+props.kriteriaList.forEach((kriteria) => {
+  currentSubLen.value += kriteria.subkriteria.length;
+});
 const formattedKriteriaList = computed(() => {
   return props.kriteriaList.map((kriteria) => {
-    currentSubLen.value += kriteria.subkriteria.length;
     return {
       ...kriteria,
       nama: `${kriteria.nama} (K${kriteria.rank})`,
@@ -51,7 +54,7 @@ const searchSubKriteria = (query, id) => {
   const filteredList = formattedKriteriaList.value.map((kriteria) => {
     if (kriteria.id === id) {
       return {
-        nama: kriteria.nama,
+        ...kriteria,
         subkriteria: kriteria.subkriteria.filter((subkriteria) => {
           const filteredQuery = query.toLowerCase();
           return subkriteria.nama.toLowerCase().includes(filteredQuery);
@@ -204,7 +207,7 @@ const searchSubKriteria = (query, id) => {
                       :id="item.nama + item.id"
                       :data-dropdown-toggle="item.nama + item.id + 'dropdown'"
                       :class="massEdit ? 'hidden' : 'block'"
-                      class="inline-flex items-center font-medium hover:bg-gray-100 dark:hover:bg-gray-700 p-1.5 dark:hover-bg-gray-800 text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100"
+                      class="inline-flex items-center font-medium hover:bg-primary-100 dark:hover:bg-gray-700 p-1.5 dark:hover-bg-gray-800 text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100"
                       type="button"
                     >
                       <svg
@@ -221,7 +224,7 @@ const searchSubKriteria = (query, id) => {
                     </button>
                     <div
                       :id="item.nama + item.id + 'dropdown'"
-                      class="hidden z-10 w-44 bg-gray-50 rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600 border border-gray-200 dark:border-gray-700"
+                      class="hidden z-10 w-44 bg-primary-50 rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600 border border-gray-200 dark:border-gray-700"
                     >
                       <ul class="py-1" :aria-labelledby="item.nama + item.id">
                         <li>
@@ -233,7 +236,7 @@ const searchSubKriteria = (query, id) => {
                               setKriteria(item),
                                 toggleModal('updateProductModal')
                             "
-                            class="flex w-full items-center py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white text-gray-700 dark:text-gray-200"
+                            class="flex w-full items-center py-2 px-4 hover:bg-primary-100 dark:hover:bg-gray-600 dark:hover:text-white text-gray-700 dark:text-gray-200"
                           >
                             <svg
                               class="w-6 h-6 text-gray-800 dark:text-white mr-2"
@@ -261,7 +264,7 @@ const searchSubKriteria = (query, id) => {
                             data-modal-target="readProductModal"
                             data-modal-toggle="readProductModal"
                             @click="setKriteria(item)"
-                            class="flex w-full items-center py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white text-gray-700 dark:text-gray-200"
+                            class="flex w-full items-center py-2 px-4 hover:bg-primary-100 dark:hover:bg-gray-600 dark:hover:text-white text-gray-700 dark:text-gray-200"
                           >
                             <svg
                               class="w-6 h-6 text-gray-800 dark:text-white mr-2"
@@ -295,7 +298,7 @@ const searchSubKriteria = (query, id) => {
                             @click="
                               setKriteria(item), toggleModal('deleteModal')
                             "
-                            class="flex w-full items-center py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 text-red-500 dark:hover:text-red-400"
+                            class="flex w-full items-center py-2 px-4 hover:bg-primary-100 dark:hover:bg-gray-600 text-red-500 dark:hover:text-red-400"
                           >
                             <svg
                               class="w-6 h-6 text-red-500 mr-2"

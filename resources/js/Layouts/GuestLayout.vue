@@ -8,7 +8,7 @@ import NavThemeToggle from '@/Components/NavThemeToggle.vue';
 <template>
   <MasterLayout>
     <div
-      class="sm:justify-center sm:pt-0 dark:bg-gray-900 flex flex-col items-center min-h-screen pt-6 bg-gray-100"
+      class="sm:justify-center sm:pt-0 dark:bg-gray-900 flex flex-col items-center min-h-screen pt-6 bg-primary-100"
     >
       <div class="flex items-center gap-3">
         <div>
@@ -26,7 +26,7 @@ import NavThemeToggle from '@/Components/NavThemeToggle.vue';
       </div>
 
       <div
-        class="sm:max-w-md dark:bg-gray-800 sm:rounded-lg w-full px-6 py-4 mt-6 overflow-hidden bg-gray-50 shadow-md"
+        class="sm:max-w-md dark:bg-gray-800 sm:rounded-lg w-full px-6 py-4 mt-6 overflow-hidden bg-primary-50 shadow-md"
       >
         <slot />
       </div>

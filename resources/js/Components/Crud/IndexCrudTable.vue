@@ -1,8 +1,27 @@
 <script setup>
 import CreateModal from '@/Components/Crud/CrudModal/CreateModal.vue';
+import SavePosisiModal from './CrudModal/SavePosisiModal.vue';
+import UpdateModal from './CrudModal/UpdateModal.vue';
+import ReadModal from './CrudModal/ReadModal.vue';
+import DeleteModal from './CrudModal/DeleteModal.vue';
+import DeleteAllModal from './CrudModal/DeleteAllModal.vue';
+
+defineProps({
+  list: {
+    type: Array,
+    default: [],
+  },
+});
 </script>
 <template lang="html">
   <CreateModal />
+  <template v-if="list.length > 0">
+    <DeleteAllModal />
+    <UpdateModal />
+    <ReadModal />
+    <DeleteModal />
+    <SavePosisiModal />
+  </template>
 
   <div class="h-full flex flex-col antialiased relative">
     <div>
