@@ -17,7 +17,7 @@ const emit = defineEmits(['submitForm']);
 
 const storePinia = useFormStore();
 const { toggleModal } = storePinia;
-const { formKriteria: form, category } = storeToRefs(storePinia);
+const { form, category } = storeToRefs(storePinia);
 
 const handleSubmit = () => {
   emit('submitForm');

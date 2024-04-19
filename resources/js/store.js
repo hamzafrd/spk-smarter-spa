@@ -5,7 +5,7 @@ import { defineStore } from 'pinia';
 
 export const useFormStore = defineStore('forms', {
   state: () => ({
-    formKriteria: useForm({
+    form: useForm({
       nama: '',
       rank: {
         min: 1,
@@ -13,6 +13,7 @@ export const useFormStore = defineStore('forms', {
         oldValue: null,
         value: null,
       },
+      id: null,
     }),
 
     category: null,
@@ -84,43 +85,37 @@ export const useFormStore = defineStore('forms', {
     submitForm(params, maxValue, category) {
       switch (params) {
         case 'store':
-          this.formKriteria.rank.max = maxValue;
-          this.formKriteria.post(route(category + '.store'), {
+          this.form.rank.max = maxValue;
+          this.form.post(route(category + '.store'), {
             onSuccess: () => {
-              this.formKriteria.nama = '';
-              this.formKriteria.rank.value = '';
+              this.form.nama = '';
+              this.form.rank.value = '';
               this.loadList(category);
               this.toggleModal('createProductModalmain');
             },
           });
           break;
         case 'update':
-          this.formKriteria.rank.max = maxValue;
-          this.formKriteria.put(
-            route(category + '.update', this[category].id),
-            {
-              onSuccess: () => {
-                this.formKriteria.nama = '';
-                this.formKriteria.rank.value = '';
-                this.loadList(category);
-                this.toggleModal('updateProductModal');
-              },
-            }
-          );
+          this.form.rank.max = maxValue;
+          this.form.put(route(category + '.update', this[category].id), {
+            onSuccess: () => {
+              this.form.nama = '';
+              this.form.rank.value = '';
+              this.loadList(category);
+              this.toggleModal('updateProductModal');
+            },
+          });
           break;
         case 'delete':
-          this.formKriteria.delete(
-            route(category + '.destroy', this[category].id),
-            {
-              onSuccess: () => {
-                this.loadList(category);
-                this.toggleModal('deleteModal');
-              },
-            }
-          );
+          this.form.delete(route(category + '.destroy', this[category].id), {
+            onSuccess: () => {
+              this.loadList(category);
+              this.toggleModal('deleteModal');
+            },
+          });
           break;
         case 'deleteAll':
-          this.formKriteria.delete(route(category + '.destroyAll'), {
+          this.form.delete(route(category + '.destroyAll'), {
             onSuccess: () => {
               this.loadList(category);
               this.toggleModal('deleteAllModal');
@@ -202,9 +197,9 @@ export const useFormStore = defineStore('forms', {
 
     setKriteria(item) {
       this.kriteria = item;
-      this.formKriteria.nama = this.kriteria.nama;
-      this.formKriteria.rank.value = this.kriteria.rank;
-      this.formKriteria.rank.oldValue = this.kriteria.rank;
+      this.form.nama = this.kriteria.nama;
+      this.form.rank.value = this.kriteria.rank;
+      this.form.rank.oldValue = this.kriteria.rank;
     },
 
     setSubKriteriaList(itemList) {
@@ -212,8 +207,8 @@ export const useFormStore = defineStore('forms', {
       this.subKriteriaList = itemList;
     },
     resetForm() {
-      this.formKriteria.reset();
-      this.formKriteria.errors = '';
+      this.form.reset();
+      this.form.errors = '';
     },
     toggleModal(modalName) {
       this.modalName = modalName;

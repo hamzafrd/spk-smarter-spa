@@ -13,7 +13,7 @@ const props = defineProps({
 const storePinia = useFormStore();
 
 const { submitForm, toggleModal } = storePinia;
-const { formKriteria, dataList, category } = storeToRefs(storePinia);
+const { form, dataList, category } = storeToRefs(storePinia);
 </script>
 <template>
   <div
@@ -68,11 +68,11 @@ const { formKriteria, dataList, category } = storeToRefs(storePinia);
                 type="text"
                 name="name"
                 id="name"
-                v-model="formKriteria.nama"
+                v-model="form.nama"
                 class="bg-primary-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                 placeholder="Masukan Nama Kriteria"
               />
-              <InputError class="mt-2" :message="formKriteria.errors.nama" />
+              <InputError class="mt-2" :message="form.errors.nama" />
             </div>
             <div>
               <label
@@ -84,14 +84,11 @@ const { formKriteria, dataList, category } = storeToRefs(storePinia);
                 type="number"
                 name="brand"
                 id="brand"
-                v-model="formKriteria.rank['value']"
+                v-model="form.rank['value']"
                 class="bg-primary-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                 :placeholder="'Masukan angka antara 1 s.d. ' + dataList.length"
               />
-              <InputError
-                class="mt-2"
-                :message="formKriteria.errors['rank.value']"
-              />
+              <InputError class="mt-2" :message="form.errors['rank.value']" />
             </div>
           </div>
           <div class="flex items-center justify-end space-x-4">

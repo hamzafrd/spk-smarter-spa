@@ -3,7 +3,7 @@ import IndexCrudTable from '@/Components/Crud/IndexCrudTable.vue';
 import TableCrud from '@/Components/Crud/TableCrud.vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { useFormStore } from '@/store';
-import { Head } from '@inertiajs/vue3';
+import { Head, useForm } from '@inertiajs/vue3';
 import { storeToRefs } from 'pinia';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
 import Thead from '@/Components/Crud/Thead.vue';
@@ -13,16 +13,13 @@ import ButtonGroupTable from '@/Components/Crud/ButtonGroupTable.vue';
 import { computed, ref } from 'vue';
 const store = useFormStore();
 
-const { setKriteria, toggleModal, moveListItem } = store;
-const { massEdit, dataList, filteredList, category, queryKriteria } =
+const { setKriteria, toggleModal, moveListItem, submitForm } = store;
+const { massEdit, dataList, filteredList, category, queryKriteria, form } =
   storeToRefs(store);
 
 category.value = 'subkriteria';
 
 const currentSubLen = ref(0);
-const searchKriteria = (query) => {
-  queryKriteria.value = query;
-};
 
 const props = defineProps({
   kriteriaList: {
@@ -34,6 +31,7 @@ const props = defineProps({
 props.kriteriaList.forEach((kriteria) => {
   currentSubLen.value += kriteria.subkriteria.length;
 });
+
 const formattedKriteriaList = computed(() => {
   return props.kriteriaList.map((kriteria) => {
     return {
@@ -45,6 +43,9 @@ const formattedKriteriaList = computed(() => {
 
 dataList.value = formattedKriteriaList.value;
 
+const searchKriteria = (query) => {
+  queryKriteria.value = query;
+};
 const searchSubKriteria = (query, id) => {
   if (!query.trim()) {
     dataList.value = formattedKriteriaList.value;
@@ -65,6 +66,11 @@ const searchSubKriteria = (query, id) => {
     }
   });
   dataList.value = filteredList;
+};
+
+const createSubkriteria = (max, id) => {
+  form.value.id = id;
+  submitForm('store', max, category.value);
 };
 </script>
 
@@ -100,9 +106,13 @@ const searchSubKriteria = (query, id) => {
             <TableCrud
               :list="kriteria.subkriteria"
               :id="`sk${kriteria.id}`"
+              :max-rank="kriteria.subkriteria.length + 1"
               errorMessage="Belum memiliki sub kriteria"
               class="lg:mx-4 lg:mb-4 lg:rounded-lg"
               wrapper="bg-content lg:m-2 my-2"
+              @create="
+                createSubkriteria(kriteria.subkriteria.length + 1, kriteria.id)
+              "
             >
               <template #sub-table-header>
                 <div
