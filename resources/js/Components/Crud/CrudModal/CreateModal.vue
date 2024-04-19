@@ -15,9 +15,9 @@ const props = defineProps({
 
 const emit = defineEmits(['submitForm']);
 
-const storePinia = useFormStore();
-const { toggleModal } = storePinia;
-const { form, category } = storeToRefs(storePinia);
+const store = useFormStore();
+const { toggleModal } = store;
+const { form, category } = storeToRefs(store);
 
 const handleSubmit = () => {
   emit('submitForm');
@@ -103,7 +103,7 @@ const handleSubmit = () => {
           </div>
           <button
             type="submit"
-            class="text-white inline-flex items-center bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+            class="text-white capitalize inline-flex items-center bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
           >
             <svg
               class="mr-1 -ml-1 w-6 h-6"
@@ -117,7 +117,7 @@ const handleSubmit = () => {
                 clip-rule="evenodd"
               />
             </svg>
-            Tambahkan Kriteria
+            Tambahkan {{ category }}
           </button>
         </form>
       </div>

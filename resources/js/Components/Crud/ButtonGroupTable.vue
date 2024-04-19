@@ -10,26 +10,20 @@ const props = defineProps({
   },
 });
 const store = useFormStore();
-const { updatePositions, toggleModal, resetForm, initLib } = store;
-const { massEdit, showBobot, currSort, filteredList, category } =
-  storeToRefs(store);
+const { toggleModal } = store;
+const { massEdit, showBobot, filteredList, category } = storeToRefs(store);
 
-const emit = defineEmits(['onClickAturPosisi']);
+const emit = defineEmits(['onClickAturPosisi', 'onShowCreate', 'onMassEdit']);
 const handlePosisi = () => {
-  massEdit.value = !massEdit.value;
-  currSort.value = 0;
   emit('onClickAturPosisi');
 };
 
-const handleCreate = () => {
-  toggleModal(`createProductModal${props.id}`);
-  resetForm();
+const handleShowCreate = () => {
+  emit('onShowCreate');
 };
 
 const handleMassEdit = () => {
-  massEdit.value = !massEdit.value;
-  updatePositions();
-  initLib();
+  emit('onMassEdit');
 };
 </script>
 <template>
@@ -38,7 +32,7 @@ const handleMassEdit = () => {
   >
     <button
       type="button"
-      @click="handleCreate()"
+      @click="handleShowCreate()"
       class="px-3 py-2 capitalize flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg t:ext-sm tableBase dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"
     >
       <svg

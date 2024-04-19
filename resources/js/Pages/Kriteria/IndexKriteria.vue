@@ -14,7 +14,6 @@ import DropdownDots from '@/Components/DropdownDots.vue';
 import SearchInput from '@/Components/Crud/SearchInput.vue';
 import { ref } from 'vue';
 
-const child = ref(null);
 const props = defineProps({
   kriteriaList: {
     type: Array,
@@ -22,16 +21,29 @@ const props = defineProps({
   },
 });
 const store = useFormStore();
+
 const {
   setKriteria,
   setSubKriteriaList,
   toggleModal,
   moveListItem,
+  updatePositions,
   initLib,
   submitForm,
+  resetForm,
 } = store;
-const { massEdit, showBobot, filteredList, dataList, category, queryKriteria } =
-  storeToRefs(store);
+
+const {
+  massEdit,
+  showBobot,
+  filteredList,
+  dataList,
+  category,
+  queryKriteria,
+  currSort,
+} = storeToRefs(store);
+
+const child = ref(null);
 
 dataList.value = props.kriteriaList;
 category.value = 'kriteria';
@@ -43,12 +55,33 @@ const searchKriteria = (query) => {
 };
 
 const handleAturPosisi = () => {
+  massEdit.value = !massEdit.value;
+  currSort.value = 0;
+
+  // Clear Search
   child.value.clearQuery();
   queryKriteria.value = '';
 };
 
+const handleMassEdit = () => {
+  massEdit.value = !massEdit.value;
+  updatePositions();
+  initLib();
+};
+
 const handleCreate = () => {
-  submitForm('store', dataList.value.length + 1, category.value);
+  submitForm('store', dataList.value.length + 1, category.value, 'main');
+};
+const handleShowCreate = () => {
+  toggleModal(`createProductModalmain`);
+  resetForm();
+};
+
+const handleUpdate = () => {
+  submitForm('update', dataList.value.length + 1, category.value, 'main');
+};
+const handleShowUpdate = (item) => {
+  setKriteria(item), toggleModal('updateProductModalmain');
 };
 </script>
 
@@ -75,16 +108,19 @@ const handleCreate = () => {
           <ButtonGroupTable
             id="main"
             @on-click-atur-posisi="handleAturPosisi"
+            @on-show-create="handleShowCreate"
+            @on-mass-edit="handleMassEdit"
           />
         </template>
         <template #table>
           <TableCrud
             id="main"
-            @create="handleCreate"
             :max-rank="dataList.length + 1"
             :list="filteredList"
             :search-query="queryKriteria"
             :class="'lg:mx-4 lg:mb-4 lg:rounded-lg'"
+            @create="handleCreate"
+            @update="handleUpdate"
           >
             <SubKriteriaModal />
 
@@ -144,8 +180,8 @@ const handleCreate = () => {
                   </a>
                 </TData>
 
-                <!-- Arrow Button -->
                 <td class="px-1 py-3 flex justify-center">
+                  <!-- Arrow Button -->
                   <div class="move-buttons" v-if="massEdit">
                     <SecondaryButton
                       @click="moveListItem(index, 'up')"
@@ -198,9 +234,7 @@ const handleCreate = () => {
                       <button
                         id="editKriteria"
                         class="dropdownDotItem"
-                        @click="
-                          setKriteria(item), toggleModal('updateProductModal')
-                        "
+                        @click="handleShowUpdate(item)"
                       >
                         <svg
                           class="w-6 h-6 text-gray-800 dark:text-white mr-2"

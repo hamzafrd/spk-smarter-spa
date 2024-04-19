@@ -8,16 +8,25 @@ const props = defineProps({
     type: String,
     default: null,
   },
+  maxRank: {
+    type: Number,
+    default: null,
+  },
 });
 
-const storePinia = useFormStore();
+const emit = defineEmits(['submitForm']);
 
-const { submitForm, toggleModal } = storePinia;
-const { form, dataList, category } = storeToRefs(storePinia);
+const store = useFormStore();
+const { toggleModal } = store;
+const { form, category } = storeToRefs(store);
+
+const handleSubmit = () => {
+  emit('submitForm');
+};
 </script>
 <template>
   <div
-    id="updateProductModal"
+    :id="`updateProductModal${id}`"
     tabindex="-1"
     aria-hidden="true"
     class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full"
@@ -36,7 +45,8 @@ const { form, dataList, category } = storeToRefs(storePinia);
           </h3>
           <button
             type="button"
-            @click="toggleModal('updateProductModal')"
+            @click="toggleModal(`updateProductModal${id}`)"
+            :data-modal-target="`updateProductModal${id}`"
             class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
           >
             <svg
@@ -56,21 +66,22 @@ const { form, dataList, category } = storeToRefs(storePinia);
           </button>
         </div>
         <!-- Modal body -->
-        <form @submit.prevent="submitForm('update', dataList.length, category)">
+        <form @submit.prevent="handleSubmit()">
           <div class="grid gap-4 mb-4 sm:grid-cols-2">
             <div>
               <label
                 for="name"
-                class="block mb-2 font-medium text-gray-900 dark:text-white"
-                >Kriteria</label
+                class="block capitalize mb-2 font-medium text-gray-900 dark:text-white"
               >
+                Nama {{ category }}
+              </label>
               <input
                 type="text"
                 name="name"
                 id="name"
                 v-model="form.nama"
                 class="bg-primary-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                placeholder="Masukan Nama Kriteria"
+                :placeholder="`Masukan Nama ${category}`"
               />
               <InputError class="mt-2" :message="form.errors.nama" />
             </div>
@@ -86,7 +97,7 @@ const { form, dataList, category } = storeToRefs(storePinia);
                 id="brand"
                 v-model="form.rank['value']"
                 class="bg-primary-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                :placeholder="'Masukan angka antara 1 s.d. ' + dataList.length"
+                :placeholder="'Masukan angka antara 1 s.d. ' + maxRank"
               />
               <InputError class="mt-2" :message="form.errors['rank.value']" />
             </div>
@@ -94,9 +105,9 @@ const { form, dataList, category } = storeToRefs(storePinia);
           <div class="flex items-center justify-end space-x-4">
             <button
               type="submit"
-              class="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+              class="capitalize text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
             >
-              Update Kriteria
+              Update {{ category }}
             </button>
           </div>
         </form>

@@ -42,7 +42,7 @@ const emit = defineEmits([
   <CreateModal @submit-form="emit('create')" :max-rank="maxRank" :id="id" />
   <template v-if="list.length > 0">
     <DeleteAllModal />
-    <UpdateModal />
+    <UpdateModal @submit-form="emit('update')" :max-rank="maxRank" :id="id" />
     <ReadModal />
     <DeleteModal />
     <SavePosisiModal />

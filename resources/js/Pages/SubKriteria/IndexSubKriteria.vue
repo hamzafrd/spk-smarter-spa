@@ -13,7 +13,7 @@ import ButtonGroupTable from '@/Components/Crud/ButtonGroupTable.vue';
 import { computed, ref } from 'vue';
 const store = useFormStore();
 
-const { setKriteria, toggleModal, moveListItem, submitForm } = store;
+const { setKriteria, toggleModal, moveListItem, submitForm, resetForm } = store;
 const { massEdit, dataList, filteredList, category, queryKriteria, form } =
   storeToRefs(store);
 
@@ -34,9 +34,16 @@ props.kriteriaList.forEach((kriteria) => {
 
 const formattedKriteriaList = computed(() => {
   return props.kriteriaList.map((kriteria) => {
+    // Sort the subkriteria array by rank
+    const sortedSubkriteria = kriteria.subkriteria.sort(
+      (a, b) => a.rank - b.rank
+    );
+
+    // Return the kriteria object with sorted subkriteria
     return {
       ...kriteria,
       nama: `${kriteria.nama} (K${kriteria.rank})`,
+      subkriteria: sortedSubkriteria,
     };
   });
 });
@@ -68,9 +75,35 @@ const searchSubKriteria = (query, id) => {
   dataList.value = filteredList;
 };
 
-const createSubkriteria = (max, id) => {
+const handleAturPosisi = () => {
+  massEdit.value = !massEdit.value;
+  currSort.value = 0;
+
+  // Clear Search
+  child.value.clearQuery();
+  queryKriteria.value = '';
+};
+
+const handleMassEdit = () => {
+  massEdit.value = !massEdit.value;
+  updatePositions();
+  initLib();
+};
+
+const handleCreate = (max, id) => {
   form.value.id = id;
-  submitForm('store', max, category.value);
+  submitForm('store', max, category.value, `sk${id}`);
+};
+const handleShowCreate = (id) => {
+  toggleModal(`createProductModal${id}`);
+  resetForm();
+};
+
+const handleUpdate = () => {
+  submitForm('update', dataList.value.length + 1, category.value, id);
+};
+const handleShowUpdate = (item, id) => {
+  setKriteria(item), toggleModal(`updateProductModal${id}`);
 };
 </script>
 
@@ -111,8 +144,9 @@ const createSubkriteria = (max, id) => {
               class="lg:mx-4 lg:mb-4 lg:rounded-lg"
               wrapper="bg-content lg:m-2 my-2"
               @create="
-                createSubkriteria(kriteria.subkriteria.length + 1, kriteria.id)
+                handleCreate(kriteria.subkriteria.length + 1, kriteria.id)
               "
+              @update="handleUpdate"
             >
               <template #sub-table-header>
                 <div
@@ -131,7 +165,12 @@ const createSubkriteria = (max, id) => {
                       :is-edit="false"
                       @search="(e) => searchSubKriteria(e, kriteria.id)"
                     />
-                    <ButtonGroupTable :id="`sk${kriteria.id}`" />
+                    <ButtonGroupTable
+                      :id="`sk${kriteria.id}`"
+                      @on-click-atur-posisi="handleAturPosisi"
+                      @on-show-create="handleShowCreate(`sk${kriteria.id}`)"
+                      @on-mass-edit="handleMassEdit"
+                    />
                   </div>
                 </div>
                 <div
@@ -241,12 +280,7 @@ const createSubkriteria = (max, id) => {
                         <li>
                           <button
                             type="button"
-                            data-modal-target="updateProductModal"
-                            data-modal-toggle="updateProductModal"
-                            @click="
-                              setKriteria(item),
-                                toggleModal('updateProductModal')
-                            "
+                            @click="handleShowUpdate(`sk${item.id}`)"
                             class="flex w-full items-center py-2 px-4 hover:bg-primary-100 dark:hover:bg-gray-600 dark:hover:text-white text-gray-700 dark:text-gray-200"
                           >
                             <svg

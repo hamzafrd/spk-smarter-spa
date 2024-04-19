@@ -82,7 +82,7 @@ export const useFormStore = defineStore('forms', {
      * @param {number} maxValue - The maximum value to set
      * @param {string} category - The category for the action
      */
-    submitForm(params, maxValue, category) {
+    submitForm(params, maxValue, category, id) {
       switch (params) {
         case 'store':
           this.form.rank.max = maxValue;
@@ -91,7 +91,7 @@ export const useFormStore = defineStore('forms', {
               this.form.nama = '';
               this.form.rank.value = '';
               this.loadList(category);
-              this.toggleModal('createProductModalmain');
+              this.toggleModal('createProductModal' + id);
             },
           });
           break;
@@ -102,7 +102,7 @@ export const useFormStore = defineStore('forms', {
               this.form.nama = '';
               this.form.rank.value = '';
               this.loadList(category);
-              this.toggleModal('updateProductModal');
+              this.toggleModal('updateProductModal' + id);
             },
           });
           break;
@@ -203,7 +203,6 @@ export const useFormStore = defineStore('forms', {
     },
 
     setSubKriteriaList(itemList) {
-      console.log(itemList);
       this.subKriteriaList = itemList;
     },
     resetForm() {
@@ -211,6 +210,7 @@ export const useFormStore = defineStore('forms', {
       this.form.errors = '';
     },
     toggleModal(modalName) {
+      console.log(modalName);
       this.modalName = modalName;
       this.getModal.toggle();
     },
