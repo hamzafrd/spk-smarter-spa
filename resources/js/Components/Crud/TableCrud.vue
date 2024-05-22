@@ -44,11 +44,11 @@ const emit = defineEmits([
     <DeleteAllModal />
     <UpdateModal @submit-form="emit('update')" :max-rank="maxRank" :id="id" />
     <ReadModal />
-    <DeleteModal />
+    <DeleteModal @submit-form="emit('delete')" />
     <SavePosisiModal />
   </template>
   <slot />
-  <div :class="wrapper">
+  <div :class="wrapper" :id="id">
     <slot name="sub-table-header" />
 
     <div v-if="list.length > 0" class="table-container" :class="class">

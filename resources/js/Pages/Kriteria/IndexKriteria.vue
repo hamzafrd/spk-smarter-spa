@@ -83,6 +83,13 @@ const handleUpdate = () => {
 const handleShowUpdate = (item) => {
   setKriteria(item), toggleModal('updateProductModalmain');
 };
+
+const handleShowDelete = (item) => {
+  setKriteria(item), toggleModal('deleteModal');
+};
+const handleDelete = () => {
+  submitForm('delete', null, store.category);
+};
 </script>
 
 <template>
@@ -121,6 +128,7 @@ const handleShowUpdate = (item) => {
             :class="'lg:mx-4 lg:mb-4 lg:rounded-lg'"
             @create="handleCreate"
             @update="handleUpdate"
+            @delete="handleDelete"
           >
             <SubKriteriaModal />
 
@@ -290,7 +298,7 @@ const handleShowUpdate = (item) => {
                     <li>
                       <button
                         class="dropdownDotItem"
-                        @click="setKriteria(item), toggleModal('deleteModal')"
+                        @click="handleShowDelete(item)"
                       >
                         <svg
                           class="w-6 h-6 text-red-500 mr-2"

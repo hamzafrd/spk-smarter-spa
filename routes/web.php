@@ -6,6 +6,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KriteriaController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SmarterHasilController;
+use App\Http\Controllers\SmarterRankingController;
 use App\Http\Controllers\SubKriteriaController;
 use Illuminate\Support\Facades\Route;
 
@@ -30,7 +31,8 @@ Route::middleware('auth')->group(function () {
   Route::resource('kriteria', KriteriaController::class);
   Route::resource('subkriteria', SubKriteriaController::class);
   Route::resource('alternatif', AlternatifController::class);
-  Route::resource('hasil-smarter', SmarterHasilController::class);
+  Route::resource('ranking', SmarterRankingController::class);
+  Route::resource('hasil', SmarterHasilController::class);
 });
 
 require __DIR__ . '/auth.php';

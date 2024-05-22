@@ -9,6 +9,11 @@ const props = defineProps({
 const store = useFormStore();
 
 const { submitForm, toggleModal } = store;
+const emit = defineEmits(['submitForm']);
+
+const handleSubmit = () => {
+  emit('submitForm');
+};
 </script>
 <template>
   <div
@@ -59,7 +64,7 @@ const { submitForm, toggleModal } = store;
         <p class="mb-4 text-gray-500 dark:text-gray-300">
           Are you sure you want to delete this item?
         </p>
-        <form @submit.prevent="submitForm('delete', _, store.category)">
+        <form @submit.prevent="handleSubmit()">
           <div class="flex justify-center items-center space-x-4">
             <button
               type="button"

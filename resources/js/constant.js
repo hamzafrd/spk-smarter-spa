@@ -20,8 +20,13 @@ export const linkNav = [
     label: 'Alternatif',
   },
   {
+    imgURL: ['img/ranking-dark.svg', 'img/ranking.svg'],
+    route: 'ranking.index',
+    label: 'Perangkingan',
+  },
+  {
     imgURL: ['img/result-dark.svg', 'img/result.svg'],
-    route: 'hasil-smarter.index',
+    route: 'hasil.index',
     label: 'Hasil',
   },
 ];

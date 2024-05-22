@@ -17,7 +17,7 @@ const imgLabel =
 
 const imgDark = `img/${imgLabel}-dark.svg`;
 const imgLight = `img/${imgLabel}.svg`;
-const link = `${label == 'hasil' ? 'hasil-smarter' : label}.index`;
+const link = `${label == 'hasil' ? 'hasil' : label}.index`;
 </script>
 <template>
   <Link

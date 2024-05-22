@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Alternatif;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
-class AlternatifController extends Controller
+class SmarterRankingController extends Controller
 {
   /**
    * Display a listing of the resource.
@@ -17,8 +16,9 @@ class AlternatifController extends Controller
   {
     $user = User::find(Auth::id());
     $alternatif = $user->alternatif()->get();
+    $kriteria_joinsb = $user->kriteria()->with('subkriteria')->orderBy('rank')->get();
 
-    return Inertia::render('Alternatif/IndexAlternatif', ['listAlternatif' => $alternatif]);
+    return Inertia::render('Ranking/IndexRanking', ['listAlternatif' => $alternatif, 'listKriteria' => $kriteria_joinsb]);
   }
 
   /**
@@ -40,7 +40,7 @@ class AlternatifController extends Controller
   /**
    * Display the specified resource.
    */
-  public function show(Alternatif $alternatif)
+  public function show(string $id)
   {
     //
   }
@@ -48,7 +48,7 @@ class AlternatifController extends Controller
   /**
    * Show the form for editing the specified resource.
    */
-  public function edit(Alternatif $alternatif)
+  public function edit(string $id)
   {
     //
   }
@@ -56,7 +56,7 @@ class AlternatifController extends Controller
   /**
    * Update the specified resource in storage.
    */
-  public function update(Request $request, Alternatif $alternatif)
+  public function update(Request $request, string $id)
   {
     //
   }
@@ -64,7 +64,7 @@ class AlternatifController extends Controller
   /**
    * Remove the specified resource from storage.
    */
-  public function destroy(Alternatif $alternatif)
+  public function destroy(string $id)
   {
     //
   }
