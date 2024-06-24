@@ -7,7 +7,8 @@ import '../css/app.css';
 import './bootstrap';
 import './store';
 
-const appName = import.meta.env.VITE_APP_NAME || 'Girya Mutiara Arrayan';
+import.meta.glob(['../fonts/**']);
+const appName = import.meta.env.VITE_APP_NAME || 'Grisya Mutiara Arrayan';
 
 createInertiaApp({
   title: (title) => `${title} - ${appName}`,

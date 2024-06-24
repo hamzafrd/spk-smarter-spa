@@ -18,45 +18,25 @@ const { status, isExtended } = storeToRefs(store);
 <template>
   <aside
     class="w-52 hidden lg:flex shrink-0 dark:bg-gray-800 dark:border-r-dark-4 sticky top-0 left-0 z-20 flex-col justify-between h-screen bg-primary-50 border-r-1 shadow shadow-gray-400 dark:shadow-gray-500"
-    :class="!status ? 'block w-[0]' : ''"
-  >
+    :class="!status ? 'block w-[0]' : ''">
     <!-- Hamburger -->
-    <button
-      @click="toggle()"
-      :class="
-        !status ? 'duration-500  transform  translate-x-12' : 'duration-0'
+    <button @click="toggle()" :class="!status ? 'duration-500  transform  translate-x-12' : 'duration-0'
       "
-      class="text-gray-700 dark:text-black dark:hover:text-gray-400 dark:hover:bg-secondary-color/50 hover:text-gray-200 hover:bg-primary-500 bg-primary-500/50 dark:bg-primary-100/50 absolute top-1 right-1 inline-flex items-center justify-center p-2 rounded-md"
-    >
-      <svg
-        class="w-6 h-6"
-        stroke="currentColor"
-        fill="none"
-        viewBox="0 0 24 24"
-      >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M4 6h16M4 12h16M4 18h16"
-        />
+      class="text-gray-700 dark:text-black dark:hover:text-gray-400 dark:hover:bg-secondary-color/50 hover:text-gray-200 hover:bg-primary-500 bg-primary-500/50 dark:bg-primary-100/50 absolute top-1 right-1 inline-flex items-center justify-center p-2 rounded-md">
+      <svg class="w-6 h-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
       </svg>
     </button>
 
     <div class="flex flex-col flex-1">
       <!-- Toggle & Logo -->
-      <div
-        class="dark:bg-indigo-700 bg-primary-300 flex flex-col gap-2 py-6 border-b border-gray-300/50"
-        :class="!status ? '' : 'duration-1000 delay-[350ms]'"
-      >
+      <div class="dark:bg-indigo-700 bg-primary-300 flex flex-col gap-2 py-6 border-b border-gray-300/50"
+        :class="!status ? '' : 'duration-1000 delay-[350ms]'">
         <!-- Logo -->
-        <div
-          class="overflow-hidden"
-          :class="'transition-opacity ' + isExtended"
-        >
+        <div class="overflow-hidden" :class="'transition-opacity ' + isExtended">
           <div class="shrink-0 justify-evenly flex items-center">
             <Link :href="route('dashboard.index')">
-              <ApplicationLogo />
+            <ApplicationLogo />
             </Link>
           </div>
           <div class="dark:text-white pt-3 text-center">
@@ -67,53 +47,21 @@ const { status, isExtended } = storeToRefs(store);
           </div>
         </div>
 
-        <!-- Toggle -->
-        <div class="flex items-center justify-center 2">
-          <NavThemeToggle :class="isExtended" />
-        </div>
-      </div>
-
-      <!-- SideBar -->
-      <div
-        class="flex flex-col flex-1 gap-4 overflow-hidden"
-        :class="'transition-opacity ' + isExtended"
-      >
-        <div class="flex flex-col">
-          <template v-for="link in linkNav" :key="link.label">
-            <NavLink
-              :href="route(link.route)"
-              :active="route().current(link.route)"
-              :img="link.imgURL"
-              :class="'py-6'"
-              :label="link.label"
-            >
-            </NavLink>
-          </template>
-        </div>
-
-        <!-- Settings Dropdown -->
+        <!-- User Auth -->
         <div class="sm:flex sm:items-center sm:justify-center hidden">
           <div class="relative">
             <Dropdown align="center" width="100%">
               <template #trigger>
                 <span class="inline-flex rounded-md">
-                  <button
-                    type="button"
-                    class="dark:text-gray-400 dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none inline-flex items-center px-3 py-2 font-medium leading-4 text-gray-500 transition duration-150 ease-in-out bg-primary-50 border border-transparent rounded-md"
-                  >
+                  <button type="button" :class="!status ? 'w-[0] hidden' : ''"
+                    class=" dark:text-white dark:bg-indigo-800 bg-primary-400 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none inline-flex items-center px-3 py-2 font-medium leading-4 text-black transition duration-150 ease-in-out border border-transparent rounded-md">
                     Hello, {{ $page.props.auth.user.name }}
 
-                    <svg
-                      class="ms-2 -me-0.5 h-4 w-4"
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                    >
-                      <path
-                        fill-rule="evenodd"
+                    <svg class="ms-2 -me-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                      fill="currentColor">
+                      <path fill-rule="evenodd"
                         d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                        clip-rule="evenodd"
-                      />
+                        clip-rule="evenodd" />
                     </svg>
                   </button>
                 </span>
@@ -129,6 +77,23 @@ const { status, isExtended } = storeToRefs(store);
               </template>
             </Dropdown>
           </div>
+        </div>
+      </div>
+
+      <!-- SideBar -->
+      <div class="flex flex-col flex-1 gap-4 overflow-hidden" :class="'transition-opacity ' + isExtended">
+        <div class="flex flex-col">
+          <template v-for="link in linkNav" :key="link.label">
+            <NavLink :href="route(link.route)" :active="route().current(link.route)" :img="link.imgURL" :class="'py-6'"
+              :label="link.label">
+            </NavLink>
+          </template>
+        </div>
+
+        <!-- Settings Dropdown -->
+        <!-- Toggle -->
+        <div class="flex items-center justify-center 2">
+          <NavThemeToggle :class="isExtended" />
         </div>
       </div>
     </div>

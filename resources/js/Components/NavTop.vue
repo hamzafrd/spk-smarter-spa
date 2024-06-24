@@ -14,9 +14,7 @@ const showingNavigationDropdown = ref(false);
 const darkNavbar =
   'dark:bg-gray-800 dark:border-gray-700 bg-primary-50 border-b border-gray-100';
 
-const store = useSideNavStatus();
 
-const { toggle } = store;
 </script>
 
 <template>
@@ -25,7 +23,7 @@ const { toggle } = store;
       <!-- Logo -->
       <div class="shrink-0 flex items-center">
         <Link :href="route('dashboard.index')">
-          <ApplicationLogo />
+        <ApplicationLogo />
         </Link>
         <div class="ps-4">
           <p class="dark:text-white text-base-semibold">SPK SMARTER</p>
@@ -44,23 +42,15 @@ const { toggle } = store;
               <Dropdown align="right" width="48">
                 <template #trigger>
                   <span class="inline-flex rounded-md">
-                    <button
-                      type="button"
-                      class="dark:text-gray-400 dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none inline-flex items-center px-3 py-2 font-medium leading-4 text-gray-500 transition duration-150 ease-in-out bg-primary-50 border border-transparent rounded-md"
-                    >
+                    <button type="button"
+                      class="dark:text-gray-400 dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none inline-flex items-center px-3 py-2 font-medium leading-4 text-gray-500 transition duration-150 ease-in-out bg-primary-50 border border-transparent rounded-md">
                       {{ $page.props.auth.user.name }}
 
-                      <svg
-                        class="ms-2 -me-0.5 h-4 w-4"
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                      >
-                        <path
-                          fill-rule="evenodd"
+                      <svg class="ms-2 -me-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                        fill="currentColor">
+                        <path fill-rule="evenodd"
                           d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                          clip-rule="evenodd"
-                        />
+                          clip-rule="evenodd" />
                       </svg>
                     </button>
                   </span>
@@ -70,11 +60,7 @@ const { toggle } = store;
                   <DropdownLink :href="route('profile.edit')">
                     Profile
                   </DropdownLink>
-                  <DropdownLink
-                    :href="route('logout')"
-                    method="post"
-                    as="button"
-                  >
+                  <DropdownLink :href="route('logout')" method="post" as="button">
                     Log Out
                   </DropdownLink>
                 </template>
@@ -85,36 +71,17 @@ const { toggle } = store;
 
         <!-- Hamburger -->
         <div class="-me-2 ms-2 sm:hidden flex items-center">
-          <button
-            @click="showingNavigationDropdown = !showingNavigationDropdown"
-            class="dark:text-gray-500 dark:hover:text-gray-400 dark:hover:bg-gray-900 dark:focus:bg-gray-900 dark:focus:text-gray-400 hover:text-gray-500 hover:bg-primary-100 focus:outline-none focus:bg-primary-100 focus:text-gray-500 inline-flex items-center justify-center p-2 text-gray-400 transition duration-150 ease-in-out rounded-md"
-          >
-            <svg
-              class="w-6 h-6"
-              stroke="currentColor"
-              fill="none"
-              viewBox="0 0 24 24"
-            >
-              <path
-                :class="{
-                  hidden: showingNavigationDropdown,
-                  'inline-flex': !showingNavigationDropdown,
-                }"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M4 6h16M4 12h16M4 18h16"
-              />
-              <path
-                :class="{
-                  hidden: !showingNavigationDropdown,
-                  'inline-flex': showingNavigationDropdown,
-                }"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M6 18L18 6M6 6l12 12"
-              />
+          <button @click="showingNavigationDropdown = !showingNavigationDropdown"
+            class="dark:text-gray-500 dark:hover:text-gray-400 dark:hover:bg-gray-900 dark:focus:bg-gray-900 dark:focus:text-gray-400 hover:text-gray-500 hover:bg-primary-100 focus:outline-none focus:bg-primary-100 focus:text-gray-500 inline-flex items-center justify-center p-2 text-gray-400 transition duration-150 ease-in-out rounded-md">
+            <svg class="w-6 h-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+              <path :class="{
+                hidden: showingNavigationDropdown,
+                'inline-flex': !showingNavigationDropdown,
+              }" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+              <path :class="{
+                hidden: !showingNavigationDropdown,
+                'inline-flex': showingNavigationDropdown,
+              }" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
         </div>
@@ -123,19 +90,13 @@ const { toggle } = store;
   </div>
 
   <!-- Responsive Navigation Menu -->
-  <div
-    :class="{
-      block: showingNavigationDropdown,
-      hidden: !showingNavigationDropdown,
-    }"
-    class="sm:hidden"
-  >
+  <div :class="{
+    block: showingNavigationDropdown,
+    hidden: !showingNavigationDropdown,
+  }" class="sm:hidden">
     <div class="pt-2 pb-3 space-y-1">
       <template v-for="link in linkNav" :key="link.label">
-        <ResponsiveNavLink
-          :href="route(link.route)"
-          :active="route().current(link.route)"
-        >
+        <ResponsiveNavLink :href="route(link.route)" :active="route().current(link.route)">
           {{ link.label }}
         </ResponsiveNavLink>
       </template>
@@ -166,12 +127,7 @@ const { toggle } = store;
   <!-- Navbar -->
   <nav id="nav" class="max-sm:hidden flex justify-center" :class="darkNavbar">
     <template v-for="link in linkNav" :key="link.label">
-      <NavLink
-        :href="route(link.route)"
-        :active="route().current(link.route)"
-        :img="link.imgURL"
-        :label="link.label"
-      >
+      <NavLink :href="route(link.route)" :active="route().current(link.route)" :img="link.imgURL" :label="link.label">
       </NavLink>
     </template>
   </nav>

@@ -27,6 +27,11 @@ defineProps({
   class: null,
   wrapper: null,
   errorMessage: null,
+
+  isSmarter: {
+    type: Boolean,
+    default: false
+  }
 });
 
 const emit = defineEmits([
@@ -39,14 +44,17 @@ const emit = defineEmits([
 ]);
 </script>
 <template>
-  <CreateModal @submit-form="emit('create')" :max-rank="maxRank" :id="id" />
-  <template v-if="list.length > 0">
-    <DeleteAllModal />
-    <UpdateModal @submit-form="emit('update')" :max-rank="maxRank" :id="id" />
-    <ReadModal />
-    <DeleteModal @submit-form="emit('delete')" />
-    <SavePosisiModal />
+  <template v-if="!isSmarter">
+    <CreateModal @submit-form="emit('create')" :max-rank="maxRank" :id="id" />
+    <template v-if="list.length > 0">
+      <DeleteAllModal />
+      <UpdateModal @submit-form="emit('update')" :max-rank="maxRank" :id="id" />
+      <ReadModal />
+      <DeleteModal @submit-form="emit('delete')" />
+      <SavePosisiModal />
+    </template>
   </template>
+
   <slot />
   <div :class="wrapper" :id="id">
     <slot name="sub-table-header" />
@@ -62,10 +70,8 @@ const emit = defineEmits([
       </table>
     </div>
 
-    <div
-      v-else-if="!searchQuery.trim()"
-      class="dark:text-gray-500 text-heading4-medium flex-1 flex items-center justify-center"
-    >
+    <div v-else-if="!searchQuery.trim()"
+      class="dark:text-gray-500 text-heading4-medium flex-1 flex items-center justify-center">
       <p class="pb-12 pt-10">
         {{
           errorMessage ??
@@ -73,10 +79,7 @@ const emit = defineEmits([
         }}
       </p>
     </div>
-    <div
-      v-else
-      class="dark:text-gray-500 text-heading4-medium flex-1 flex items-center justify-center"
-    >
+    <div v-else class="dark:text-gray-500 text-heading4-medium flex-1 flex items-center justify-center">
       <p>Data tidak Ditemukan</p>
     </div>
   </div>

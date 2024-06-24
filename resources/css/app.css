@@ -61,4 +61,81 @@
   .dropdownHoverItem {
     @apply w-full text-start px-4 py-2 hover:bg-primary-100 dark:hover:bg-gray-600 dark:hover:text-white text-gray-700 dark:text-gray-200;
   }
+
+  .borders {
+    @apply border border-red-600;
+  }
+
+  #guesthome .table-container {
+    @apply w-[30rem] md:overflow-x-hidden;
+  }
+  #guesthome table {
+    @apply divide-y divide-gray-200 w-full;
+  }
+
+  #guesthome th {
+    @apply py-3 px-3 text-start text-xs font-medium text-gray-500 uppercase;
+  }
+
+  #guesthome td {
+    @apply py-3 px-3 whitespace-nowrap text-sm text-gray-800;
+  }
+
+  .th-alternatif {
+    @apply md:w-[73%] inline-block text-base-semibold text-black;
+  }
+
+  .th-ranking {
+    @apply md:w-[25%] inline-block text-end text-base-medium text-blue-700;
+  }
+
+  .table-td-hightlight {
+    @apply bg-blue-100 px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800;
+  }
+}
+
+@layer base {
+  @font-face {
+    font-family: 'charterBoldItalic';
+    src: url('/public/fonts/charter_bold_italic-webfont.eot');
+    src:
+      url('/public/fonts/charter_bold_italic-webfont.eot?#iefix')
+        format('embedded-opentype'),
+      url('/public/fonts/charter_bold_italic-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'charterBold';
+    src: url('/public/fonts/charter_bold-webfont.eot');
+    src:
+      url('/public/fonts/charter_bold-webfont.eot?#iefix')
+        format('embedded-opentype'),
+      url('/public/fonts/charter_bold-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'charterItalic';
+    src: url('/public/fonts/charter_italic-webfont.eot');
+    src:
+      url('/public/fonts/charter_italic-webfont.eot?#iefix')
+        format('embedded-opentype'),
+      url('/public/fonts/charter_italic-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'charterRegular';
+    src: url('/public/fonts/charter_regular-webfont.eot');
+    src:
+      url('/public/fonts/charter_regular-webfont.eot?#iefix')
+        format('embedded-opentype'),
+      url('/public/fonts/charter_regular-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+  }
 }

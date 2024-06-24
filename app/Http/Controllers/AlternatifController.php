@@ -26,7 +26,6 @@ class AlternatifController extends Controller
    */
   public function create()
   {
-    //
   }
 
   /**
@@ -34,8 +33,40 @@ class AlternatifController extends Controller
    */
   public function store(Request $request)
   {
-    //
+    // dd($request);
+    $rules = [
+      'nama' => 'required|max:255',
+      'rank.value' => [
+        'required',
+        'numeric',
+        'min:' . $request->rank['min'],
+        'max:' . $request->rank['max'],
+      ],
+    ];
+    $request->validate($rules, [
+      'nama' => 'Isi alternatif terlebih dahulu',
+      'rank.value.required' => 'Isi peringkat terlebih dahulu.',
+      'rank.value.numeric' => 'Nilai yang dimasukan harus berupa angka.',
+      'rank.value.min' => 'Nilai peringkat minimum adalah :min.',
+      'rank.value.max' => 'Nilai peringkat tidak boleh melebihi :max.',
+    ]);
+
+    $postData = [
+      'nama' => $request->nama,
+      'rank' => $request->rank['value'],
+    ];
+
+    try {
+      $user = User::find(Auth::id());
+
+      $user->alternatif()->create($postData);
+
+      return to_route('alternatif.index');
+    } catch (\Exception $e) {
+      return response()->json(['error' => 'Internal server error : ' . $e], 500);
+    }
   }
+
 
   /**
    * Display the specified resource.

@@ -39,6 +39,7 @@ const submit = () => {
 
 <template>
   <GuestLayout>
+
     <Head title="Log in" />
 
     <div v-if="status" class="mb-4 font-medium text-green-600">
@@ -49,15 +50,8 @@ const submit = () => {
       <div>
         <InputLabel for="email" value="Email" />
 
-        <TextInput
-          id="email"
-          type="email"
-          class="block w-full mt-1"
-          v-model="form.email"
-          required
-          autofocus
-          autocomplete="username"
-        />
+        <TextInput id="email" type="email" class="block w-full mt-1" v-model="form.email" required autofocus
+          autocomplete="username" />
 
         <InputError class="mt-2" :message="form.errors.email" />
       </div>
@@ -65,14 +59,8 @@ const submit = () => {
       <div class="mt-4">
         <InputLabel for="password" value="Password" />
 
-        <TextInput
-          id="password"
-          type="password"
-          class="block w-full mt-1"
-          v-model="form.password"
-          required
-          autocomplete="current-password"
-        />
+        <TextInput id="password" type="password" class="block w-full mt-1" v-model="form.password" required
+          autocomplete="current-password" />
 
         <InputError class="mt-2" :message="form.errors.password" />
       </div>
@@ -86,26 +74,16 @@ const submit = () => {
 
       <div class="flex items-center justify-end mt-4">
         <div class="flex justify-between flex-1 items-center">
-          <Link
-            v-if="canRegister"
-            :href="route('register')"
-            class="hover:text-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 text-gray-600 underline rounded-md"
-          >
-            Register
+          <Link v-if="canRegister" :href="route('register')"
+            class="hover:text-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 text-gray-600 underline rounded-md">
+          Register
           </Link>
-          <Link
-            v-if="canResetPassword"
-            :href="route('password.request')"
-            class="hover:text-gray-300 text-end focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 text-gray-600 underline rounded-md"
-          >
-            Forgot your password?
+          <Link v-if="canResetPassword" :href="route('password.request')"
+            class="hover:text-gray-300 text-end focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 text-gray-600 underline rounded-md">
+          Forgot your password?
           </Link>
         </div>
-        <PrimaryButton
-          class="ms-4"
-          :class="{ 'opacity-25': form.processing }"
-          :disabled="form.processing"
-        >
+        <PrimaryButton class="ms-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
           Log in
         </PrimaryButton>
       </div>

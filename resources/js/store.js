@@ -90,8 +90,9 @@ export const useFormStore = defineStore('forms', {
             onSuccess: () => {
               this.form.nama = '';
               this.form.rank.value = '';
-              this.loadList(category);
               this.toggleModal('createProductModal' + id);
+              this.loadList(category);
+              location.reload();
             },
           });
           break;
@@ -101,8 +102,8 @@ export const useFormStore = defineStore('forms', {
             onSuccess: () => {
               this.form.nama = '';
               this.form.rank.value = '';
-              this.loadList(category);
               this.toggleModal('updateProductModal' + id);
+              this.loadList(category);
             },
           });
           break;

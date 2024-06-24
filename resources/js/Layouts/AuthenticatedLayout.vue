@@ -6,12 +6,8 @@ import MasterLayout from './MasterLayout.vue';
 
 <template>
   <MasterLayout>
-    <div
-      class="dark:bg-gray-900 min-h-screen bg-primary-100 flex flex-col lg:flex-row"
-    >
-      <header
-        class="lg:hidden dark:bg-gray-800 dark:border-gray-700 bg-primary-50 border-b border-gray-100"
-      >
+    <div class="dark:bg-gray-900 min-h-screen bg-primary-100 flex flex-col lg:flex-row">
+      <header class="lg:hidden dark:bg-gray-800 dark:border-gray-700 bg-primary-50 border-b border-gray-100">
         <NavBarTop />
       </header>
       <main class="flex-1 flex dark:bg-gray-900 bg-slate-200">
