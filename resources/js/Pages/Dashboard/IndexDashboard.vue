@@ -16,7 +16,6 @@ const props = defineProps({
   },
 });
 
-useFormStore().kriteriaList = props.kriteriaList;
 const subkriteriaLen = props.kriteriaList.reduce((result, current) => {
   return result + current.subkriteria.length;
 }, 0);
@@ -26,19 +25,17 @@ const hasilLen = props.kriteriaList.reduce((result, current) => {
 </script>
 
 <template>
+
   <Head title="Dashboard" />
 
   <AuthenticatedLayout>
     <section>
       <div class="py-8 px-4 text-center">
         <h1
-          class="text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-heading1-bold dark:text-white"
-        >
+          class="text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-heading1-bold dark:text-white">
           Sistem Pendukung Keputusan
         </h1>
-        <p
-          class="text-lg font-normal text-gray-500 lg:text-xl sm:px-16 xl:px-48 dark:text-gray-400"
-        >
+        <p class="text-lg font-normal text-gray-500 lg:text-xl sm:px-16 xl:px-48 dark:text-gray-400">
           Pemilihan Tanah Perumahan
         </p>
 
@@ -52,41 +49,23 @@ const hasilLen = props.kriteriaList.reduce((result, current) => {
         <DashboardPill />
 
         <div class="table-container rounded-t-lg">
-          <h1
-            class="t-head capitalize py-2 tracking-tight leading-none md:text-xl text-white"
-          >
+          <h1 class="t-head capitalize py-2 tracking-tight leading-none md:text-xl text-white">
             Intruksi Penggunaan :
           </h1>
 
-          <div
-            class="py-8 px-4 lg:px-6 grid lg:grid-cols-4 grid-cols-2 dark:bg-gray-800 bg-primary-100"
-          >
-            <CardInstruction
-              number="1"
-              title="Masukan Kriteria"
-              desc="Masukan kriteria tanah perumahan pada halaman kriteria "
-            />
-            <CardInstruction
-              number="2"
-              title="Masukan Sub Kriteria"
-              desc="Masukan sub kriteria dari kriteria yang telah dibuat pada halaman sub kriteria "
-            />
-            <CardInstruction
-              number="3"
-              title="Masukan Alternatif"
-              desc="Masukan alternatif/tanah perumahan yang akan dipilih pada halaman alternatif "
-            />
-            <CardInstruction
-              number="4"
-              title="Melihat Hasil"
-              desc="Lihat hasil tanah perumahan terbaik yang telah diproses dengan  metode SMARTER"
-            />
+          <div class="py-8 px-4 lg:px-6 grid lg:grid-cols-4 grid-cols-2 dark:bg-gray-800 bg-primary-100">
+            <CardInstruction number="1" title="Masukan Kriteria"
+              desc="Masukan kriteria tanah perumahan pada halaman kriteria " />
+            <CardInstruction number="2" title="Masukan Sub Kriteria"
+              desc="Masukan sub kriteria dari kriteria yang telah dibuat pada halaman sub kriteria " />
+            <CardInstruction number="3" title="Masukan Alternatif"
+              desc="Masukan alternatif/tanah perumahan yang akan dipilih pada halaman alternatif " />
+            <CardInstruction number="4" title="Melihat Hasil"
+              desc="Lihat hasil tanah perumahan terbaik yang telah diproses dengan  metode SMARTER" />
           </div>
         </div>
 
-        <p
-          class="mt-8 text-lg font-normal text-gray-500 lg: sm:px-16 xl:px-48 dark:text-gray-400"
-        >
+        <p class="mt-8 text-lg font-normal text-gray-500 lg: sm:px-16 xl:px-48 dark:text-gray-400">
           &copy; 2024 Hamza Firdaus
         </p>
       </div>

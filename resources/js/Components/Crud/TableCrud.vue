@@ -6,10 +6,10 @@ import ReadModal from './CrudModal/ReadModal.vue';
 import DeleteModal from './CrudModal/DeleteModal.vue';
 import DeleteAllModal from './CrudModal/DeleteAllModal.vue';
 
-defineProps({
+const props = defineProps({
   id: {
     type: String,
-    default: null,
+    default: 'main',
   },
   maxRank: {
     type: Number,
@@ -36,19 +36,17 @@ defineProps({
 
 const emit = defineEmits([
   'create',
-  'deleteAll',
   'update',
-  'read',
   'delete',
-  'save',
 ]);
+
 </script>
 <template>
   <template v-if="!isSmarter">
-    <CreateModal @submit-form="emit('create')" :max-rank="maxRank" :id="id" />
+    <CreateModal @submit-form="emit('create')" :max-rank="props.maxRank" :id="props.id" />
     <template v-if="list.length > 0">
       <DeleteAllModal />
-      <UpdateModal @submit-form="emit('update')" :max-rank="maxRank" :id="id" />
+      <UpdateModal @submit-form="emit('update')" :max-rank="props.maxRank" :id="props.id" />
       <ReadModal />
       <DeleteModal @submit-form="emit('delete')" />
       <SavePosisiModal />

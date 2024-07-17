@@ -160,7 +160,8 @@ class KriteriaController extends Controller
   }
 
   /**
-   * Remove the specified resource from storage.
+   * Remove the specified resource from storage
+   * id is kriteria_id
    */
   public function destroy(string $id)
   {
@@ -184,9 +185,9 @@ class KriteriaController extends Controller
    */
   public function destroyAll()
   {
+    $data = Kriteria::where('user_id', Auth::id())->delete();
+    return to_route('kriteria.index');
     try {
-      Kriteria::query()->delete();
-      return to_route('kriteria.index');
     } catch (\Exception $e) {
       return response()->json(['error' => 'Internal server error : ' . $e], 500);
     }

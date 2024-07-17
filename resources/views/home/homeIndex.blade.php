@@ -44,9 +44,28 @@
                         {{-- <img src="https://via.placeholder.com/400x200" alt="Luas Tanah" class="rounded-t-lg mb-4"> --}}
                         <h3 class="text-xl font-semibold mb-2">Sertifikat Tanah</h3>
                         <ul class="list-disc ml-6">
-                            <li>Hak Milik</li>
-                            <li>Hak Hak Guna Bangunan</li>
-                            <li>Girik</li>
+                            <li>
+                                <strong>Hak Milik</strong>
+                                <p>
+                                    Hak Milik adalah jenis sertifikat tanah yang memberikan kepemilikan penuh atas tanah
+                                    kepada pemegangnya.
+                                </p>
+                            </li>
+                            <li>
+                                <strong>Hak Guna Bangunan</strong>
+                                <p>
+                                    Hak Guna Bangunan adalah hak yang memberikan izin kepada pemegangnya untuk mendirikan
+                                    dan memiliki bangunan di atas tanah yang bukan miliknya sendiri untuk jangka waktu
+                                    tertentu.
+                                </p>
+                            </li>
+                            <li>
+                                <strong>Girik</strong>
+                                <p>
+                                    Girik adalah bukti penguasaan atas tanah yang dikeluarkan oleh desa atau kelurahan
+                                    setempat dan bukan merupakan sertifikat resmi dari Badan Pertanahan Nasional (BPN).
+                                </p>
+                            </li>
                         </ul>
                     </div>
                     <!-- Luas Tanah Card -->
@@ -54,9 +73,24 @@
                         {{-- <img src="https://via.placeholder.com/400x200" alt="Luas Tanah" class="rounded-t-lg mb-4"> --}}
                         <h3 class="text-xl font-semibold mb-2">Keterangan Pendaftar Tanah</h3>
                         <ul class="list-disc ml-6">
-                            <li>Pemilik Pertama</li>
-                            <li>Pemilik Kedua</li>
-                            <li>Tanggungan</li>
+                            <li>
+                                <strong>Pemilik Pertama</strong>
+                                <p>Pemilik pertama adalah individu yang pertama kali memiliki atau mendaftarkan
+                                    tanah tersebut.</p>
+                            </li>
+                            <li>
+                                <strong>Pemilik Kedua</strong>
+                                <p>Pemilik kedua adalah individu yang memiliki atau mendaftarkan tanah tersebut
+                                    setelah pemilik pertama, biasanya melalui proses jual beli, hibah, atau warisan.</p>
+                            </li>
+                            <li>
+                                <strong>Tanggungan</strong>
+                                <p>
+                                    Tanggungan adalah kewajiban atau beban yang melekat pada tanah yang menunjukkan bahwa
+                                    tanah tersebut saat ini sedang dijadikan jaminan untuk suatu pinjaman
+                                    atau kewajiban lainnya.
+                                </p>
+                            </li>
                         </ul>
                     </div>
                     <div class="p-6 border rounded-md bg-blue-50">
@@ -113,22 +147,30 @@
                         <h3 class="text-xl font-semibold mb-2">Fisik Dasar Tanah</h3>
                         <ul class="list-disc ml-6">
                             <li>
-                                <strong>Normal (kemiringan 0-0,02 meter dari tanah datar)</strong>
-                                <p>Tanah yang hampir tidak memiliki kemiringan. Biasanya sangat baik untuk pembangunan
-                                    karena
-                                    tidak memerlukan pekerjaan tanah yang signifikan.</p>
+                                <strong>Normal</strong>
+                                <p>
+                                    Tanah ini mungkin hanya miring sedikit saja. Bayangkan jika Anda berjalan sejauh 100
+                                    meter, maka tanah akan naik hanya sekitar 2 meter. Tanah seperti ini sangat cocok untuk
+                                    pembangunan rumah.
+                                </p>
                             </li>
                             <li>
-                                <strong>Agak Miring (kemiringan 0,02-0,05 meter dari tanah datar)</strong>
-                                <p>Tanah dengan sedikit kemiringan yang masih cukup mudah untuk diolah.</p>
+                                <strong>Agak Miring</strong>
+                                <p>Tanah ini memiliki kemiringan yang agak terasa. Jika Anda berjalan sejauh 100 meter,
+                                    tanah akan naik sekitar 2 hingga 15 meter.</p>
                             </li>
                             <li>
-                                <strong>Miring (kemiringan 0,05-0,15 meter dari tanah datar)</strong>
-                                <p>Tanah dengan kemiringan sedang yang memerlukan perencanaan lebih untuk pembangunan.</p>
+                                <strong>Miring</strong>
+                                <p>
+                                    Tanah ini lebih curam. Jika Anda berjalan sejauh 100 meter, tanah akan naik sekitar 15
+                                    hingga 30 meter. Tanah dengan kemiringan seperti ini lebih sulit untuk dibangun dan
+                                    diolah.
+                                </p>
                             </li>
                             <li>
-                                <strong>Sangat Miring (kemiringan >0,15 meter dari tanah datar)</strong>
-                                <p>Tanah dengan kemiringan tajam yang memerlukan teknik konstruksi khusus.</p>
+                                <strong>Sangat Miring</strong>
+                                <p>Tanah ini sangat curam. Jika Anda berjalan sejauh 100 meter, tanah akan naik lebih dari
+                                    30 meter.</p>
                             </li>
                         </ul>
                     </div>
@@ -138,9 +180,9 @@
                         {{-- <img src="https://via.placeholder.com/400x200" alt="Lokasi" class="rounded-t-lg mb-4"> --}}
                         <h3 class="text-xl font-semibold mb-2">Lokasi</h3>
                         <ul class="list-disc ml-6">
-                            <li>Pinggir Kota (10-20 km dari pusat kota)</li>
-                            <li>Tengah Kota (5-10 km dari pusat kota)</li>
-                            <li>Pusat Kota (0-5 km dari pusat kota)</li>
+                            <li>Pinggir Kota (Radius 10-20 km dari pusat kota/keramaian)</li>
+                            <li>Tengah Kota (Radius 5-10 km dari pusat kota/keramaian)</li>
+                            <li>Pusat Kota (Radius 0-5 km dari pusat kota/keramaian)</li>
                         </ul>
                     </div>
                 </div>
@@ -266,11 +308,13 @@
                     $.each(response, function(index, kriteria) {
                         const checkboxHtml =
                             `
-                            <div class="border p-4 rounded bg-blue-50 flex items-center gap-2 ">
-                                <input type="checkbox" id="checkbox-${kriteria.id}"
-                                  class="kriteria-checkbox" data-kriteria-id="${kriteria.id}" data-bobot="${kriteria.bobot}">
-                                <label for="checkbox-${kriteria.id}">${kriteria.nama}</label>
-                            </div>
+                             <label for="checkbox-${kriteria.id}" class="cursor-pointer">
+                              <div  class="border p-4 rounded bg-blue-50 flex items-center gap-2 ">
+                                  <input type="checkbox" id="checkbox-${kriteria.id}"
+                                    class="kriteria-checkbox" data-kriteria-id="${kriteria.id}" data-bobot="${kriteria.bobot}">
+                                  <p>${kriteria.nama}</p>
+                              </div>
+                            </label>
                             `
                         $('#kriteriaCheckboxContainer').append(checkboxHtml);
                     });

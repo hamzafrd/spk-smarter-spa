@@ -71,6 +71,9 @@ class SubKriteriaController extends Controller
    */
   public function update(Request $request, string $idSubKriteria)
   {
+
+    // dd(['req' => $request->all(), 'idsub' => $idSubKriteria]);
+
     $rules = [
       'nama' => 'required|max:255',
       'rank.value' => [

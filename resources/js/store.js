@@ -1,6 +1,6 @@
 import { router, useForm } from '@inertiajs/vue3';
 import axios from 'axios';
-import { Dropdown, Modal, initFlowbite } from 'flowbite';
+import { Modal, initFlowbite } from 'flowbite';
 import { defineStore } from 'pinia';
 
 export const useFormStore = defineStore('forms', {
@@ -26,7 +26,7 @@ export const useFormStore = defineStore('forms', {
       bobot: '',
     },
 
-    subKriteria: {
+    subkriteria: {
       nama: '',
       rank: '',
       bobot: '',
@@ -38,8 +38,6 @@ export const useFormStore = defineStore('forms', {
     sortState: ['normal', 'desc', 'asc'],
     sortValue: 'normal',
     currSort: 0,
-
-    modalName: '',
 
     queryKriteria: '',
     searchTimeout: null,
@@ -82,7 +80,13 @@ export const useFormStore = defineStore('forms', {
      * @param {number} maxValue - The maximum value to set
      * @param {string} category - The category for the action
      */
-    submitForm(params, maxValue, category, id) {
+    hideModal(id) {
+      const $targetEl = document.getElementById(id);
+      const modal = new Modal($targetEl);
+      modal.hide();
+    },
+
+    submitForm(params, maxValue, category, idModal) {
       switch (params) {
         case 'store':
           this.form.rank.max = maxValue;
@@ -90,20 +94,23 @@ export const useFormStore = defineStore('forms', {
             onSuccess: () => {
               this.form.nama = '';
               this.form.rank.value = '';
-              this.toggleModal('createProductModal' + id);
               this.loadList(category);
-              location.reload();
+              this.hideModal(`createProductModal${idModal}`);
+              hideLoading();
             },
           });
           break;
         case 'update':
           this.form.rank.max = maxValue;
+
+          // this[category].id mengambil id dari state. cth 'kriteria' => this.kriteria.id
           this.form.put(route(category + '.update', this[category].id), {
             onSuccess: () => {
               this.form.nama = '';
               this.form.rank.value = '';
-              this.toggleModal('updateProductModal' + id);
               this.loadList(category);
+              this.hideModal('updateProductModalmain');
+              hideLoading();
             },
           });
           break;
@@ -111,7 +118,7 @@ export const useFormStore = defineStore('forms', {
           this.form.delete(route(category + '.destroy', this[category].id), {
             onSuccess: () => {
               this.loadList(category);
-              this.toggleModal('deleteModal');
+              hideLoading();
             },
           });
           break;
@@ -119,13 +126,15 @@ export const useFormStore = defineStore('forms', {
           this.form.delete(route(category + '.destroyAll'), {
             onSuccess: () => {
               this.loadList(category);
-              this.toggleModal('deleteAllModal');
+              hideLoading();
             },
           });
           break;
 
         default:
           console.error('not yet implemented');
+          hideLoading();
+
           break;
       }
     },
@@ -202,6 +211,12 @@ export const useFormStore = defineStore('forms', {
       this.form.rank.value = this.kriteria.rank;
       this.form.rank.oldValue = this.kriteria.rank;
     },
+    setSubkritea(item) {
+      this.subkriteria = item;
+      this.form.nama = this.subkriteria.nama;
+      this.form.rank.value = this.subkriteria.rank;
+      this.form.rank.oldValue = this.subkriteria.rank;
+    },
 
     setSubKriteriaList(itemList) {
       this.subKriteriaList = itemList;
@@ -209,11 +224,6 @@ export const useFormStore = defineStore('forms', {
     resetForm() {
       this.form.reset();
       this.form.errors = '';
-    },
-    toggleModal(modalName) {
-      console.log(modalName);
-      this.modalName = modalName;
-      this.getModal.toggle();
     },
 
     sortList(params) {
@@ -246,10 +256,6 @@ export const useFormStore = defineStore('forms', {
       }
 
       return list.reverse();
-    },
-
-    getModal(state) {
-      return new Modal(document.getElementById(state.modalName));
     },
 
     filteredList(state) {

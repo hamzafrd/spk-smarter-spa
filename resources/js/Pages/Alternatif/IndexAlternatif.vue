@@ -23,8 +23,6 @@ const store = useFormStore();
 
 const {
   setKriteria,
-  setSubKriteriaList,
-  toggleModal,
   moveListItem,
   updatePositions,
   initLib,
@@ -64,7 +62,6 @@ const handleCreate = () => {
   submitForm('store', dataList.value.length + 1, category.value, 'main');
 };
 const handleShowCreate = () => {
-  toggleModal(`createProductModalmain`);
   resetForm();
 };
 
@@ -72,12 +69,13 @@ const handleUpdate = () => {
   submitForm('update', dataList.value.length + 1, category.value, 'main');
 };
 const handleShowUpdate = (item) => {
-  setKriteria(item), toggleModal('updateProductModalmain');
+  setKriteria(item)
 };
 
 const handleShowDelete = (item) => {
-  setKriteria(item), toggleModal('deleteModal');
+  setKriteria(item)
 };
+
 const handleDelete = () => {
   submitForm('delete', null, store.category);
 };
