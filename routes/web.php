@@ -39,7 +39,7 @@ Route::middleware('auth')->group(function () {
   Route::resource('subkriteria', SubKriteriaController::class);
   Route::resource('alternatif', AlternatifController::class);
   Route::resource('ranking', SmarterRankingController::class);
-  Route::resource('hasil', AlternatifController::class);
+  Route::resource('hasil', SmarterHasilController::class);
 });
 
 require __DIR__ . '/auth.php';

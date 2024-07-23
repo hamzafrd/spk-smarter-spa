@@ -123,12 +123,11 @@ class SubKriteriaController extends Controller
   /**
    * Remove the specified resource from storage.
    */
-  public function destroy(SubKriteria $subKriteria)
+  public function destroy(Request $request, string $idSubKriteria)
   {
     try {
-      $kriteria = Kriteria::find($subKriteria->kriteria_id);
-      $subKriteria->find($subKriteria->id)->delete();
-
+      $kriteria = Kriteria::find($request->id);
+      $kriteria->subkriteria()->find($idSubKriteria)->delete();
       $this->updateBobot($kriteria);
 
       return to_route('subkriteria.index');

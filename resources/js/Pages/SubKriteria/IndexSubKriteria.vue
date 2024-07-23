@@ -85,7 +85,9 @@ const handleShowCreate = (id) => {
 };
 
 const handleShowUpdate = (item) => {
-
+  setSubkritea(item)
+};
+const handleShowDelete = (item) => {
   setSubkritea(item)
 };
 
@@ -94,8 +96,9 @@ const handleUpdate = (max, idKriteria) => {
   submitForm('update', max, category.value, `sk${idKriteria}`);
 };
 
-const handleDelete = () => {
-  console.log('test');
+const handleDelete = (idKriteria) => {
+  form.value.id = idKriteria;
+  submitForm('delete', null, category.value, `sk${idKriteria}`);
 }
 </script>
 
@@ -129,7 +132,7 @@ const handleDelete = () => {
             <TableCrud :list="kriteria.subkriteria" :max-rank="kriteria.subkriteria.length + 1"
               errorMessage="Belum memiliki sub kriteria" class="lg:mx-4 lg:mb-4 lg:rounded-lg"
               wrapper="bg-content lg:m-2 my-2" @create="handleCreate(kriteria.subkriteria.length + 1, kriteria.id)"
-              @update="handleUpdate(kriteria.subkriteria.length + 1, kriteria.id)" @delete="handleDelete">
+              @update="handleUpdate(kriteria.subkriteria.length + 1, kriteria.id)" @delete="handleDelete(kriteria.id)">
 
               <template #sub-table-header>
                 <div class="flex flex-col md:flex-row justify-between p-4 text-center">
@@ -226,14 +229,12 @@ const handleDelete = () => {
                                 d="M21 12c0 1.2-4.03 6-9 6s-9-4.8-9-6c0-1.2 4.03-6 9-6s9 4.8 9 6Z" />
                               <path stroke="currentColor" stroke-width="2" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                             </svg>
-
                             Lihat
                           </button>
                         </li>
                         <li>
-                          <button type="button" data-modal-target="deleteModal" data-modal-toggle="deleteModal" @click="
-                            setKriteria(item)
-                            "
+                          <button type="button" data-modal-target="deleteModal" data-modal-toggle="deleteModal"
+                            @click="handleShowDelete(item)"
                             class="flex w-full items-center py-2 px-4 hover:bg-primary-100 dark:hover:bg-gray-600 text-red-500 dark:hover:text-red-400">
                             <svg class="w-6 h-6 text-red-500 mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                               fill="currentColor" viewBox="0 0 24 24">
@@ -241,7 +242,6 @@ const handleDelete = () => {
                                 d="M8.586 2.586A2 2 0 0 1 10 2h4a2 2 0 0 1 2 2v2h3a1 1 0 1 1 0 2v12a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V8a1 1 0 0 1 0-2h3V4a2 2 0 0 1 .586-1.414ZM10 6h4V4h-4v2Zm1 4a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0v-8Zm4 0a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0v-8Z"
                                 clip-rule="evenodd" />
                             </svg>
-
                             Delete
                           </button>
                         </li>
