@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Alternatif;
+use App\Models\HasilSmarter;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class SmarterHasilController extends Controller
@@ -12,7 +16,17 @@ class SmarterHasilController extends Controller
    */
   public function index()
   {
-    return Inertia::render('HasilSmarter/IndexHasil');
+    $user = User::find(Auth::id());
+    $listHasil = $user->alternatif()
+      ->whereHas('hasilperhitungan') // Ensure only those with hasilperhitungan are included
+      ->with(['hasilperhitungan' => function ($query) {
+        $query->orderBy('total', 'DESC');
+      }])
+      ->join('hasilsmarter', 'alternatif.id', '=', 'hasilsmarter.alternatif_id')
+      ->orderBy('hasilsmarter.total', 'DESC')
+      ->select('alternatif.*') // Ensure only alternatif columns are selected
+      ->get();
+    return Inertia::render('HasilSmarter/IndexHasil', ['listHasil' => $listHasil]);
   }
 
   /**

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\HasilSmarter;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -17,8 +18,9 @@ class DashboardController extends Controller
     $user = User::find(Auth::id());
     $kriteria = $user->kriteria()->with('subkriteria')->with('smarter')->get();
     $alternatif = $user->alternatif()->get();
+    $hasil = HasilSmarter::where('user_id', Auth::id())->get();
 
-    return Inertia::render('Dashboard/IndexDashboard', ['kriteriaList' => $kriteria, 'alternatifList' => $alternatif]);
+    return Inertia::render('Dashboard/IndexDashboard', ['kriteriaList' => $kriteria, 'alternatifList' => $alternatif, 'hasilList' => $hasil]);
   }
 
   /**

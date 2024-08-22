@@ -11,14 +11,15 @@ return new class extends Migration
    */
   public function up(): void
   {
-    Schema::create('smarter', function (Blueprint $table) {
+    Schema::create('HasilSmarter', function (Blueprint $table) {
       $table->id();
-      $table->unsignedBigInteger('kriteria_id');
-      $table->unsignedBigInteger('alternatif_id');
-      $table->double('hasil_utility');
       $table->timestamps();
+      $table->double('total');
+      $table->integer('rank');
+      $table->unsignedBigInteger('alternatif_id');
+      $table->unsignedBigInteger('user_id');
 
-      $table->foreign('kriteria_id')->references('id')->on('kriteria')->onDelete('cascade');
+      $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
       $table->foreign('alternatif_id')->references('id')->on('alternatif')->onDelete('cascade');
     });
   }
@@ -28,6 +29,6 @@ return new class extends Migration
    */
   public function down(): void
   {
-    Schema::dropIfExists('smarter');
+    Schema::dropIfExists('HasilSmarter');
   }
 };

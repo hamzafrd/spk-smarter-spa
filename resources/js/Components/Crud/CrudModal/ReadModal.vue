@@ -6,6 +6,14 @@ const props = defineProps({
     type: String,
     default: null,
   },
+  showRank: {
+    type: Boolean,
+    default: true
+  },
+  showBobot: {
+    type: Boolean,
+    default: true
+  },
 });
 const store = useFormStore();
 
@@ -39,19 +47,24 @@ const { kriteria } = storeToRefs(store);
             </button>
           </div>
         </div>
-        <dl>
-          <dt class="mb-2 font-sans leading-none text-gray-900 dark:text-white">
-            Rank Kriteria :
-          </dt>
-          <dd class="mb-4 font-bold text-gray-500 sm:mb-5 dark:text-gray-400">
-            {{ kriteria.rank }}
-          </dd>
-          <dt class="mb-2 font-sans leading-none text-gray-900 dark:text-white">
-            Bobot ROC :
-          </dt>
-          <dd class="mb-4 font-light text-gray-500 sm:mb-5 dark:text-gray-400">
-            {{ kriteria.bobot }}
-          </dd>
+        <dl v-if="props.showBobot || props.showRank">
+          <template v-if="props.showRank">
+            <dt class="mb-2 font-sans leading-none text-gray-900 dark:text-white">
+              Rank Kriteria :
+            </dt>
+            <dd class="mb-4 font-bold text-gray-500 sm:mb-5 dark:text-gray-400">
+              {{ kriteria.rank }}
+            </dd>
+          </template>
+          <template v-if="props.showBobot">
+            <dt class="mb-2 font-sans leading-none text-gray-900 dark:text-white">
+              Bobot ROC :
+            </dt>
+            <dd class="mb-4 font-light text-gray-500 sm:mb-5 dark:text-gray-400">
+              {{ kriteria.bobot }}
+            </dd>
+          </template>
+
         </dl>
 
       </div>

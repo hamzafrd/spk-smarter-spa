@@ -22,13 +22,6 @@ class AlternatifController extends Controller
   }
 
   /**
-   * Show the form for creating a new resource.
-   */
-  public function create()
-  {
-  }
-
-  /**
    * Store a newly created resource in storage.
    */
   public function store(Request $request)
@@ -36,24 +29,15 @@ class AlternatifController extends Controller
     // dd($request);
     $rules = [
       'nama' => 'required|max:255',
-      'rank.value' => [
-        'required',
-        'numeric',
-        'min:' . $request->rank['min'],
-        'max:' . $request->rank['max'],
-      ],
+
     ];
     $request->validate($rules, [
       'nama' => 'Isi alternatif terlebih dahulu',
-      'rank.value.required' => 'Isi peringkat terlebih dahulu.',
-      'rank.value.numeric' => 'Nilai yang dimasukan harus berupa angka.',
-      'rank.value.min' => 'Nilai peringkat minimum adalah :min.',
-      'rank.value.max' => 'Nilai peringkat tidak boleh melebihi :max.',
+
     ]);
 
     $postData = [
       'nama' => $request->nama,
-      'rank' => $request->rank['value'],
     ];
 
     try {
@@ -67,6 +51,48 @@ class AlternatifController extends Controller
     }
   }
 
+  /**
+   * Update the specified resource in storage.
+   */
+  public function update(Request $request,  $idAlternatif)
+  {
+    $rules = [
+      'nama' => 'required|max:255',
+
+    ];
+    $request->validate($rules, [
+      'nama' => 'Isi alternatif terlebih dahulu',
+
+    ]);
+
+    $postData = [
+      'nama' => $request->nama,
+    ];
+
+    try {
+      $user = User::find(Auth::id());
+      $user->alternatif()->find($idAlternatif)->update($postData);
+
+      return to_route('alternatif.index');
+    } catch (\Exception $e) {
+      return response()->json(['error' => 'Internal server error : ' . $e], 500);
+    }
+  }
+
+  /**
+   * Remove the specified resource from storage.
+   */
+  public function destroy(string $idAlternatif)
+  {
+    try {
+      Alternatif::find($idAlternatif)->delete();
+
+      return to_route('alternatif.index');
+    } catch (\Throwable $th) {
+      return response()->json(['error' => 'Internal server error : ' . $th], 500);
+    }
+  }
+
 
   /**
    * Display the specified resource.
@@ -77,25 +103,14 @@ class AlternatifController extends Controller
   }
 
   /**
+   * Show the form for creating a new resource.
+   */
+  public function create() {}
+
+  /**
    * Show the form for editing the specified resource.
    */
   public function edit(Alternatif $alternatif)
-  {
-    //
-  }
-
-  /**
-   * Update the specified resource in storage.
-   */
-  public function update(Request $request, Alternatif $alternatif)
-  {
-    //
-  }
-
-  /**
-   * Remove the specified resource from storage.
-   */
-  public function destroy(Alternatif $alternatif)
   {
     //
   }

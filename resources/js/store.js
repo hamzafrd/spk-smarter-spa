@@ -32,6 +32,11 @@ export const useFormStore = defineStore('forms', {
       bobot: '',
     },
 
+    alternatif: {
+      id: '',
+      nama: '',
+    },
+
     massEdit: false,
     showBobot: false,
 
@@ -46,7 +51,9 @@ export const useFormStore = defineStore('forms', {
   actions: {
     loadList(category) {
       try {
-        router.get(route(`${category}.index`));
+        router.visit(route(`${category}.index`), {
+          preserveScroll: true,
+        });
       } catch (error) {
         console.error(error.response);
       }
@@ -91,6 +98,7 @@ export const useFormStore = defineStore('forms', {
         case 'store':
           this.form.rank.max = maxValue;
           this.form.post(route(category + '.store'), {
+            preserveScroll: true,
             onSuccess: () => {
               this.form.nama = '';
               this.form.rank.value = '';
@@ -105,6 +113,7 @@ export const useFormStore = defineStore('forms', {
 
           // this[category].id mengambil id dari state. cth 'kriteria' => this.kriteria.id
           this.form.put(route(category + '.update', this[category].id), {
+            preserveScroll: true,
             onSuccess: () => {
               this.form.nama = '';
               this.form.rank.value = '';
@@ -116,6 +125,7 @@ export const useFormStore = defineStore('forms', {
           break;
         case 'delete':
           this.form.delete(route(category + '.destroy', this[category].id), {
+            preserveScroll: true,
             onSuccess: () => {
               this.loadList(category);
               hideLoading();
@@ -124,6 +134,7 @@ export const useFormStore = defineStore('forms', {
           break;
         case 'deleteAll':
           this.form.delete(route(category + '.destroyAll'), {
+            preserveScroll: true,
             onSuccess: () => {
               this.loadList(category);
               hideLoading();
@@ -206,16 +217,28 @@ export const useFormStore = defineStore('forms', {
     },
 
     setKriteria(item) {
+      this.resetForm();
       this.kriteria = item;
       this.form.nama = this.kriteria.nama;
       this.form.rank.value = this.kriteria.rank;
       this.form.rank.oldValue = this.kriteria.rank;
     },
+
     setSubkritea(item) {
+      this.resetForm();
+
       this.subkriteria = item;
       this.form.nama = this.subkriteria.nama;
       this.form.rank.value = this.subkriteria.rank;
       this.form.rank.oldValue = this.subkriteria.rank;
+    },
+
+    setAlternatif(item) {
+      this.resetForm();
+
+      this.alternatif = item;
+      this.form.nama = this.alternatif.nama;
+      this.form.id = this.alternatif.id;
     },
 
     setSubKriteriaList(itemList) {

@@ -54,6 +54,10 @@ class SubKriteriaController extends Controller
 
     try {
       $kriteria = Kriteria::find($request->id);
+      $isRankExist = $kriteria->subkriteria()->where('rank', $postData['rank'])->exists();
+      if ($isRankExist) {
+        return back()->withErrors(['rank.value' => 'Ranking sudah terdapat pada kriteria.']);
+      }
 
       $this->updateRanks($kriteria, $postData, true);
       $kriteria->subkriteria()->create($postData);
@@ -109,9 +113,12 @@ class SubKriteriaController extends Controller
 
     try {
       $kriteria = Kriteria::find($request->id);
-
+      $isRankExist = $kriteria->subkriteria()->where('rank', $putData['rank'])->exists();
+      if ($isRankExist) {
+        return back()->withErrors(['rank.value' => 'Ranking sudah terdapat pada sub kriteria.']);
+      }
       $this->updateRanks($kriteria, $requestData);
-      $kriteria->subkriteria()->find($idSubKriteria)->update($putData);
+      SubKriteria::where('id', $idSubKriteria)->update($putData);
       $this->updateBobot($kriteria);
 
       return to_route('subkriteria.index');

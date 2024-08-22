@@ -105,7 +105,10 @@ class KriteriaController extends Controller
 
     try {
       $user = User::find(Auth::id());
-
+      $isRankExist = $user->kriteria()->where('rank', $putData['rank'])->exists();
+      if ($isRankExist) {
+        return back()->withErrors(['rank.value' => 'Ranking sudah terdapat pada kriteria.']);
+      }
       $this->updateRanks($user, $requestData);
       $user->kriteria()->find($id)->update($putData);
       $this->updateBobot($user);

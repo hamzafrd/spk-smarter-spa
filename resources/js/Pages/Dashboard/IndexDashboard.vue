@@ -14,14 +14,16 @@ const props = defineProps({
     type: Array,
     default: null,
   },
+  hasilList: {
+    type: Array,
+    default: null,
+  }
 });
 
 const subkriteriaLen = props.kriteriaList.reduce((result, current) => {
   return result + current.subkriteria.length;
 }, 0);
-const hasilLen = props.kriteriaList.reduce((result, current) => {
-  return result + current.smarter.length;
-}, 0);
+
 </script>
 
 <template>
@@ -44,7 +46,7 @@ const hasilLen = props.kriteriaList.reduce((result, current) => {
           <Card :length="kriteriaList.length" label="Kriteria" />
           <Card :length="subkriteriaLen" label="Sub Kriteria" />
           <Card :length="alternatifList.length" label="Alternatif" />
-          <Card :length="hasilLen" label="Hasil" />
+          <Card :length="props.hasilList.length" label="Hasil" />
         </div>
         <DashboardPill />
 
@@ -60,7 +62,7 @@ const hasilLen = props.kriteriaList.reduce((result, current) => {
               desc="Masukan sub kriteria dari kriteria yang telah dibuat pada halaman sub kriteria " />
             <CardInstruction number="3" title="Masukan Alternatif"
               desc="Masukan alternatif/tanah perumahan yang akan dipilih pada halaman alternatif " />
-            <CardInstruction number="4" title="Melihat Hasil"
+            <CardInstruction number="4" title="Pilih dan Lihat Hasil"
               desc="Lihat hasil tanah perumahan terbaik yang telah diproses dengan  metode SMARTER" />
           </div>
         </div>

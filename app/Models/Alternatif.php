@@ -7,19 +7,24 @@ use Illuminate\Database\Eloquent\Model;
 
 class Alternatif extends Model
 {
-    use HasFactory;
+  use HasFactory;
 
-    protected $table = 'alternatif';
-    protected $fillable = ['nama'];
+  protected $table = 'alternatif';
+  protected $fillable = ['nama'];
 
 
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
+  public function user()
+  {
+    return $this->belongsTo(User::class);
+  }
 
-    public function smarter()
-    {
-        return $this->hasMany(Smarter::class);
-    }
+  public function smarter()
+  {
+    return $this->hasMany(Smarter::class);
+  }
+
+  public function hasilperhitungan()
+  {
+    return $this->hasMany(HasilSmarter::class);
+  }
 }

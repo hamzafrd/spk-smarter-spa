@@ -107,7 +107,7 @@ const handleDelete = () => {
         <template #table-header>
           <SearchInput ref="child" label="Kriteria" :is-edit="massEdit" @search="searchKriteria" />
           <ButtonGroupTable @on-click-atur-posisi="handleAturPosisi" @on-show-create="handleShowCreate"
-            @on-mass-edit="handleMassEdit" />
+            @on-mass-edit="handleMassEdit" :showSetting="true" />
         </template>
         <template #table>
           <TableCrud :max-rank="dataList.length + 1" :list="filteredList" :search-query="queryKriteria"

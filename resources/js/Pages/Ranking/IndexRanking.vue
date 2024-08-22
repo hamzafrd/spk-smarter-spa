@@ -9,7 +9,7 @@ import SecondaryButton from '@/Components/SecondaryButton.vue';
 import DropdownDots from '@/Components/DropdownDots.vue';
 import Thead from '@/Components/Crud/Thead.vue';
 import TData from '@/Components/Crud/TData.vue';
-import { computed, ref } from 'vue';
+import { computed, nextTick, ref } from 'vue';
 import SearchInput from '@/Components/Crud/SearchInput.vue';
 
 const props = defineProps({
@@ -21,7 +21,42 @@ const props = defineProps({
     type: Array,
     default: [],
   },
+  listSmarter: {
+    type: Array,
+    default: [],
+  },
 });
+
+// let groupedAlternatif = [];
+$(document).ready(function () {
+  props.listSmarter.forEach((e) => {
+    // groupedAlternatif.push({
+    //   id: e.alternatif_id,
+    //   value: []
+    // });
+
+    $(`#alr${e.alternatif_id} #kriteria${e.kriteria_id} select`).val(`${e.kriteria_id},${e.sub_kriteria_id}`);
+  });
+
+  // const uniqueData = Object.values(
+  //   groupedAlternatif.reduce((acc, item) => {
+  //     if (!acc[item.id]) {
+  //       acc[item.id] = item;
+  //     }
+  //     return acc;
+  //   }, {})
+  // );
+
+  // uniqueData.forEach(e => {
+  //   props.listSmarter.forEach(item => {
+  //     if (e.id === item.alternatif_id) {
+  //       e.value.push(`${item.kriteria_id},${item.sub_kriteria_id}`);
+  //     }
+  //   });
+  // });
+
+  // groupedAlternatif = uniqueData;
+})
 
 const formattedKriteriaList = computed(() => {
   return props.listKriteria.map((kriteria) => {
@@ -32,8 +67,9 @@ const formattedKriteriaList = computed(() => {
   });
 });
 
+const listAlternatifs = ref([...props.listAlternatif])
 const rankingList = computed(() => {
-  return props.listAlternatif.map((alternatif) => {
+  return listAlternatifs.value.map((alternatif) => {
     return {
       ...alternatif,
       kriteria: formattedKriteriaList.value,
@@ -41,111 +77,85 @@ const rankingList = computed(() => {
   });
 });
 
-const store = useFormStore();
+const handleSaveRanking = (id) => {
+  let testValue = []
+  const alternatifId = id;
+  $(`.kriteriaAlr${id} select`).each(function (index) {
+    testValue.push($(this).val())
+  });
 
-const { setKriteria, submitForm, resetForm } = store;
-const { massEdit, dataList, category, queryKriteria, currSort } =
-  storeToRefs(store);
-
-category.value = 'Perankingan';
-
-const handleAturPosisi = () => {
-  massEdit.value = !massEdit.value;
-  currSort.value = 0;
-
-  // Clear Search
-  child.value.clearQuery();
-  queryKriteria.value = '';
-};
-
-const handleMassEdit = () => {
-  massEdit.value = !massEdit.value;
-  updatePositions();
-  initLib();
-};
-
-const handleCreate = () => {
-  submitForm('store', category.value, 'main');
-};
-const handleShowCreate = () => {
-  resetForm();
-};
-
-const handleUpdate = () => {
-  submitForm('update', dataList.value.length + 1, category.value, 'main');
-};
-const handleShowUpdate = (item) => {
-  setKriteria(item)
-};
-
-const handleShowDelete = (item) => {
-  setKriteria(item)
-};
-const handleDelete = () => {
-  submitForm('delete', null, store.category);
-};
-
-const selectedOptions = ref({});
-
-const handleSaveRanking = () => {
-  const groupedValues = {};
-
-  for (const key in selectedOptions.value) {
-    const id = parseInt(key.slice(-1));
-    // console.log(id);
-    if (!groupedValues[id]) {
-      groupedValues[id] = { id, value: [] };
-    }
-    groupedValues[id].value.push(selectedOptions.value[key]);
+  const filteredData = testValue.filter(item => item !== "");
+  const mergedArray = {
+    id: alternatifId,
+    value: filteredData
   }
 
-  // Convert object to array
-  /**
-   * return array of object {
-   *   id : {alternatif_id}
-   *   value : {
-   *     {kriteria} : {sub_kriteria_id}
-   * }
-   * }
-   */
-  const mergedArray = Object.values(groupedValues);
-  const smarterList = [...mergedArray].map((item) => {
-    return {
-      ...item,
-      alternatif_id: item.id,
-      value: {
-        'kriteria_id': item.value.map(e => (e.split(',')[0])),
-        'sub_kriteria_id': item.value.map(e => (e.split(',')[1])),
-      },
-    };
-  })
-  if (mergedArray.length) {
-    const subkriteriaLen = rankingList.value[0].kriteria[0].subkriteria.length;
-    mergedArray.forEach((e) => {
-      if (e.value.length !== subkriteriaLen) {
-        console.log('lengkapi data')
-      } else {
-        const form = useForm({
-          alternatif_id: null,
-          kriteria_id: null,
-          sub_kriteria_id: null,
-          hasil_utility: null,
-          rank: null,
-        });
-        smarterList.forEach(e => {
-          // console.log(e.alternatif.);
-        })
+  if (mergedArray) {
+    const kriteriaLen = rankingList.value[0].kriteria.length;
+    if (mergedArray.value.length !== kriteriaLen || mergedArray.value == '') {
+      rankingList.value.forEach((ranking) => {
+        if (mergedArray.id === ranking.id) {
+          Swal.fire(
+            'Lengkapi Data Alternatif',
+            'Alternatif ' + ranking.nama + ' belum lengkap',
+            'error'
+          )
+        }
+      })
 
-        console.log('sudah lengkap');
-        console.log(smarterList);
+      $('#alr' + mergedArray.id).addClass('border border-red-500');
+    } else {
+      rankingList.value.forEach((ranking) => {
+        if (mergedArray.id === ranking.id) {
+          $('#alr' + mergedArray.id).removeClass('border border-red-500');
+
+
+
+          const form = useForm({
+            alternatif_id: mergedArray.id,
+            kriteria_subKriteria: mergedArray.value,
+          });
+
+          form.post(route('ranking.store'), {
+            preserveScroll: true,
+            onSuccess: () => {
+              Swal.fire(
+                'Berhasil',
+                'Penilaian ' + ranking.nama + ' berhasil disimpan',
+                'success'
+              )
+            },
+            onFailure: () => {
+              Swal.fire(
+                'Gagal Post Database',
+                'Penilaian ' + ranking.nama + ' gagal disimpan',
+                'success'
+              )
+            }
+          });
+        }
+      })
+    }
+  }
+
+};
+
+const handleSearch = (query) => {
+  const originalList = [...props.listAlternatif];
+
+  listAlternatifs.value = originalList.filter((value) => {
+    return value.nama.trim().toLowerCase().includes(query.toLowerCase());
+  });
+
+  nextTick(() => {
+    props.listSmarter.forEach((e) => {
+      const selectElement = document.querySelector(`#alr${e.alternatif_id} #kriteria${e.kriteria_id} select`);
+      if (selectElement) {
+        selectElement.value = `${e.kriteria_id},${e.sub_kriteria_id}`;
       }
     });
-  }
-  // console.log(mergedArray);
-};
-const handleSelectOption = (event, id) => {
-  selectedOptions.value[id] = event.target.value;
-};
+  })
+}
 </script>
 
 <template>
@@ -168,7 +178,7 @@ const handleSelectOption = (event, id) => {
               class="text-start max-md:text-center lg:text-heading4-medium text-body-semibold dark:text-gray-300 text-gray-800 pb-2">
               Cari Alternatif :
             </p>
-            <SearchInput label="Alternatif" :is-edit="massEdit" @search="" />
+            <SearchInput label="Alternatif" @search="handleSearch" />
           </div>
         </template>
         <template #table>
@@ -181,10 +191,10 @@ const handleSelectOption = (event, id) => {
                   <p class="lg:text-heading3-bold text-heading3-bold my-3 text-gray-800 dark:text-gray-100">
                     {{ alternatif.nama }}
                   </p>
-                  <button @click="handleSaveRanking(alternatif.id)"
-                    class="px-3 max-h-12 capitalize flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg t:ext-sm tableBase dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800">
-                    Save
-                  </button>
+                  <div class="hidden flex-col justify-center items-center">
+                    <img src="img/result.svg" width="35px">
+                    <p class="font-semibold dark:text-blue-400">Sudah Terisi Semua</p>
+                  </div>
                 </div>
               </template>
               <template #thead-content>
@@ -194,21 +204,14 @@ const handleSelectOption = (event, id) => {
                 </tr>
               </template>
 
-
-
               <template #tbody-content>
-                <tr v-for="(item, index) in alternatif.kriteria" class="t-row" :id="'kriteriaAlr' + alternatif.id">
+                <tr v-for="(item, index) in alternatif.kriteria" class="t-row" :class="'kriteriaAlr' + alternatif.id">
+
                   <TData :label="item.nama" class="px-3" />
 
-                  <TData class="px-3">
-                    <select
-                      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                      @change="
-                        handleSelectOption(
-                          $event,
-                          'select' + index + alternatif.id
-                        )
-                        ">
+                  <TData class="px-3" :id="'kriteria' + item.id">
+                    <select @change="handleSelectOption(alternatif.id)"
+                      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                       <option value="">Choose a Sub Kriteria</option>
                       <template v-for="subkriteria in item.subkriteria">
                         <option :value="[item.id, subkriteria.id]">
@@ -216,6 +219,15 @@ const handleSelectOption = (event, id) => {
                         </option>
                       </template>
                     </select>
+                  </TData>
+                </tr>
+                <tr>
+                  <TData></TData>
+                  <TData>
+                    <button @click="handleSaveRanking(alternatif.id)"
+                      class="px-4 py-2 ms-auto mx-1 me-2 max-h-12 capitalize flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg t:ext-sm tableBase dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800">
+                      Save
+                    </button>
                   </TData>
                 </tr>
               </template>

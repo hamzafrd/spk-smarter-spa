@@ -197,7 +197,7 @@
                 <h1 class="text-heading1-semibold text-center">Pilih Kriteria Tanah</h1>
                 <div id="kriteriaCheckboxContainer" class="grid md:grid-cols-3 md:gap-4 gap-2 mb-4 validate-checkbox"></div>
 
-                <a href="#alternatif" class="navigate-section">
+                <a id="kriteriaCheckboxBtn" href="#alternatif" class="navigate-section">
                     @include('home.components.button', ['text' => 'Lanjut ke jumlah alternatif'])
                 </a>
             </div>
@@ -211,6 +211,9 @@
                     <input type="number" id="alternatifInput" min="2" value="2"
                         class="border p-2 validate-alternatives" placeholder="Enter number of alternatif">
                 </div>
+                <div id="inputNamaKriteria" class="p-4">
+
+                </div>
                 <a href="#spk" id="generateAlternatifBtn"
                     class="bg-blue-500 text-white px-4 py-2 rounded navigate-section">
                     Lanjut ke penilaian alternatif perumahan
@@ -221,6 +224,7 @@
         <section class="section" id="spk">
             <div class="p-4">
                 <h2 class="text-heading1-semibold text-center">Masukan Kriteria Tiap Alternatif</h2>
+
                 <div id="alternatifContainer" class="grid md:grid-cols-3 grid-cols-1 md:gap-5 gap-2 my-4 validate-spk">
                 </div>
 
@@ -277,8 +281,8 @@
                 // e.preventDefault();
 
                 if ($(this).closest('.section').find('.validate-checkbox').length > 0) {
-                    if ($(this).closest('.section').find('.kriteria-checkbox:checked').length === 0) {
-                        alert('Pilih setidaknya 1 kriteria.');
+                    if ($(this).closest('.section').find('.kriteria-checkbox:checked').length < 3) {
+                        alert('Pilih setidaknya 3 kriteria.');
                         return;
                     }
                     $(target).show();
@@ -295,6 +299,33 @@
                 showLink(target);
             });
 
+            for (let index = 0; index < 2; index++) {
+                $('#inputNamaKriteria').append(`
+                    <label class="cursor-pointer">
+                      <div class="border p-4 rounded bg-blue-50 flex items-center gap-2 ">
+                        <label>Nama Alternatif ${index+1} : </label>
+                        <input type="text" placeholder="ex : Tanah Griya Mutiara Arrayan ${index+1}" name="namaAlternatif">
+                      </div>
+                    </label>
+                    `)
+            }
+
+            $('#alternatifInput').on('change', function() {
+                const value = $(this).val()
+                $('#inputNamaKriteria').html("")
+
+                for (let index = 0; index < value; index++) {
+                    $('#inputNamaKriteria').append(`
+                    <label class="cursor-pointer">
+                      <div class="border p-4 rounded bg-blue-50 flex items-center gap-2 ">
+                        <label>Nama Alternatif ${index+1} : </label>
+                        <input type="text" placeholder="ex : Tanah Griya Mutiara Arrayan ${index+1}" name="namaAlternatif">
+                      </div>
+                    </label>
+                    `)
+                }
+
+            })
 
             // Fetch kriteria names to create checkboxes
             $.ajax({
@@ -309,17 +340,22 @@
                         const checkboxHtml =
                             `
                              <label for="checkbox-${kriteria.id}" class="cursor-pointer">
-                              <div  class="border p-4 rounded bg-blue-50 flex items-center gap-2 ">
-                                  <input type="checkbox" id="checkbox-${kriteria.id}"
+                              <div class="border p-4 rounded bg-blue-50 flex items-center gap-2">
+                                  <input type="checkbox" checked id="checkbox-${kriteria.id}"
                                     class="kriteria-checkbox" data-kriteria-id="${kriteria.id}" data-bobot="${kriteria.bobot}">
                                   <p>${kriteria.nama}</p>
                               </div>
                             </label>
                             `
                         $('#kriteriaCheckboxContainer').append(checkboxHtml);
+
+
                     });
 
                     $('#generateAlternatifBtn').click(function() {
+                        const inputNamaAlternatif = $('input[name="namaAlternatif"]')
+
+
                         const numberOfAlternatif = $('#alternatifInput').val();
                         const selectedKriteriaContainer = $('#alternatifContainer');
                         selectedKriteriaContainer.empty();
@@ -329,15 +365,16 @@
                                 return $(this).data('kriteria-id');
                             }).get();
 
-                        for (let i = 1; i <= numberOfAlternatif; i++) {
+                        inputNamaAlternatif.each(function(i) {
                             let alternatifHtml = `
                             <div class="border p-4 rounded shadow mb-4 bg-blue-50">
-                              <h3>Alternatif ${i}</h3>
+                              <h3>Tanah ${$(this).val()}</h3>
                             `;
 
                             selectedKriteriaIds.forEach(kriteriaId => {
                                 const kriteriaName =
-                                    $(`label[for='checkbox-${kriteriaId}']`).text();
+                                    $(`label[for='checkbox-${kriteriaId}']`)
+                                    .text();
                                 const kriteriaBobot =
                                     $(`#checkbox-${kriteriaId}`).data('bobot');
 
@@ -359,7 +396,7 @@
                             </div>
                             `;
                             selectedKriteriaContainer.append(alternatifHtml);
-                        }
+                        })
 
 
 
@@ -384,14 +421,18 @@
 
                     // Handle calculateBtn click event
                     $('#calculateBtn').click(function() {
+                        const inputNamaAlternatif = $('input[name="namaAlternatif"]')
+
                         const results = [];
                         let hasError = false
                         $('.error-message').html('');
 
                         $('#alternatifContainer > div').each(function(index, elem) {
                             const alternatifIndex = index + 1;
+                            const alternatifNama = inputNamaAlternatif.eq(index).val()
                             const alternatif = {
                                 index: alternatifIndex,
+                                nama: alternatifNama,
                                 kriteria: []
                             };
 
@@ -472,12 +513,11 @@
                                       <thead>
                                         <tr>
                                             <th colspan="3">
-                                              <span class="th-alternatif">Alternatif ${alternatif.index}</span>
-
+                                              <span class="th-alternatif">Tanah ${alternatif.nama}</span>
                                             </th>
                                             <th>
                                               <span class="th-ranking">
-                                                Peringkat ${index+1}
+                                                Rekomendasi ${index+1}
                                               </span>
                                             </th>
                                         </tr>

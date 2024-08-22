@@ -12,7 +12,10 @@ const props = defineProps({
     type: Number,
     default: null,
   },
-
+  showRank: {
+    type: Boolean,
+    default: true
+  },
 });
 
 const emit = defineEmits(['submitForm']);
@@ -49,7 +52,7 @@ const handleSubmit = () => {
         </div>
         <!-- Modal body -->
         <form @submit.prevent="handleSubmit()">
-          <div class="grid gap-4 mb-4 sm:grid-cols-2">
+          <div class="grid gap-4 mb-4" :class="props.showRank ? 'sm:grid-cols-2' : ''">
             <div>
               <label for="name" class="block capitalize mb-2 font-medium text-gray-900 dark:text-white">
                 Nama {{ category }}
@@ -59,7 +62,7 @@ const handleSubmit = () => {
                 :placeholder="`Masukan Nama ${category}`" />
               <InputError class="mt-2" :message="form.errors.nama" />
             </div>
-            <div>
+            <div v-if="props.showRank">
               <label for="brand" class="block mb-2 font-medium text-gray-900 dark:text-white">Peringkat</label>
               <input type="number" name="brand" id="brand" v-model="form.rank['value']"
                 class="bg-primary-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"

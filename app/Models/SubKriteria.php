@@ -7,13 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class SubKriteria extends Model
 {
-    use HasFactory;
+  use HasFactory;
 
-    protected $table = 'sub_kriteria';
-    protected $fillable = ['nama', 'rank', 'bobot'];
+  protected $table = 'sub_kriteria';
+  protected $fillable = ['nama', 'rank', 'bobot'];
 
-    public function kriteria()
-    {
-        return $this->belongsTo('kriteria');
-    }
+  public function kriteria()
+  {
+    return $this->belongsTo(Kriteria::class);
+  }
 }

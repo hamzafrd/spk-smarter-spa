@@ -10,7 +10,7 @@ class Smarter extends Model
   use HasFactory;
 
   protected $table = 'smarter';
-  protected $fillable = ['hasil_utility', 'total', 'rank'];
+  protected $guarded = [''];
 
   public function kriteria()
   {

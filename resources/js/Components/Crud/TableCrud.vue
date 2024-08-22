@@ -24,6 +24,15 @@ const props = defineProps({
     default: '',
   },
 
+  showRank: {
+    type: Boolean,
+    default: true
+  },
+  showBobot: {
+    type: Boolean,
+    default: true
+  },
+
   class: null,
   wrapper: null,
   errorMessage: null,
@@ -43,11 +52,11 @@ const emit = defineEmits([
 </script>
 <template>
   <template v-if="!isSmarter">
-    <CreateModal @submit-form="emit('create')" :max-rank="props.maxRank" :id="props.id" />
+    <CreateModal @submit-form="emit('create')" :showRank="props.showRank" :max-rank="props.maxRank" :id="props.id" />
     <template v-if="list.length > 0">
       <DeleteAllModal />
-      <UpdateModal @submit-form="emit('update')" :max-rank="props.maxRank" :id="props.id" />
-      <ReadModal />
+      <UpdateModal @submit-form="emit('update')" :showRank="props.showRank" :max-rank="props.maxRank" :id="props.id" />
+      <ReadModal :showRank="props.showRank" :showBobot="props.showBobot" />
       <DeleteModal @submit-form="emit('delete')" />
       <SavePosisiModal />
     </template>

@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\HasilSmarter;
+use App\Models\Kriteria;
+use App\Models\Smarter;
+use App\Models\SubKriteria;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -15,10 +19,15 @@ class SmarterRankingController extends Controller
   public function index()
   {
     $user = User::find(Auth::id());
-    $alternatif = $user->alternatif()->get();
+    $dataAlternatif = $user->alternatif();
+    $alternatif = $dataAlternatif->get();
+    $alternatifIds = $dataAlternatif->pluck('id')->toArray();
+    $smarterRecords = Smarter::whereIn('alternatif_id', $alternatifIds)
+      ->orderBy('alternatif_id')
+      ->get();
     $kriteria_joinsb = $user->kriteria()->with('subkriteria')->orderBy('rank')->get();
 
-    return Inertia::render('Ranking/IndexRanking', ['listAlternatif' => $alternatif, 'listKriteria' => $kriteria_joinsb]);
+    return Inertia::render('Ranking/IndexRanking', ['listAlternatif' => $alternatif, 'listSmarter' => $smarterRecords, 'listKriteria' => $kriteria_joinsb]);
   }
 
   /**
@@ -34,7 +43,47 @@ class SmarterRankingController extends Controller
    */
   public function store(Request $request)
   {
-    //
+    $alternatifId = $request->alternatif_id;
+    $list = $request->kriteria_subKriteria;
+
+
+    try {
+      foreach ($list as $value) {
+        $dataList = explode(',', $value);
+        $kriteriaId = $dataList[0];
+        $subKriteriaId = $dataList[1];
+
+        $bobotKriteria = Kriteria::where('id', $kriteriaId)->value('bobot');
+        $bobotSubKriteria = SubKriteria::where('id', $subKriteriaId)->value('bobot');
+
+        $attributes = [
+          'alternatif_id' => $alternatifId,
+          'kriteria_id' => $dataList[0],
+        ];
+
+        $values = [
+          'sub_kriteria_id' => $dataList[1],
+          'hasil_utility' => $bobotKriteria * $bobotSubKriteria
+        ];
+
+        Smarter::updateOrCreate($attributes, $values);
+      }
+
+      $totalUtility = Smarter::where('alternatif_id', $alternatifId)->sum('hasil_utility');
+      $attributes = [
+        'alternatif_id' => $alternatifId,
+        'user_id' => Auth::id(),
+      ];
+
+      $values = [
+        'total' => $totalUtility,
+      ];
+
+      HasilSmarter::updateOrCreate($attributes, $values);
+      return to_route('ranking.index');
+    } catch (\Exception $e) {
+      return response()->json(['error' => 'Internal server error : ' . $e], 500);
+    }
   }
 
   /**

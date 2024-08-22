@@ -12,6 +12,8 @@ import TData from '@/Components/Crud/TData.vue';
 import ButtonGroupTable from '@/Components/Crud/ButtonGroupTable.vue';
 import SearchInput from '@/Components/Crud/SearchInput.vue';
 
+const idModal = 'main';
+
 const props = defineProps({
   listAlternatif: {
     type: Array,
@@ -22,6 +24,7 @@ const props = defineProps({
 const store = useFormStore();
 
 const {
+  setAlternatif,
   setKriteria,
   moveListItem,
   updatePositions,
@@ -32,53 +35,48 @@ const {
 
 const {
   massEdit,
-  showBobot,
   filteredList,
   dataList,
   category,
   queryKriteria,
-  currSort,
 } = storeToRefs(store);
 
-
+dataList.value = props.listAlternatif;
 category.value = 'alternatif';
 
-const handleAturPosisi = () => {
-  massEdit.value = !massEdit.value;
-  currSort.value = 0;
 
-  // Clear Search
-  child.value.clearQuery();
-  queryKriteria.value = '';
-};
-
-const handleMassEdit = () => {
-  massEdit.value = !massEdit.value;
-  updatePositions();
-  initLib();
-};
-
-const handleCreate = () => {
-  submitForm('store', dataList.value.length + 1, category.value, 'main');
-};
 const handleShowCreate = () => {
   resetForm();
 };
+const handleCreate = () => {
+  submitForm('store', props.listAlternatif.length + 1, category.value, idModal);
+};
+
+const handleShowAlternatif = (item) => {
+  setKriteria(item);
+}
+
+const handleShowUpdate = (item) => {
+  setAlternatif(item)
+};
 
 const handleUpdate = () => {
-  submitForm('update', dataList.value.length + 1, category.value, 'main');
-};
-const handleShowUpdate = (item) => {
-  setKriteria(item)
+  submitForm('update', null, category.value, idModal);
 };
 
 const handleShowDelete = (item) => {
-  setKriteria(item)
+  setAlternatif(item)
 };
 
 const handleDelete = () => {
   submitForm('delete', null, store.category);
 };
+
+const searchAlternatif = (query) => {
+  queryKriteria.value = query;
+
+}
+
 </script>
 
 <template>
@@ -90,22 +88,20 @@ const handleDelete = () => {
       <IndexCrudTable>
         <template #header>
           <p class="text-heading1-bold">Alternatif</p>
-
           <p class="text-heading2-semibold">
             Jumlah Alternatif : {{ props.listAlternatif.length }}
           </p>
         </template>
 
         <template #table-header>
-          <SearchInput ref="child" label="Kriteria" :is-edit="massEdit" @search="searchKriteria" />
-          <ButtonGroupTable id="main" @on-click-atur-posisi="handleAturPosisi" @on-show-create="handleShowCreate"
-            @on-mass-edit="handleMassEdit" />
+          <SearchInput ref="child" label="Alternatif" @search="searchAlternatif" />
+          <ButtonGroupTable :id="idModal" @on-show-create="handleShowCreate" />
         </template>
 
         <template #table>
-          <TableCrud id="main" :max-rank="props.listAlternatif.length + 1" :list="props.listAlternatif"
-            :search-query="queryKriteria" :class="'lg:mx-4 lg:mb-4 lg:rounded-lg'" @create="handleCreate"
-            @update="handleUpdate" @delete="handleDelete">
+          <TableCrud :showRank="false" :showBobot="false" :id="idModal" :max-rank="props.listAlternatif.length + 1"
+            :list="props.listAlternatif" :search-query="queryKriteria" :class="'lg:mx-4 lg:mb-4 lg:rounded-lg'"
+            @create="handleCreate" @update="handleUpdate" @delete="handleDelete">
             <template #thead-content>
               <tr>
                 <Thead v-if="!massEdit" :label="'Altenatif'" />
@@ -116,7 +112,7 @@ const handleDelete = () => {
             </template>
 
             <template #tbody-content>
-              <tr v-for="(item, index) in props.listAlternatif" class="t-row" :id="'altenatif' + index">
+              <tr v-for="(item, index) in filteredList" class="t-row" :id="'altenatif' + index">
                 <TData v-if="!massEdit" :label="'A' + (index + 1)" />
 
                 <TData :label="item.nama" />
@@ -140,9 +136,10 @@ const handleDelete = () => {
                     </SecondaryButton>
                   </div>
 
-                  <DropdownDots v-if="!massEdit" :id="`alternatif${item.id}`">
+                  <DropdownDots v-if="!massEdit" :id="`Alternatif${item.id}`">
                     <li>
-                      <button id="editAlternatif" class="dropdownDotItem" @click="handleShowUpdate(item)">
+                      <button id="editKriteria" class="dropdownDotItem" data-modal-target="updateProductModalmain"
+                        data-modal-toggle="updateProductModalmain" @click="handleShowUpdate(item)">
                         <svg class="w-6 h-6 text-gray-800 dark:text-white mr-2" aria-hidden="true"
                           xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                           <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -152,20 +149,20 @@ const handleDelete = () => {
                       </button>
                     </li>
                     <li>
-                      <button class="dropdownDotItem" @click="setKriteria(item)" data-modal-target="readProductModal"
-                        data-modal-toggle="readProductModal">
+                      <button class="dropdownDotItem" @click="handleShowAlternatif(item)"
+                        data-modal-target="readProductModal" data-modal-toggle="readProductModal">
                         <svg class="w-6 h-6 text-gray-800 dark:text-white mr-2" aria-hidden="true"
                           xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                           <path stroke="currentColor" stroke-width="2"
                             d="M21 12c0 1.2-4.03 6-9 6s-9-4.8-9-6c0-1.2 4.03-6 9-6s9 4.8 9 6Z" />
                           <path stroke="currentColor" stroke-width="2" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                         </svg>
-
                         Lihat
                       </button>
                     </li>
                     <li>
-                      <button class="dropdownDotItem" @click="handleShowDelete(item)">
+                      <button class="dropdownDotItem" @click="handleShowDelete(item)" data-modal-target="deleteModal"
+                        data-modal-toggle="deleteModal">
                         <svg class="w-6 h-6 text-red-500 mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                           fill="currentColor" viewBox="0 0 24 24">
                           <path fill-rule="evenodd"
